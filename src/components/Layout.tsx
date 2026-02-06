@@ -191,7 +191,16 @@ export default function Layout({ children }: LayoutProps) {
         {/* Footer */}
         <footer className="p-4 border-t border-gray-200 bg-white">
           <div className="text-center text-sm text-gray-500">
-            Built by <span className="font-medium text-gray-700">Lia Mesika</span>. All rights reserved.
+            Built by{' '}
+            <a
+              href="https://liamesika.co.il"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-gray-700 hover:text-indigo-600 transition-colors"
+            >
+              Lia Mesika
+            </a>
+            . All rights reserved.
           </div>
         </footer>
       </main>

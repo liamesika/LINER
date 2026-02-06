@@ -142,11 +142,11 @@ export default function Dashboard() {
           </div>
           <div className="p-4 space-y-3">
             <div className="p-3 bg-indigo-50 rounded-lg">
-              <p className="font-medium text-indigo-900">יום 1 - העתקות לינאריות + ע"ע ולכסון</p>
+              <p className="font-medium text-indigo-900">יום 1 - מטריצות + מטריצות הפיכות</p>
               <p className="text-sm text-indigo-700">חזרה מהירה + תרגול ממבחנים</p>
             </div>
             <div className="p-3 bg-blue-50 rounded-lg">
-              <p className="font-medium text-blue-900">יום 2 - מכפלות פנימיות + דטרמיננטות</p>
+              <p className="font-medium text-blue-900">יום 2 - דרגה ומרחב שורות/עמודות + דטרמיננטות</p>
               <p className="text-sm text-blue-700">שינון נוסחאות + תרגול</p>
             </div>
             <div className="p-3 bg-purple-50 rounded-lg">
@@ -176,14 +176,14 @@ export default function Dashboard() {
         </div>
         <div className="p-4">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
-            {keyFormulas.linearTransformations.slice(0, 3).map((f, i) => (
+            {keyFormulas.matrices.slice(0, 3).map((f, i) => (
               <div key={i} className="p-3 bg-gray-50 rounded-lg border border-gray-100">
                 <p className="font-mono text-sm text-gray-700">{f.formula}</p>
                 <p className="text-xs text-gray-500 mt-1">{f.name}</p>
               </div>
             ))}
-            {keyFormulas.eigenvalues.slice(0, 2).map((f, i) => (
-              <div key={`ev-${i}`} className="p-3 bg-gray-50 rounded-lg border border-gray-100">
+            {keyFormulas.rankAndSpaces.slice(0, 2).map((f, i) => (
+              <div key={`rs-${i}`} className="p-3 bg-gray-50 rounded-lg border border-gray-100">
                 <p className="font-mono text-sm text-gray-700">{f.formula}</p>
                 <p className="text-xs text-gray-500 mt-1">{f.name}</p>
               </div>

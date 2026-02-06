@@ -48,38 +48,38 @@ export function generateStudyPlan(): WeekPlan[] {
           dayNameHe: 'שבת',
           isStudyDay: true,
           topics: [
-            { name: 'linear-transformations', nameHe: 'העתקות לינאריות', priority: 'high', estimatedHours: 3 },
-            { name: 'eigenvalues', nameHe: 'ערכים עצמיים ולכסון', priority: 'high', estimatedHours: 3 },
+            { name: 'matrices', nameHe: 'מטריצות', priority: 'high', estimatedHours: 3 },
+            { name: 'invertible-matrices', nameHe: 'מטריצות הפיכות', priority: 'high', estimatedHours: 3 },
           ],
           tasks: [
             {
               id: 'sat-1',
-              title: 'חזרה על העתקות לינאריות',
-              description: 'הגדרות, גרעין, תמונה, משפט המימד',
+              title: 'חזרה על מטריצות',
+              description: 'כפל מטריצות, מטריצות אלמנטריות, דירוג',
               type: 'review',
               estimatedMinutes: 60,
-              resources: ['הרצאות 9-12', 'שיעורי בית 4-5'],
+              resources: ['הרצאות 13-14', 'שיעורי בית 8'],
             },
             {
               id: 'sat-2',
-              title: 'תרגול העתקות לינאריות',
-              description: 'פתור 5 שאלות מייצוג מטריצי וגרעין/תמונה',
+              title: 'תרגול מטריצות',
+              description: 'פתור 5 שאלות על כפל מטריצות ודירוג',
               type: 'practice',
               estimatedMinutes: 90,
               resources: ['מבחן 2024 מועד א', 'מבחן 2023 מועד ב'],
             },
             {
               id: 'sat-3',
-              title: 'חזרה על ע"ע ולכסון',
-              description: 'פולינום אופייני, מרחבים עצמיים, קריטריון לכסינות',
+              title: 'חזרה על מטריצות הפיכות',
+              description: 'הפיכות, מציאת הופכי, תכונות מטריצות הפיכות',
               type: 'review',
               estimatedMinutes: 60,
-              resources: ['הרצאות 19-22'],
+              resources: ['הרצאות 15-16'],
             },
             {
               id: 'sat-4',
-              title: 'תרגול לכסון',
-              description: 'לכסן 3 מטריצות, בדוק לכסינות',
+              title: 'תרגול מטריצות הפיכות',
+              description: 'מצא הופכי ל-3 מטריצות, הוכח הפיכות',
               type: 'practice',
               estimatedMinutes: 90,
               resources: ['מבחנים 2022-2024'],
@@ -92,29 +92,29 @@ export function generateStudyPlan(): WeekPlan[] {
           dayNameHe: 'ראשון',
           isStudyDay: true,
           topics: [
-            { name: 'inner-products', nameHe: 'מכפלות פנימיות', priority: 'high', estimatedHours: 3 },
+            { name: 'rank', nameHe: 'דרגה ומרחב שורות/עמודות', priority: 'high', estimatedHours: 3 },
             { name: 'determinants', nameHe: 'דטרמיננטות', priority: 'medium', estimatedHours: 2 },
           ],
           tasks: [
             {
               id: 'sun-1',
-              title: 'חזרה על מכפלות פנימיות',
-              description: 'מרחבים אוניטריים, גרם-שמידט, ריבועים פחותים',
+              title: 'חזרה על דרגה ומרחב שורות/עמודות',
+              description: 'דרגה, מרחב שורות, מרחב עמודות, מרחב האפס',
               type: 'review',
               estimatedMinutes: 60,
-              resources: ['הרצאות 23-26'],
+              resources: ['הרצאות 19-20'],
             },
             {
               id: 'sun-2',
               title: 'שינון נוסחאות',
-              description: 'שנן את כל נוסחאות הדטרמיננטות וגרם-שמידט',
+              description: 'שנן את כל נוסחאות הדטרמיננטות והדרגה',
               type: 'memorize',
               estimatedMinutes: 30,
               resources: ['טבלת נוסחאות'],
             },
             {
               id: 'sun-3',
-              title: 'תרגול מכפלות פנימיות',
+              title: 'תרגול דרגה ומרחבים',
               description: 'פתור 5 שאלות ממבחנים',
               type: 'practice',
               estimatedMinutes: 90,
@@ -144,9 +144,9 @@ export function generateStudyPlan(): WeekPlan[] {
           dayNameHe: 'שני',
           isStudyDay: true,
           topics: [
-            { name: 'basis-dimension', nameHe: 'בסיס ומימד', priority: 'high', estimatedHours: 2 },
+            { name: 'basis', nameHe: 'בסיס ומימד', priority: 'high', estimatedHours: 2 },
             { name: 'subspaces', nameHe: 'תת-מרחבים', priority: 'medium', estimatedHours: 1 },
-            { name: 'exam-simulation', nameHe: 'סימולציית מבחן', priority: 'high', estimatedHours: 3 },
+            { name: 'other', nameHe: 'סימולציית מבחן', priority: 'high', estimatedHours: 3 },
           ],
           tasks: [
             {
@@ -189,7 +189,7 @@ export function generateStudyPlan(): WeekPlan[] {
           dayNameHe: 'שלישי',
           isStudyDay: true,
           topics: [
-            { name: 'final-review', nameHe: 'חזרה אחרונה', priority: 'high', estimatedHours: 2 },
+            { name: 'other', nameHe: 'חזרה אחרונה', priority: 'high', estimatedHours: 2 },
           ],
           tasks: [
             {
@@ -227,11 +227,11 @@ export function generateStudyPlan(): WeekPlan[] {
 
 // Key formulas for Linear Algebra
 export const keyFormulas = {
-  linearTransformations: [
-    { formula: 'dim(V) = dim(ker(T)) + dim(Im(T))', name: 'משפט המימד (Rank-Nullity)' },
-    { formula: '[T]_B = [T(b₁)]_B ... [T(bₙ)]_B', name: 'מטריצה מייצגת' },
-    { formula: '[T]_C = P⁻¹[T]_B·P', name: 'החלפת בסיס' },
+  matrices: [
+    { formula: 'rank(A) + nullity(A) = n', name: 'משפט המימד (Rank-Nullity)' },
     { formula: 'rank(AB) ≤ min(rank(A), rank(B))', name: 'אי-שוויון דרגות' },
+    { formula: 'A·A⁻¹ = A⁻¹·A = I', name: 'הגדרת הפיכות' },
+    { formula: '(AB)⁻¹ = B⁻¹·A⁻¹', name: 'הופכי של מכפלה' },
   ],
   determinants: [
     { formula: 'det(AB) = det(A)·det(B)', name: 'כפליות דטרמיננטה' },
@@ -239,17 +239,17 @@ export const keyFormulas = {
     { formula: 'det(Aᵀ) = det(A)', name: 'דטרמיננטת שחלוף' },
     { formula: 'det(cA) = cⁿ·det(A)', name: 'כפל בסקלר' },
   ],
-  eigenvalues: [
-    { formula: 'det(A - λI) = 0', name: 'פולינום אופייני' },
-    { formula: 'A·v = λ·v', name: 'הגדרת ע"ע ו-ו"ע' },
-    { formula: 'A = PDP⁻¹', name: 'לכסון' },
-    { formula: 'tr(A) = Σλᵢ, det(A) = Πλᵢ', name: 'עקבה ודטרמיננטה' },
+  rankAndSpaces: [
+    { formula: 'rank(A) = dim(Col(A)) = dim(Row(A))', name: 'דרגה = מימד מרחב עמודות' },
+    { formula: 'dim(Null(A)) = n - rank(A)', name: 'מימד מרחב האפס' },
+    { formula: 'Row(A) = Row(RREF(A))', name: 'מרחב שורות נשמר בדירוג' },
+    { formula: 'rank(A) = rank(Aᵀ)', name: 'דרגת שורות = דרגת עמודות' },
   ],
-  innerProducts: [
-    { formula: '‖v‖ = √⟨v,v⟩', name: 'נורמה' },
-    { formula: 'proj_u(v) = ⟨v,u⟩/⟨u,u⟩ · u', name: 'הטלה' },
-    { formula: 'wₖ = vₖ - Σⱼ₌₁ᵏ⁻¹ proj_uⱼ(vₖ)', name: 'גרם-שמידט' },
-    { formula: 'AᵀAx̂ = Aᵀb', name: 'משוואות נורמליות' },
+  basisAndDimension: [
+    { formula: 'dim(W₁+W₂) = dim(W₁)+dim(W₂)-dim(W₁∩W₂)', name: 'נוסחת מימדים' },
+    { formula: '|B| = dim(V) for any basis B', name: 'גודל בסיס = מימד' },
+    { formula: 'V = W₁ ⊕ W₂ ⟺ V = W₁+W₂, W₁∩W₂ = {0}', name: 'סכום ישר' },
+    { formula: 'Ax = b consistent ⟺ b ∈ Col(A)', name: 'פתירות מערכת' },
   ],
 };
 

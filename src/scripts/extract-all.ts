@@ -32,19 +32,19 @@ interface WeekMapping {
 
 // Week mapping based on lecture sequence (26 lectures, ~13 weeks, 2 lectures per week)
 const WEEK_MAPPINGS: WeekMapping[] = [
-  { weekNumber: 1, title: 'Fields and Vector Spaces Basics', topics: ['fields', 'vector-spaces'], lectureFiles: ['LA01 lecture 01 2026.pdf', 'LA01 lecture 02 2026.pdf'], tutorialFiles: ['Lin_Alg_I_2025-2026_Tirgul_1_Omer.pdf'] },
-  { weekNumber: 2, title: 'Subspaces and Linear Combinations', topics: ['subspaces', 'linear-combinations'], lectureFiles: ['LA01 lecture 03 2026.pdf', 'LA01 lecture 04 2026.pdf'], tutorialFiles: ['Lin_Alg_I_2025-2026_Tirgul_2_Omer.pdf'] },
-  { weekNumber: 3, title: 'Span and Linear Independence', topics: ['span', 'linear-independence'], lectureFiles: ['LA01 lecture 05 2026.pdf', 'LA01 lecture 06 2026.pdf'], tutorialFiles: ['Lin_Alg_I_2025-2026_Tirgul_3_Omer.pdf'] },
-  { weekNumber: 4, title: 'Basis and Dimension', topics: ['basis', 'dimension'], lectureFiles: ['LA01 lecture 07 2026.pdf', 'LA01 lecture 08 2026.pdf'], tutorialFiles: ['Lin_Alg_I_2025-2026_Tirgul_4_Omer.pdf'] },
-  { weekNumber: 5, title: 'Linear Transformations', topics: ['linear-transformations'], lectureFiles: ['LA01 lecture 09 2026.pdf', 'LA01 lecture 10 2026.pdf'], tutorialFiles: ['Lin_Alg_I_2025-2026_Tirgul_5_Omer.pdf'] },
-  { weekNumber: 6, title: 'Matrix Representation', topics: ['matrix-representation', 'change-of-basis'], lectureFiles: ['LA01 lecture 11 2026.pdf', 'LA01 lecture 12 2026.pdf'], tutorialFiles: ['Lin_Alg_I_2025-2026_Tirgul_6_Omer.pdf'] },
-  { weekNumber: 7, title: 'Rank and Nullity', topics: ['rank', 'nullity', 'systems-of-equations'], lectureFiles: ['LA01 lecture 13 2026.pdf', 'LA01 lecture 14 2026.pdf'], tutorialFiles: ['Lin_Alg_I_2025-2026_Tirgul_7_Omer.pdf'] },
-  { weekNumber: 8, title: 'Row Reduction and Systems', topics: ['row-reduction', 'systems-of-equations'], lectureFiles: ['LA01 lecture 15 2026.pdf', 'LA01 lecture 16 2026.pdf'], tutorialFiles: ['Lin_Alg_I_2025-2026_Tirgul_8_Omer.pdf'] },
+  { weekNumber: 1, title: 'Fields and Complex Numbers', topics: ['fields', 'complex-numbers'], lectureFiles: ['LA01 lecture 01 2026.pdf', 'LA01 lecture 02 2026.pdf'], tutorialFiles: ['Lin_Alg_I_2025-2026_Tirgul_1_Omer.pdf'] },
+  { weekNumber: 2, title: 'Linear Equations and Systems', topics: ['linear-equations', 'systems-of-equations'], lectureFiles: ['LA01 lecture 03 2026.pdf', 'LA01 lecture 04 2026.pdf'], tutorialFiles: ['Lin_Alg_I_2025-2026_Tirgul_2_Omer.pdf'] },
+  { weekNumber: 3, title: 'Vector Spaces and Subspaces', topics: ['vector-spaces', 'subspaces'], lectureFiles: ['LA01 lecture 05 2026.pdf', 'LA01 lecture 06 2026.pdf'], tutorialFiles: ['Lin_Alg_I_2025-2026_Tirgul_3_Omer.pdf'] },
+  { weekNumber: 4, title: 'Linear Combinations and Span', topics: ['linear-combinations', 'span'], lectureFiles: ['LA01 lecture 07 2026.pdf', 'LA01 lecture 08 2026.pdf'], tutorialFiles: ['Lin_Alg_I_2025-2026_Tirgul_4_Omer.pdf'] },
+  { weekNumber: 5, title: 'Linear Independence', topics: ['linear-independence'], lectureFiles: ['LA01 lecture 09 2026.pdf', 'LA01 lecture 10 2026.pdf'], tutorialFiles: ['Lin_Alg_I_2025-2026_Tirgul_5_Omer.pdf'] },
+  { weekNumber: 6, title: 'Basis and Dimension', topics: ['basis', 'dimension'], lectureFiles: ['LA01 lecture 11 2026.pdf', 'LA01 lecture 12 2026.pdf'], tutorialFiles: ['Lin_Alg_I_2025-2026_Tirgul_6_Omer.pdf'] },
+  { weekNumber: 7, title: 'Matrices', topics: ['matrices'], lectureFiles: ['LA01 lecture 13 2026.pdf', 'LA01 lecture 14 2026.pdf'], tutorialFiles: ['Lin_Alg_I_2025-2026_Tirgul_7_Omer.pdf'] },
+  { weekNumber: 8, title: 'Invertible Matrices and Row Reduction', topics: ['invertible-matrices', 'row-reduction'], lectureFiles: ['LA01 lecture 15 2026.pdf', 'LA01 lecture 16 2026.pdf'], tutorialFiles: ['Lin_Alg_I_2025-2026_Tirgul_8_Omer.pdf'] },
   { weekNumber: 9, title: 'Determinants', topics: ['determinants'], lectureFiles: ['LA01 lecture 17 2026.pdf', 'LA01 lecture 18 2026.pdf'], tutorialFiles: ['Lin_Alg_I_2025-2026_Tirgul_9_Omer.pdf'] },
-  { weekNumber: 10, title: 'Eigenvalues and Eigenvectors', topics: ['eigenvalues', 'eigenvectors'], lectureFiles: ['LA01 lecture 19 2026.pdf', 'LA01 lecture 20 2026.pdf'], tutorialFiles: ['Lin_Alg_I_2025-2026_Tirgul_10_Omer.pdf'] },
-  { weekNumber: 11, title: 'Diagonalization', topics: ['diagonalization'], lectureFiles: ['LA01 lecture 21 2026.pdf', 'LA01 lecture 22 2026.pdf'], tutorialFiles: ['Lin_Alg_I_2025-2026_Tirgul_11_Omer.pdf'] },
-  { weekNumber: 12, title: 'Inner Products and Orthogonality', topics: ['inner-products', 'orthogonality'], lectureFiles: ['LA01 lecture 23 2026.pdf', 'LA01 lecture 24 2026.pdf'], tutorialFiles: ['Lin_Alg_I_2025-2026_Tirgul_12_Omer.pdf'] },
-  { weekNumber: 13, title: 'Gram-Schmidt and Applications', topics: ['gram-schmidt', 'least-squares'], lectureFiles: ['LA01 lecture 25 2026.pdf', 'LA01 lecture 26 2026.pdf'], tutorialFiles: ['Lin_Alg_I_2025-2026_Tirgul_13_Omer.pdf'] },
+  { weekNumber: 10, title: 'Rank and Row/Column Space', topics: ['rank', 'row-column-space'], lectureFiles: ['LA01 lecture 19 2026.pdf', 'LA01 lecture 20 2026.pdf'], tutorialFiles: ['Lin_Alg_I_2025-2026_Tirgul_10_Omer.pdf'] },
+  { weekNumber: 11, title: 'Systems of Equations', topics: ['systems-of-equations'], lectureFiles: ['LA01 lecture 21 2026.pdf', 'LA01 lecture 22 2026.pdf'], tutorialFiles: ['Lin_Alg_I_2025-2026_Tirgul_11_Omer.pdf'] },
+  { weekNumber: 12, title: 'Advanced Topics', topics: ['other'], lectureFiles: ['LA01 lecture 23 2026.pdf', 'LA01 lecture 24 2026.pdf'], tutorialFiles: ['Lin_Alg_I_2025-2026_Tirgul_12_Omer.pdf'] },
+  { weekNumber: 13, title: 'Review and Applications', topics: ['other'], lectureFiles: ['LA01 lecture 25 2026.pdf', 'LA01 lecture 26 2026.pdf'], tutorialFiles: ['Lin_Alg_I_2025-2026_Tirgul_13_Omer.pdf'] },
 ]
 
 async function loadPdfParse() {
@@ -254,29 +254,23 @@ function getWeekForTutorial(tutorialFile: string): number {
 
 function detectTopic(content: string): string {
   const topicKeywords: Record<string, string[]> = {
-    'fields': ['field', 'שדה', 'F', 'characteristic', 'מאפיין'],
-    'vector-spaces': ['vector space', 'מרחב וקטורי', 'V', 'scalar', 'סקלר'],
+    'fields': ['field', 'שדה', 'characteristic', 'מאפיין'],
+    'complex-numbers': ['complex', 'מרוכב', 'imaginary', 'מדומה', 'i²=-1'],
+    'linear-equations': ['linear equation', 'משוואה לינארית'],
+    'vector-spaces': ['vector space', 'מרחב וקטורי', 'scalar', 'סקלר'],
     'subspaces': ['subspace', 'תת-מרחב', 'subset'],
     'linear-combinations': ['linear combination', 'צירוף לינארי'],
     'span': ['span', 'פרישה', 'Sp(', 'spanning'],
     'linear-independence': ['linearly independent', 'בלתי תלויים', 'dependent', 'תלויים'],
     'basis': ['basis', 'בסיס', 'bases'],
     'dimension': ['dimension', 'מימד', 'dim(', 'dim '],
-    'linear-transformations': ['linear transformation', 'העתקה לינארית', 'T:', 'homomorphism'],
-    'matrix-representation': ['matrix representation', 'ייצוג מטריצי', '[T]', 'representing matrix'],
-    'change-of-basis': ['change of basis', 'מעבר בין בסיסים', 'transition matrix'],
-    'rank': ['rank', 'דרגה', 'rk(', 'rank('],
-    'nullity': ['nullity', 'nullspace', 'kernel', 'גרעין', 'ker('],
+    'matrices': ['matrix', 'מטריצה', 'matrices'],
+    'invertible-matrices': ['invertible', 'הפיכה', 'inverse', 'הופכי', 'A⁻¹'],
     'systems-of-equations': ['system of equations', 'מערכת משוואות', 'Ax=b', 'solution'],
     'row-reduction': ['row reduction', 'דירוג', 'echelon', 'pivot', 'Gaussian'],
     'determinants': ['determinant', 'דטרמיננטה', 'det(', '|A|'],
-    'eigenvalues': ['eigenvalue', 'ערך עצמי', 'λ', 'characteristic polynomial'],
-    'eigenvectors': ['eigenvector', 'וקטור עצמי', 'eigenspace'],
-    'diagonalization': ['diagonalizable', 'לכסון', 'diagonal', 'D=P^{-1}AP'],
-    'inner-products': ['inner product', 'מכפלה פנימית', '<', '>', '⟨', '⟩'],
-    'orthogonality': ['orthogonal', 'אורתוגונל', 'perpendicular', 'ניצב'],
-    'gram-schmidt': ['Gram-Schmidt', 'גרם-שמידט', 'orthonormalization'],
-    'least-squares': ['least squares', 'ריבועים מזעריים', 'best approximation'],
+    'rank': ['rank', 'דרגה', 'rk(', 'rank(', 'nullity', 'nullspace', 'kernel', 'גרעין', 'ker('],
+    'row-column-space': ['row space', 'column space', 'מרחב שורות', 'מרחב עמודות', 'Col(', 'Row('],
   }
 
   const lowerContent = content.toLowerCase()

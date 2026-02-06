@@ -13,6 +13,8 @@ export type KnowledgeType =
 
 export type LinearAlgebraTopic =
   | 'fields'
+  | 'complex-numbers'
+  | 'linear-equations'
   | 'vector-spaces'
   | 'subspaces'
   | 'linear-combinations'
@@ -20,25 +22,13 @@ export type LinearAlgebraTopic =
   | 'linear-independence'
   | 'basis'
   | 'dimension'
-  | 'linear-transformations'
-  | 'matrix-representation'
-  | 'change-of-basis'
-  | 'rank'
-  | 'nullity'
+  | 'matrices'
+  | 'invertible-matrices'
   | 'systems-of-equations'
   | 'row-reduction'
   | 'determinants'
-  | 'eigenvalues'
-  | 'eigenvectors'
-  | 'diagonalization'
-  | 'inner-products'
-  | 'orthogonality'
-  | 'gram-schmidt'
-  | 'least-squares'
-  | 'singular-values'
-  | 'jordan-form'
-  | 'bilinear-forms'
-  | 'quadratic-forms'
+  | 'rank'
+  | 'row-column-space'
   | 'other';
 
 export interface KnowledgeItem {

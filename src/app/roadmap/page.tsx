@@ -130,9 +130,9 @@ export default function RoadmapPage() {
 
         <div className="space-y-4">
           <div>
-            <h3 className="text-sm font-medium text-gray-700 mb-2">העתקות לינאריות</h3>
+            <h3 className="text-sm font-medium text-gray-700 mb-2">מטריצות והפיכות</h3>
             <div className="grid md:grid-cols-2 gap-2">
-              {keyFormulas.linearTransformations.map((f, i) => (
+              {keyFormulas.matrices.map((f, i) => (
                 <div key={i} className="p-2 bg-blue-50 rounded-lg">
                   <p className="font-mono text-sm text-blue-800">{f.formula}</p>
                   <p className="text-xs text-blue-600">{f.name}</p>
@@ -154,9 +154,9 @@ export default function RoadmapPage() {
           </div>
 
           <div>
-            <h3 className="text-sm font-medium text-gray-700 mb-2">ערכים עצמיים ולכסון</h3>
+            <h3 className="text-sm font-medium text-gray-700 mb-2">דרגה ומרחבי שורות/עמודות</h3>
             <div className="grid md:grid-cols-2 gap-2">
-              {keyFormulas.eigenvalues.map((f, i) => (
+              {keyFormulas.rankAndSpaces.map((f, i) => (
                 <div key={i} className="p-2 bg-green-50 rounded-lg">
                   <p className="font-mono text-sm text-green-800">{f.formula}</p>
                   <p className="text-xs text-green-600">{f.name}</p>
@@ -166,9 +166,9 @@ export default function RoadmapPage() {
           </div>
 
           <div>
-            <h3 className="text-sm font-medium text-gray-700 mb-2">מכפלות פנימיות</h3>
+            <h3 className="text-sm font-medium text-gray-700 mb-2">בסיס ומימד</h3>
             <div className="grid md:grid-cols-2 gap-2">
-              {keyFormulas.innerProducts.map((f, i) => (
+              {keyFormulas.basisAndDimension.map((f, i) => (
                 <div key={i} className="p-2 bg-orange-50 rounded-lg">
                   <p className="font-mono text-sm text-orange-800">{f.formula}</p>
                   <p className="text-xs text-orange-600">{f.name}</p>

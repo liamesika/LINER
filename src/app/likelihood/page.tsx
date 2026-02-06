@@ -7,6 +7,8 @@ import { getHighLikelihoodHomework } from '@/data/liner-homework';
 
 const topicHebrewMap: Record<string, string> = {
   'fields': 'שדות',
+  'complex-numbers': 'מספרים מרוכבים',
+  'linear-equations': 'משוואות ליניאריות',
   'vector-spaces': 'מרחבים וקטוריים',
   'subspaces': 'תת-מרחבים',
   'linear-combinations': 'צירופים לינאריים',
@@ -14,21 +16,14 @@ const topicHebrewMap: Record<string, string> = {
   'linear-independence': 'אי-תלות לינארית',
   'basis': 'בסיס',
   'dimension': 'מימד',
-  'linear-transformations': 'העתקות לינאריות',
-  'matrix-representation': 'ייצוג מטריצי',
-  'change-of-basis': 'החלפת בסיס',
-  'rank': 'דרגה',
-  'nullity': 'מימד הגרעין',
+  'matrices': 'מטריצות',
+  'invertible-matrices': 'מטריצות הפיכות',
   'systems-of-equations': 'מערכות משוואות',
   'row-reduction': 'דירוג שורות',
   'determinants': 'דטרמיננטות',
-  'eigenvalues': 'ערכים עצמיים',
-  'eigenvectors': 'וקטורים עצמיים',
-  'diagonalization': 'לכסון',
-  'inner-products': 'מכפלות פנימיות',
-  'orthogonality': 'אורתוגונליות',
-  'gram-schmidt': 'גרם-שמידט',
-  'least-squares': 'ריבועים פחותים',
+  'rank': 'דרגה',
+  'row-column-space': 'מרחב שורות ועמודות',
+  'other': 'אחר',
 };
 
 export default function LikelihoodPage() {

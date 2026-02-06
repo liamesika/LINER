@@ -16,6 +16,7 @@ export default function RootLayout({
     <html lang="he" dir="rtl">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <meta name="google-site-verification" content="PM2b5bKCR8PwiLrcetI7XdVHV9cN2By4kGvChWuUIqE" />
       </head>
       <body>
         <Layout>{children}</Layout>

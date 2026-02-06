@@ -1,17 +1,17 @@
-import type { Metadata } from 'next'
-import './globals.css'
-import Layout from '@/components/Layout'
+import type { Metadata } from "next";
+import "./globals.css";
+import Layout from "@/components/Layout";
 
 export const metadata: Metadata = {
-  title: 'LINER - אלגברה לינארית',
-  description: 'מערכת למידה לאלגברה לינארית 1',
-}
+  title: "LINER - אלגברה לינארית",
+  description: "מערכת לימוד לאלגברה לינארית מבוססת על החומרים שלך",
+};
 
 export default function RootLayout({
   children,
-}: {
-  children: React.ReactNode
-}) {
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
     <html lang="he" dir="rtl">
       <head>
@@ -21,5 +21,5 @@ export default function RootLayout({
         <Layout>{children}</Layout>
       </body>
     </html>
-  )
+  );
 }

@@ -1,286 +1,228 @@
-'use client'
+'use client';
 
-import { useState, useMemo } from 'react'
-import Link from 'next/link'
-import {
-  Library,
-  Search,
-  Filter,
-  BookMarked,
-  Lightbulb,
-  Scroll,
-  ChevronDown,
-  ChevronUp,
-  X
-} from 'lucide-react'
-import { allDefinitions, allTheorems, allProofs, searchKnowledge, topicSummary } from '@/data/liner-knowledge'
-import { weeksData } from '@/data/liner-weeks'
-import type { KnowledgeItem, LinearAlgebraTopic } from '@/types'
-
-type TabType = 'all' | 'definitions' | 'theorems' | 'proofs'
-
-function KnowledgeCard({ item }: { item: KnowledgeItem }) {
-  const [expanded, setExpanded] = useState(false)
-
-  const typeStyles: Record<string, { bg: string; border: string; icon: React.ReactNode }> = {
-    definition: { bg: 'bg-blue-50 dark:bg-blue-900/20', border: 'border-l-blue-500', icon: <BookMarked size={16} /> },
-    theorem: { bg: 'bg-purple-50 dark:bg-purple-900/20', border: 'border-l-purple-500', icon: <Lightbulb size={16} /> },
-    lemma: { bg: 'bg-amber-50 dark:bg-amber-900/20', border: 'border-l-amber-500', icon: <Lightbulb size={16} /> },
-    corollary: { bg: 'bg-purple-50 dark:bg-purple-900/20', border: 'border-l-purple-400', icon: <Lightbulb size={16} /> },
-    proof: { bg: 'bg-green-50 dark:bg-green-900/20', border: 'border-l-green-500', icon: <Scroll size={16} /> },
-  }
-
-  const style = typeStyles[item.type] || typeStyles.definition
-
-  return (
-    <div className={`card border-l-4 ${style.border} ${style.bg}`}>
-      <div
-        className="cursor-pointer"
-        onClick={() => setExpanded(!expanded)}
-      >
-        <div className="flex items-start justify-between gap-4">
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 mb-1">
-              <span className="text-[var(--muted)]">{style.icon}</span>
-              <span className="text-xs font-semibold uppercase tracking-wider text-[var(--muted)]">
-                {item.type}
-              </span>
-              {item.likelihoodScore && item.likelihoodScore >= 80 && (
-                <span className="badge likelihood-high text-xs">
-                  {item.likelihoodScore}%
-                </span>
-              )}
-            </div>
-            <h3 className="font-bold text-lg">{item.title}</h3>
-            <div className="flex flex-wrap gap-2 mt-2 text-xs">
-              <Link
-                href={`/syllabus/${item.weekNumber}`}
-                className="px-2 py-0.5 bg-[var(--border)] rounded hover:bg-[var(--primary)] hover:text-white transition-colors"
-                onClick={(e) => e.stopPropagation()}
-              >
-                Week {item.weekNumber}
-              </Link>
-              <span className="px-2 py-0.5 bg-[var(--primary)]/10 text-[var(--primary)] rounded">
-                {item.topic.replace(/-/g, ' ')}
-              </span>
-            </div>
-          </div>
-          <button className="shrink-0 p-1 text-[var(--muted)]">
-            {expanded ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-          </button>
-        </div>
-      </div>
-
-      {expanded && (
-        <div className="mt-4 pt-4 border-t border-[var(--border)]">
-          <div className="math-content whitespace-pre-wrap mb-4">
-            {item.verbatimContent}
-          </div>
-          <div className="text-sm text-[var(--muted)]">
-            Source: {item.source}, Page {item.pageNumber}
-          </div>
-          {item.explanation && (
-            <div className="mt-4 p-3 bg-[var(--warning)]/10 rounded-lg">
-              <div className="text-xs font-semibold uppercase text-[var(--warning)] mb-1">
-                Explanation
-              </div>
-              <p className="text-sm">{item.explanation}</p>
-            </div>
-          )}
-        </div>
-      )}
-    </div>
-  )
-}
+import { useState, useMemo } from 'react';
+import Link from 'next/link';
+import { Search, Filter, BookOpen, Lightbulb, Wrench, ChevronDown, ChevronUp } from 'lucide-react';
+import { getAllWeeks } from '@/data/weeks-content';
 
 export default function KnowledgePage() {
-  const [activeTab, setActiveTab] = useState<TabType>('all')
-  const [searchQuery, setSearchQuery] = useState('')
-  const [selectedTopic, setSelectedTopic] = useState<LinearAlgebraTopic | 'all'>('all')
-  const [selectedWeek, setSelectedWeek] = useState<number | 'all'>('all')
-  const [showFilters, setShowFilters] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedType, setSelectedType] = useState<'all' | 'definition' | 'theorem' | 'technique'>('all');
+  const [expandedId, setExpandedId] = useState<string | null>(null);
+
+  const weeks = getAllWeeks();
 
   const allItems = useMemo(() => {
-    let items: KnowledgeItem[] = []
+    const items: Array<{
+      id: string;
+      title: string;
+      type: 'definition' | 'theorem' | 'technique';
+      content: string;
+      week: number;
+      topic: string;
+    }> = [];
 
-    switch (activeTab) {
-      case 'definitions':
-        items = allDefinitions
-        break
-      case 'theorems':
-        items = allTheorems
-        break
-      case 'proofs':
-        items = allProofs
-        break
-      default:
-        items = [...allDefinitions, ...allTheorems, ...allProofs]
-    }
+    weeks.forEach(week => {
+      const topicName = week.titleHe;
+      week.definitions.forEach((d) => {
+        items.push({
+          id: d.id,
+          title: d.title,
+          type: 'definition',
+          content: d.content,
+          week: week.weekNumber,
+          topic: topicName,
+        });
+      });
+      week.theorems.forEach((t) => {
+        items.push({
+          id: t.id,
+          title: t.title,
+          type: 'theorem',
+          content: t.statement + (t.proof ? `\n\nהוכחה:\n${t.proof}` : ''),
+          week: week.weekNumber,
+          topic: topicName,
+        });
+      });
+      week.techniques.forEach((t) => {
+        items.push({
+          id: t.id,
+          title: t.title,
+          type: 'technique',
+          content: t.description + (t.steps ? '\n\n' + t.steps.join('\n') : ''),
+          week: week.weekNumber,
+          topic: topicName,
+        });
+      });
+    });
 
-    // Apply search
-    if (searchQuery) {
-      items = items.filter(
-        item =>
-          item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          item.verbatimContent.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          item.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
-      )
-    }
+    return items;
+  }, [weeks]);
 
-    // Apply topic filter
-    if (selectedTopic !== 'all') {
-      items = items.filter(item => item.topic === selectedTopic)
-    }
+  const filteredItems = useMemo(() => {
+    return allItems.filter(item => {
+      if (searchQuery) {
+        const query = searchQuery.toLowerCase();
+        if (!item.title.toLowerCase().includes(query) &&
+            !item.content.toLowerCase().includes(query) &&
+            !item.topic.toLowerCase().includes(query)) {
+          return false;
+        }
+      }
+      if (selectedType !== 'all' && item.type !== selectedType) {
+        return false;
+      }
+      return true;
+    });
+  }, [allItems, searchQuery, selectedType]);
 
-    // Apply week filter
-    if (selectedWeek !== 'all') {
-      items = items.filter(item => item.weekNumber === selectedWeek)
-    }
-
-    // Sort by likelihood score
-    return items.sort((a, b) => (b.likelihoodScore || 0) - (a.likelihoodScore || 0))
-  }, [activeTab, searchQuery, selectedTopic, selectedWeek])
-
-  const topics = Object.entries(topicSummary)
-    .filter(([_, data]) => data.count > 0)
-    .map(([key, data]) => ({ id: key, name: data.name }))
-
-  const clearFilters = () => {
-    setSearchQuery('')
-    setSelectedTopic('all')
-    setSelectedWeek('all')
-  }
-
-  const hasActiveFilters = searchQuery || selectedTopic !== 'all' || selectedWeek !== 'all'
+  const stats = {
+    definitions: allItems.filter(i => i.type === 'definition').length,
+    theorems: allItems.filter(i => i.type === 'theorem').length,
+    techniques: allItems.filter(i => i.type === 'technique').length,
+  };
 
   return (
-    <div className="max-w-5xl mx-auto space-y-6">
+    <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold flex items-center gap-3">
-          <Library className="text-[var(--primary)]" size={32} />
-          Knowledge Base
+        <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
+          <BookOpen className="w-7 h-7 text-blue-600" />
+          בסיס ידע
         </h1>
-        <p className="text-[var(--muted)] mt-1">
-          All definitions, theorems, and proofs from LA1
+        <p className="text-gray-500">
+          {stats.definitions} הגדרות - {stats.theorems} משפטים - {stats.techniques} טכניקות
         </p>
       </div>
 
-      {/* Search and Filters */}
-      <div className="card">
-        <div className="flex flex-col md:flex-row gap-4">
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--muted)]" size={20} />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search definitions, theorems, proofs..."
-              className="w-full pl-10 pr-4 py-2 bg-[var(--border)]/30 border border-[var(--border)] rounded-lg focus:outline-none focus:border-[var(--primary)]"
-            />
-          </div>
-          <button
-            onClick={() => setShowFilters(!showFilters)}
-            className={`btn ${showFilters ? 'btn-primary' : 'btn-secondary'} flex items-center gap-2`}
-          >
-            <Filter size={18} />
-            Filters
-            {hasActiveFilters && (
-              <span className="w-2 h-2 rounded-full bg-[var(--danger)]" />
-            )}
-          </button>
+      {/* Filters */}
+      <div className="bg-white rounded-xl border border-gray-100 p-4 space-y-4">
+        <div className="relative">
+          <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+          <input
+            type="text"
+            placeholder="חיפוש בהגדרות, משפטים, טכניקות..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full pr-10 pl-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500"
+          />
         </div>
 
-        {showFilters && (
-          <div className="mt-4 pt-4 border-t border-[var(--border)]">
-            <div className="flex flex-col md:flex-row gap-4">
-              <div className="flex-1">
-                <label className="block text-sm font-medium mb-1">Topic</label>
-                <select
-                  value={selectedTopic}
-                  onChange={(e) => setSelectedTopic(e.target.value as LinearAlgebraTopic | 'all')}
-                  className="w-full px-3 py-2 bg-[var(--border)]/30 border border-[var(--border)] rounded-lg"
-                >
-                  <option value="all">All Topics</option>
-                  {topics.map((topic) => (
-                    <option key={topic.id} value={topic.id}>
-                      {topic.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="flex-1">
-                <label className="block text-sm font-medium mb-1">Week</label>
-                <select
-                  value={selectedWeek}
-                  onChange={(e) => setSelectedWeek(e.target.value === 'all' ? 'all' : parseInt(e.target.value))}
-                  className="w-full px-3 py-2 bg-[var(--border)]/30 border border-[var(--border)] rounded-lg"
-                >
-                  <option value="all">All Weeks</option>
-                  {weeksData.map((week) => (
-                    <option key={week.weekNumber} value={week.weekNumber}>
-                      Week {week.weekNumber}: {week.title}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              {hasActiveFilters && (
-                <button
-                  onClick={clearFilters}
-                  className="btn btn-secondary flex items-center gap-2 self-end"
-                >
-                  <X size={18} />
-                  Clear
-                </button>
-              )}
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* Tabs */}
-      <div className="flex flex-wrap gap-2">
-        {[
-          { id: 'all', label: 'All', count: allDefinitions.length + allTheorems.length + allProofs.length },
-          { id: 'definitions', label: 'Definitions', count: allDefinitions.length },
-          { id: 'theorems', label: 'Theorems', count: allTheorems.length },
-          { id: 'proofs', label: 'Proofs', count: allProofs.length },
-        ].map((tab) => (
+        <div className="flex flex-wrap gap-2">
           <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id as TabType)}
-            className={`px-4 py-2 rounded-lg transition-colors ${
-              activeTab === tab.id
-                ? 'bg-[var(--primary)] text-white'
-                : 'bg-[var(--border)]/30 hover:bg-[var(--border)]/50'
+            onClick={() => setSelectedType('all')}
+            className={`px-3 py-1.5 rounded-lg text-sm font-medium flex items-center gap-1.5 ${
+              selectedType === 'all'
+                ? 'bg-indigo-100 text-indigo-700'
+                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
             }`}
           >
-            {tab.label}
-            <span className={`ml-2 px-2 py-0.5 text-xs rounded-full ${
-              activeTab === tab.id ? 'bg-white/20' : 'bg-[var(--border)]'
-            }`}>
-              {tab.count}
-            </span>
+            הכל ({allItems.length})
           </button>
-        ))}
+          <button
+            onClick={() => setSelectedType('definition')}
+            className={`px-3 py-1.5 rounded-lg text-sm font-medium flex items-center gap-1.5 ${
+              selectedType === 'definition'
+                ? 'bg-blue-100 text-blue-700'
+                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+            }`}
+          >
+            <BookOpen className="w-4 h-4" />
+            הגדרות ({stats.definitions})
+          </button>
+          <button
+            onClick={() => setSelectedType('theorem')}
+            className={`px-3 py-1.5 rounded-lg text-sm font-medium flex items-center gap-1.5 ${
+              selectedType === 'theorem'
+                ? 'bg-purple-100 text-purple-700'
+                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+            }`}
+          >
+            <Lightbulb className="w-4 h-4" />
+            משפטים ({stats.theorems})
+          </button>
+          <button
+            onClick={() => setSelectedType('technique')}
+            className={`px-3 py-1.5 rounded-lg text-sm font-medium flex items-center gap-1.5 ${
+              selectedType === 'technique'
+                ? 'bg-green-100 text-green-700'
+                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+            }`}
+          >
+            <Wrench className="w-4 h-4" />
+            טכניקות ({stats.techniques})
+          </button>
+        </div>
       </div>
 
-      {/* Results */}
-      <div className="text-sm text-[var(--muted)] mb-4">
-        Showing {allItems.length} items
-      </div>
-
-      <div className="space-y-4">
-        {allItems.length === 0 ? (
-          <div className="text-center py-12 text-[var(--muted)]">
-            No items found matching your criteria.
+      {/* Items List */}
+      <div className="space-y-3">
+        {filteredItems.length === 0 ? (
+          <div className="bg-white rounded-xl border border-gray-100 p-12 text-center">
+            <Filter className="w-12 h-12 text-gray-300 mx-auto mb-4" />
+            <p className="text-gray-500">לא נמצאו פריטים</p>
           </div>
         ) : (
-          allItems.map((item) => (
-            <KnowledgeCard key={item.id} item={item} />
+          filteredItems.map((item) => (
+            <div
+              key={item.id}
+              className="bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-md transition-shadow"
+            >
+              <button
+                className="w-full p-4 text-right"
+                onClick={() => setExpandedId(expandedId === item.id ? null : item.id)}
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex items-start gap-3">
+                    <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
+                      item.type === 'definition' ? 'bg-blue-100' :
+                      item.type === 'theorem' ? 'bg-purple-100' : 'bg-green-100'
+                    }`}>
+                      {item.type === 'definition' ? (
+                        <BookOpen className="w-5 h-5 text-blue-600" />
+                      ) : item.type === 'theorem' ? (
+                        <Lightbulb className="w-5 h-5 text-purple-600" />
+                      ) : (
+                        <Wrench className="w-5 h-5 text-green-600" />
+                      )}
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <h3 className="font-medium text-gray-900">{item.title}</h3>
+                        <span className="px-2 py-0.5 bg-gray-100 text-gray-500 rounded-full text-xs">
+                          שבוע {item.week}
+                        </span>
+                      </div>
+                      <p className="text-sm text-gray-500">{item.topic}</p>
+                    </div>
+                  </div>
+                  {expandedId === item.id ? (
+                    <ChevronUp className="w-5 h-5 text-gray-400 shrink-0" />
+                  ) : (
+                    <ChevronDown className="w-5 h-5 text-gray-400 shrink-0" />
+                  )}
+                </div>
+              </button>
+
+              {expandedId === item.id && (
+                <div className="border-t border-gray-100 p-4 bg-gray-50">
+                  <div className="whitespace-pre-wrap text-sm text-gray-700" dir="auto">
+                    {item.content}
+                  </div>
+                  <div className="mt-3 pt-3 border-t border-gray-200">
+                    <Link
+                      href={`/weeks/${item.week}`}
+                      className="text-sm text-indigo-600 hover:underline"
+                    >
+                      לשבוע {item.week} המלא
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </div>
           ))
         )}
       </div>
     </div>
-  )
+  );
 }

@@ -1,0 +1,327 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --primary: #4f46e5;
+  --primary-light: #6366f1;
+  --secondary: #8b5cf6;
+  --accent: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --muted: #64748b;
+  --border: #e2e8f0;
+  --card: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0f172a;
+    --foreground: #f1f5f9;
+    --primary: #818cf8;
+    --primary-light: #a5b4fc;
+    --secondary: #a78bfa;
+    --accent: #34d399;
+    --warning: #fbbf24;
+    --danger: #f87171;
+    --muted: #94a3b8;
+    --border: #334155;
+    --card: #1e293b;
+  }
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, 'Noto Sans', 'Noto Sans Hebrew', sans-serif;
+  line-height: 1.7;
+}
+
+/* RTL Support */
+[dir="rtl"] {
+  text-align: right;
+}
+
+/* Math content - LTR */
+.math-content {
+  font-family: 'Cambria Math', 'STIX Two Math', 'Latin Modern Math', serif;
+  unicode-bidi: embed;
+  direction: ltr;
+  text-align: left;
+}
+
+/* Cards */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  transition: all 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  border-radius: 0.5rem;
+  transition: all 0.2s;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: var(--primary-light);
+}
+
+.btn-secondary {
+  background: var(--border);
+  color: var(--foreground);
+}
+
+.btn-secondary:hover {
+  background: var(--muted);
+  color: white;
+}
+
+/* Badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: 9999px;
+}
+
+.badge-definition {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.badge-theorem {
+  background-color: #f3e8ff;
+  color: #7c3aed;
+}
+
+.badge-lemma {
+  background-color: #fef3c7;
+  color: #b45309;
+}
+
+.badge-proof {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.badge-technique {
+  background-color: #ecfdf5;
+  color: #047857;
+}
+
+.badge-homework {
+  background-color: #ffedd5;
+  color: #c2410c;
+}
+
+/* Likelihood levels - Hebrew labels */
+.likelihood-critical {
+  background: linear-gradient(135deg, #dc2626, #ef4444);
+  color: white;
+}
+
+.likelihood-high {
+  background: linear-gradient(135deg, #ea580c, #f97316);
+  color: white;
+}
+
+.likelihood-medium {
+  background: linear-gradient(135deg, #ca8a04, #eab308);
+  color: white;
+}
+
+.likelihood-low {
+  background: linear-gradient(135deg, #6b7280, #9ca3af);
+  color: white;
+}
+
+/* Verbatim blocks - RTL adjusted (border on right) */
+.verbatim-block {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border-right: 4px solid var(--primary);
+  border-left: none;
+  padding: 1rem 1.25rem;
+  margin: 0.75rem 0;
+  border-radius: 0.5rem 0 0 0.5rem;
+  font-family: 'Cambria Math', 'STIX Two Math', Georgia, serif;
+  white-space: pre-wrap;
+  direction: ltr;
+  text-align: left;
+}
+
+@media (prefers-color-scheme: dark) {
+  .verbatim-block {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  }
+}
+
+.definition-block {
+  border-right-color: #3b82f6;
+}
+
+.theorem-block {
+  border-right-color: #8b5cf6;
+}
+
+.proof-block {
+  border-right-color: #10b981;
+}
+
+.lemma-block {
+  border-right-color: #f59e0b;
+}
+
+/* Progress bar */
+.progress-bar {
+  height: 0.5rem;
+  background: var(--border);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+  transition: width 0.3s ease;
+}
+
+/* Source citation */
+.source-citation {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-top: 0.5rem;
+  font-style: italic;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--muted);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* Mobile spacing */
+@media (max-width: 1024px) {
+  main {
+    padding-bottom: 5rem;
+  }
+}
+
+/* Focus states */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Line clamp utility */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Content type cards */
+.content-card-definition {
+  border-right: 4px solid #3b82f6;
+}
+
+.content-card-definition .card-header {
+  background: #eff6ff;
+}
+
+.content-card-theorem {
+  border-right: 4px solid #8b5cf6;
+}
+
+.content-card-theorem .card-header {
+  background: #f5f3ff;
+}
+
+.content-card-proof {
+  border-right: 4px solid #10b981;
+}
+
+.content-card-proof .card-header {
+  background: #ecfdf5;
+}
+
+.content-card-homework {
+  border-right: 4px solid #f97316;
+}
+
+.content-card-homework .card-header {
+  background: #fff7ed;
+}
+
+@media (prefers-color-scheme: dark) {
+  .content-card-definition .card-header {
+    background: #1e3a5f;
+  }
+  .content-card-theorem .card-header {
+    background: #2e1065;
+  }
+  .content-card-proof .card-header {
+    background: #064e3b;
+  }
+  .content-card-homework .card-header {
+    background: #431407;
+  }
+}

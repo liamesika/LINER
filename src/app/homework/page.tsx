@@ -130,7 +130,7 @@ export default function HomeworkPage() {
                   </div>
 
                   <h4 className="font-medium text-gray-700 mb-2">פתרון</h4>
-                  <div className="bg-green-50 p-4 rounded-lg text-sm whitespace-pre-wrap font-mono" dir="ltr">
+                  <div className="bg-green-50 p-4 rounded-lg text-sm whitespace-pre-wrap">
                     {q.solution}
                   </div>
 

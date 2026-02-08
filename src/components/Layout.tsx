@@ -13,6 +13,7 @@ import {
   FileSearch,
   Map,
   GitBranch,
+  Grid3X3,
   Bug,
   Menu,
   X,
@@ -81,6 +82,12 @@ const navItems: NavItem[] = [
     label: 'Concept Flow',
     labelHe: 'מפת מושגים',
     icon: <GitBranch className="w-5 h-5" />,
+  },
+  {
+    href: '/matrices',
+    label: 'Matrices Summary',
+    labelHe: 'סיכום מטריצות',
+    icon: <Grid3X3 className="w-5 h-5" />,
   },
   {
     href: '/roadmap',

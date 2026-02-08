@@ -14,6 +14,7 @@ import {
   Map,
   GitBranch,
   Grid3X3,
+  Target,
   Bug,
   Menu,
   X,
@@ -88,6 +89,12 @@ const navItems: NavItem[] = [
     label: 'Matrices Summary',
     labelHe: 'סיכום מטריצות',
     icon: <Grid3X3 className="w-5 h-5" />,
+  },
+  {
+    href: '/golden-rules',
+    label: 'Golden Rules',
+    labelHe: 'כללי זהב',
+    icon: <Target className="w-5 h-5" />,
   },
   {
     href: '/roadmap',

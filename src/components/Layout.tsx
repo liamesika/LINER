@@ -12,6 +12,7 @@ import {
   GraduationCap,
   FileSearch,
   Map,
+  GitBranch,
   Bug,
   Menu,
   X,
@@ -74,6 +75,12 @@ const navItems: NavItem[] = [
     label: 'Past Exams',
     labelHe: 'מבחנים קודמים',
     icon: <FileSearch className="w-5 h-5" />,
+  },
+  {
+    href: '/flow',
+    label: 'Concept Flow',
+    labelHe: 'מפת מושגים',
+    icon: <GitBranch className="w-5 h-5" />,
   },
   {
     href: '/roadmap',

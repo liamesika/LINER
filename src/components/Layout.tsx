@@ -14,6 +14,7 @@ import {
   Map,
   GitBranch,
   Grid3X3,
+  Hash,
   Target,
   FileText,
   ClipboardCheck,
@@ -91,6 +92,12 @@ const navItems: NavItem[] = [
     label: 'Matrices Summary',
     labelHe: 'סיכום מטריצות',
     icon: <Grid3X3 className="w-5 h-5" />,
+  },
+  {
+    href: '/determinants',
+    label: 'Determinants',
+    labelHe: 'דטרמיננטות',
+    icon: <Hash className="w-5 h-5" />,
   },
   {
     href: '/golden-rules',

@@ -23,6 +23,7 @@ import {
   X,
   Calendar,
   Layers,
+  Crosshair,
 } from 'lucide-react';
 
 interface NavItem {
@@ -98,6 +99,12 @@ const navItems: NavItem[] = [
     label: 'Determinants',
     labelHe: 'דטרמיננטות',
     icon: <Hash className="w-5 h-5" />,
+  },
+  {
+    href: '/review',
+    label: 'Exam Review',
+    labelHe: 'חזרה למבחן',
+    icon: <Crosshair className="w-5 h-5" />,
   },
   {
     href: '/golden-rules',

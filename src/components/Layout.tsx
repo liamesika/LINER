@@ -26,6 +26,7 @@ import {
   Crosshair,
   ScrollText,
   FileCheck,
+  Ruler,
 } from 'lucide-react';
 
 interface NavItem {
@@ -101,6 +102,12 @@ const navItems: NavItem[] = [
     label: 'Determinants',
     labelHe: 'דטרמיננטות',
     icon: <Hash className="w-5 h-5" />,
+  },
+  {
+    href: '/dimensions',
+    label: 'Dimensions',
+    labelHe: 'ממדים — סיכום מלא',
+    icon: <Ruler className="w-5 h-5" />,
   },
   {
     href: '/summary',

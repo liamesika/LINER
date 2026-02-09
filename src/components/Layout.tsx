@@ -15,6 +15,7 @@ import {
   GitBranch,
   Grid3X3,
   Target,
+  FileText,
   Bug,
   Menu,
   X,
@@ -95,6 +96,12 @@ const navItems: NavItem[] = [
     label: 'Golden Rules',
     labelHe: 'כללי זהב',
     icon: <Target className="w-5 h-5" />,
+  },
+  {
+    href: '/tirgul8',
+    label: 'Tirgul 8 Summary',
+    labelHe: 'סיכום תרגול 8',
+    icon: <FileText className="w-5 h-5" />,
   },
   {
     href: '/roadmap',

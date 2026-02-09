@@ -16,6 +16,7 @@ import {
   Grid3X3,
   Target,
   FileText,
+  ClipboardCheck,
   Bug,
   Menu,
   X,
@@ -102,6 +103,12 @@ const navItems: NavItem[] = [
     label: 'Tirgul 8 Summary',
     labelHe: 'סיכום תרגול 8',
     icon: <FileText className="w-5 h-5" />,
+  },
+  {
+    href: '/quizzes',
+    label: 'Quiz Definitions',
+    labelHe: 'הגדרות בחנים',
+    icon: <ClipboardCheck className="w-5 h-5" />,
   },
   {
     href: '/roadmap',

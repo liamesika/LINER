@@ -25,6 +25,7 @@ import {
   Layers,
   Crosshair,
   ScrollText,
+  FileCheck,
 } from 'lucide-react';
 
 interface NavItem {
@@ -106,6 +107,12 @@ const navItems: NavItem[] = [
     label: 'Full Summary',
     labelHe: 'סיכום מלא',
     icon: <ScrollText className="w-5 h-5" />,
+  },
+  {
+    href: '/exam2024a',
+    label: 'Exam 2024 Moed A',
+    labelHe: 'מבחן 2024 מועד א׳',
+    icon: <FileCheck className="w-5 h-5" />,
   },
   {
     href: '/review',

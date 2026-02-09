@@ -24,6 +24,7 @@ import {
   Calendar,
   Layers,
   Crosshair,
+  ScrollText,
 } from 'lucide-react';
 
 interface NavItem {
@@ -99,6 +100,12 @@ const navItems: NavItem[] = [
     label: 'Determinants',
     labelHe: 'דטרמיננטות',
     icon: <Hash className="w-5 h-5" />,
+  },
+  {
+    href: '/summary',
+    label: 'Full Summary',
+    labelHe: 'סיכום מלא',
+    icon: <ScrollText className="w-5 h-5" />,
   },
   {
     href: '/review',

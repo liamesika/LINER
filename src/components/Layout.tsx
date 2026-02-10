@@ -116,9 +116,45 @@ const navItems: NavItem[] = [
     icon: <ScrollText className="w-5 h-5" />,
   },
   {
+    href: '/exam2023a',
+    label: 'Exam 2023 Moed A',
+    labelHe: 'מבחן 2023 מועד א׳',
+    icon: <FileCheck className="w-5 h-5" />,
+  },
+  {
+    href: '/exam2023b',
+    label: 'Exam 2023 Moed B',
+    labelHe: 'מבחן 2023 מועד ב׳',
+    icon: <FileCheck className="w-5 h-5" />,
+  },
+  {
     href: '/exam2024a',
     label: 'Exam 2024 Moed A',
     labelHe: 'מבחן 2024 מועד א׳',
+    icon: <FileCheck className="w-5 h-5" />,
+  },
+  {
+    href: '/exam2024b',
+    label: 'Exam 2024 Moed B',
+    labelHe: 'מבחן 2024 מועד ב׳',
+    icon: <FileCheck className="w-5 h-5" />,
+  },
+  {
+    href: '/exam2025a',
+    label: 'Exam 2025 Moed A',
+    labelHe: 'מבחן 2025 מועד א׳',
+    icon: <FileCheck className="w-5 h-5" />,
+  },
+  {
+    href: '/exam2025b',
+    label: 'Exam 2025 Moed B',
+    labelHe: 'מבחן 2025 מועד ב׳',
+    icon: <FileCheck className="w-5 h-5" />,
+  },
+  {
+    href: '/simulation',
+    label: 'Simulation 2026',
+    labelHe: 'סימולציה 2026',
     icon: <FileCheck className="w-5 h-5" />,
   },
   {

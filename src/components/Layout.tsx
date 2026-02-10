@@ -27,6 +27,7 @@ import {
   ScrollText,
   FileCheck,
   Ruler,
+  Trophy,
 } from 'lucide-react';
 
 interface NavItem {
@@ -156,6 +157,12 @@ const navItems: NavItem[] = [
     label: 'Simulation 2026',
     labelHe: 'סימולציה 2026',
     icon: <FileCheck className="w-5 h-5" />,
+  },
+  {
+    href: '/top5',
+    label: 'Top 5 Theorems',
+    labelHe: 'Top 5 משפטים למבחן',
+    icon: <Trophy className="w-5 h-5" />,
   },
   {
     href: '/review',

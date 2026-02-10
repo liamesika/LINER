@@ -179,6 +179,12 @@ const navItems: NavItem[] = [
     icon: <Trophy className="w-5 h-5" />,
   },
   {
+    href: '/det-flow',
+    label: 'Det Flow',
+    labelHe: 'עץ דטרמיננטות',
+    icon: <GitBranch className="w-5 h-5" />,
+  },
+  {
     href: '/steinitz',
     label: 'Steinitz Deep Dive',
     labelHe: 'שטייניץ + משפט המימדים',

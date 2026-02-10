@@ -120,7 +120,10 @@ export default function Top5Page() {
         <p className="text-gray-600">ההוכחות שהכי סביר שיופיעו — עם הוכחות מלאות מההרצאות</p>
         <div className="mt-3 flex flex-wrap justify-center gap-3">
           <span className="bg-red-100 text-red-700 px-3 py-1 rounded-lg text-sm font-medium flex items-center gap-1">
-            <Star className="w-4 h-4" />מבוסס על ניתוח 7 מבחנים
+            <Star className="w-4 h-4" />מבוסס על ניתוח 7 מבחנים + חומר חדש
+          </span>
+          <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-lg text-sm font-medium flex items-center gap-1">
+            <AlertTriangle className="w-4 h-4" />דטרמיננטות נכנסות לראשונה!
           </span>
           <span className="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-lg text-sm font-medium">
             הוכחות מדויקות מההרצאות
@@ -224,134 +227,123 @@ export default function Top5Page() {
       {/* ═══════════ THEOREM #3 ═══════════ */}
       <TheoremCard
         rank={3}
-        title="נוסחת הממדים לסכום תת-מרחבים"
-        frequency="הופיע ב-6/7 מבחנים"
-        source="הרצאה 14 עמוד 12 (ניסוח), הרצאה 15 עמודים 2–5 (הוכחה)"
+        title="A · adj(A) = det(A) · Iₙ (משפט המטריצה המצורפת)"
+        frequency="חדש! צפוי מאוד — דטרמיננטות לראשונה"
+        source="הרצאה 24"
         statement={
           <div className="space-y-1">
-            <p>יהי <M>V</M> מ&quot;ו נוצר סופית מעל <M>F</M>, ויהיו <M>U, W ≤ V</M> תתי-מרחבים.</p>
-            <p className="font-bold text-lg text-center my-2 text-red-700">dim(U + W) = dim U + dim W − dim(U ∩ W)</p>
-            <p><strong>מסקנה (סכום ישר):</strong> אם <M>U ∩ W = &#123;0&#125;</M> אז <M>dim(U ⊕ W) = dim U + dim W</M>.</p>
+            <p>תהי <M>A ∈ Mₙ(F)</M>.</p>
+            <p className="font-bold text-lg text-center my-2 text-red-700">A · adj(A) = adj(A) · A = det(A) · Iₙ</p>
+            <p><strong>מסקנה 1:</strong> אם A הפיכה אז <M>A⁻¹ = adj(A) / det(A)</M>.</p>
+            <p><strong>מסקנה 2:</strong> אם A לא הפיכה אז <M>A · adj(A) = Oₙ</M>.</p>
           </div>
         }
       >
         <Proof>
-          <p className="font-bold text-emerald-900">הוכחה מלאה:</p>
-          <p>נסמן: <M>dim U = k</M>, <M>dim W = l</M>, <M>dim(U ∩ W) = r</M>.</p>
-          <p><strong>נוכיח:</strong> <M>dim(U + W) = k + l − r</M>.</p>
+          <p className="font-bold text-emerald-900">הוכחה (A · adj(A) = det(A) · Iₙ):</p>
+          <p>נוכיח שלכל <M>1 ≤ i, j ≤ n</M>: <M>[A · adj(A)]_ij = [det(A) · Iₙ]_ij</M>.</p>
 
           <hr className="border-emerald-300 my-2" />
 
-          <p className="font-bold">שלב 1 — בניית בסיס:</p>
-          <p>יהי <M>&#123;v₁,...,vᵣ&#125;</M> בסיס של <M>U ∩ W</M>.</p>
-          <p>כיוון ש-<M>U ∩ W ≤ U</M>, נשלים לבסיס של <M>U</M>:</p>
-          <p className="text-center font-mono bg-white rounded p-1">&#123;v₁,...,vᵣ, u_(r+1),...,uₖ&#125; — בסיס של U</p>
-          <p>כיוון ש-<M>U ∩ W ≤ W</M>, נשלים לבסיס של <M>W</M>:</p>
-          <p className="text-center font-mono bg-white rounded p-1">&#123;v₁,...,vᵣ, w_(r+1),...,wₗ&#125; — בסיס של W</p>
-
-          <p className="mt-2"><strong>טענה:</strong> הקבוצה <M>B = &#123;v₁,...,vᵣ, u_(r+1),...,uₖ, w_(r+1),...,wₗ&#125;</M> היא בסיס של <M>U + W</M>.</p>
-          <p>גודל <M>B</M> = <M>r + (k−r) + (l−r) = k + l − r</M>.</p>
+          <p className="font-bold">מקרה 1 — אלכסון (i = j):</p>
+          <p className="text-center font-mono">[A · adj(A)]_ii = Σₖ₌₁ⁿ [A]_ik · [adj(A)]_ki</p>
+          <p>מהגדרת adj: <M>[adj(A)]_ki = (−1)^(k+i) · M_ik^(A)</M>. לכן:</p>
+          <p className="text-center font-mono">= Σₖ₌₁ⁿ [A]_ik · (−1)^(k+i) · M_ik^(A)</p>
+          <p>זהו בדיוק <strong>פיתוח det(A) לפי שורה i</strong>:</p>
+          <p className="text-center font-mono bg-white rounded p-1">= det(A) ✓</p>
 
           <hr className="border-emerald-300 my-2" />
 
-          <p className="font-bold">שלב 2 — B פורשת את U + W:</p>
-          <p>יהי <M>v ∈ U + W</M>. אז קיימים <M>u ∈ U</M> ו-<M>w ∈ W</M> כך ש-<M>v = u + w</M>.</p>
-          <p>מכיוון ש-<M>&#123;v₁,...,vᵣ, u_(r+1),...,uₖ&#125;</M> בסיס של <M>U</M>:</p>
-          <p className="text-center font-mono">u = α₁v₁ + ... + αᵣvᵣ + α_(r+1)u_(r+1) + ... + αₖuₖ</p>
-          <p>מכיוון ש-<M>&#123;v₁,...,vᵣ, w_(r+1),...,wₗ&#125;</M> בסיס של <M>W</M>:</p>
-          <p className="text-center font-mono">w = β₁v₁ + ... + βᵣvᵣ + β_(r+1)w_(r+1) + ... + βₗwₗ</p>
-          <p>לכן:</p>
-          <p className="text-center font-mono">v = u + w = (α₁+β₁)v₁ + ... + (αᵣ+βᵣ)vᵣ + α_(r+1)u_(r+1) + ... + αₖuₖ + β_(r+1)w_(r+1) + ... + βₗwₗ</p>
-          <p>כלומר <M>v ∈ Sp(B)</M>. ✓</p>
+          <p className="font-bold">מקרה 2 — מחוץ לאלכסון (i ≠ j):</p>
+          <p className="text-center font-mono">[A · adj(A)]_ij = Σₖ₌₁ⁿ [A]_ik · [adj(A)]_kj = Σₖ₌₁ⁿ [A]_ik · (−1)^(k+j) · M_jk^(A)</p>
+
+          <p className="mt-2"><strong>הטריק (&quot;שורת רפאים&quot;):</strong> נבנה מטריצה <M>B</M> שמתקבלת מ-A ע&quot;י <strong>החלפת שורה j בשורה i</strong>.</p>
+          <p>ב-B יש 2 שורות זהות (שורות i ו-j), ולכן <M>det(B) = 0_F</M>.</p>
+
+          <p className="mt-2">נפתח את <M>det(B)</M> לפי שורה j:</p>
+          <p className="text-center font-mono">det(B) = Σₖ₌₁ⁿ (−1)^(k+j) · [B]_jk · M_jk^(B)</p>
+          <p>מכיוון ש-<M>[B]_jk = [A]_ik</M> (כי שורה j הוחלפה בשורה i)</p>
+          <p>ו-<M>M_jk^(B) = M_jk^(A)</M> (כי מוחקים שורה j — השורה שהשתנתה):</p>
+          <p className="text-center font-mono bg-white rounded p-1">[A · adj(A)]_ij = det(B) = 0_F ✓</p>
 
           <hr className="border-emerald-300 my-2" />
+          <p>מהמקרים: <M>[A · adj(A)]_ij = det(A)</M> אם <M>i = j</M>, ו-<M>0_F</M> אם <M>i ≠ j</M>.</p>
+          <p>כלומר: <M>A · adj(A) = det(A) · Iₙ</M>. ∎</p>
+        </Proof>
 
-          <p className="font-bold">שלב 3 — B בת&quot;ל:</p>
-          <p>נניח:</p>
-          <p className="text-center font-mono">(*) α₁v₁ + ... + αᵣvᵣ + β_(r+1)u_(r+1) + ... + βₖuₖ + γ_(r+1)w_(r+1) + ... + γₗwₗ = 0_V</p>
-          <p>נעביר את חלק ה-W לאגף ימין:</p>
-          <p className="text-center font-mono">(**) α₁v₁ + ... + αᵣvᵣ + β_(r+1)u_(r+1) + ... + βₖuₖ = −γ_(r+1)w_(r+1) − ... − γₗwₗ</p>
-
-          <p className="mt-2"><strong>תצפית מפתח:</strong></p>
-          <p>• אגף שמאל ∈ <M>U</M> (כי כל הוקטורים שם מ-<M>U</M>)</p>
-          <p>• אגף ימין ∈ <M>W</M> (כי כל הוקטורים שם מ-<M>W</M>)</p>
-          <p>• הם שווים ⟹ הערך המשותף ∈ <M>U ∩ W</M>.</p>
-
-          <p className="mt-2">מכיוון ש-<M>&#123;v₁,...,vᵣ&#125;</M> בסיס של <M>U ∩ W</M>, קיימים <M>δ₁,...,δᵣ</M> כך ש:</p>
-          <p className="text-center font-mono">−γ_(r+1)w_(r+1) − ... − γₗwₗ = δ₁v₁ + ... + δᵣvᵣ</p>
-          <p>נעביר אגפים:</p>
-          <p className="text-center font-mono">δ₁v₁ + ... + δᵣvᵣ + γ_(r+1)w_(r+1) + ... + γₗwₗ = 0_V</p>
-          <p>אבל <M>&#123;v₁,...,vᵣ, w_(r+1),...,wₗ&#125;</M> הוא בסיס של <M>W</M> (בפרט בת&quot;ל), לכן:</p>
-          <p className="text-center font-mono bg-white rounded p-1">δ₁ = ... = δᵣ = γ_(r+1) = ... = γₗ = 0</p>
-
-          <p className="mt-2">נציב בחזרה ב-(*) ונקבל:</p>
-          <p className="text-center font-mono">α₁v₁ + ... + αᵣvᵣ + β_(r+1)u_(r+1) + ... + βₖuₖ = 0_V</p>
-          <p>אבל <M>&#123;v₁,...,vᵣ, u_(r+1),...,uₖ&#125;</M> הוא בסיס של <M>U</M> (בפרט בת&quot;ל), לכן:</p>
-          <p className="text-center font-mono bg-white rounded p-1">α₁ = ... = αᵣ = β_(r+1) = ... = βₖ = 0</p>
-
-          <p className="mt-2"><strong>מסקנה:</strong> כל המקדמים = 0, לכן <M>B</M> בת&quot;ל. ✓</p>
-
-          <hr className="border-emerald-300 my-2" />
-          <p><M>B</M> פורשת ובת&quot;ל ⟹ <M>B</M> בסיס של <M>U + W</M>.</p>
-          <p>גודל <M>B</M> = <M>k + l − r</M>, לכן <M>dim(U + W) = dim U + dim W − dim(U ∩ W)</M>. ∎</p>
+        <Proof title="מסקנה 1: A⁻¹ = adj(A)/det(A)">
+          <p>מהמשפט: <M>A · adj(A) = det(A) · Iₙ</M>.</p>
+          <p>A הפיכה ⟹ <M>det(A) ≠ 0_F</M>.</p>
+          <p>נחלק בdet(A): <M>A · (adj(A)/det(A)) = Iₙ</M>.</p>
+          <p>לכן <M>A⁻¹ = adj(A)/det(A)</M>. ∎</p>
         </Proof>
 
         <Tip>
-          <strong>שלב המפתח:</strong> לזהות שהערך המשותף נמצא ב-<M>U ∩ W</M> — כי אגף אחד ב-<M>U</M> ואגף שני ב-<M>W</M>.
+          <strong>הטריק המרכזי:</strong> מחוץ לאלכסון בונים &quot;מטריצת רפאים&quot; B עם 2 שורות זהות → det(B) = 0. זה הופך את הסכום לפיתוח דטרמיננטה של מטריצה סינגולרית.
         </Tip>
+        <Warning>
+          <strong>חדש במבחן!</strong> דטרמיננטות נכנסות לראשונה. משפט זה מחבר בין adj, det, והפיכות — צפוי מאוד כשאלת הוכחה.
+        </Warning>
       </TheoremCard>
 
       {/* ═══════════ THEOREM #4 ═══════════ */}
       <TheoremCard
         rank={4}
-        title="דרגה + אפסיות = n (Rank-Nullity למטריצות)"
-        frequency="הופיע ב-7/7 מבחנים"
-        source="הרצאה 26, עמוד 5 (ניסוח); נגזר מצורת מדרגות"
+        title="det(AB) = det(A) · det(B) (כפליות הדטרמיננטה)"
+        frequency="חדש! צפוי מאוד — דטרמיננטות לראשונה"
+        source="הרצאה 22 (משפט חשוב 1 + למה 1)"
         statement={
           <div className="space-y-1">
-            <p>תהי <M>A ∈ M_(m×n)(F)</M>. אזי:</p>
-            <p className="font-bold text-lg text-center my-2 text-red-700">rank(A) + dim Nul(A) = n</p>
-            <p>כאשר <M>rank(A)</M> = מספר עמודות ציר בצורת מדרגות, ו-<M>dim Nul(A)</M> = מספר המשתנים החופשיים.</p>
+            <p>תהי <M>Δ: Mₙ(F) → F</M> פונקציית דטרמיננטה.</p>
+            <p>תהיינה <M>A, B ∈ Mₙ(F)</M>.</p>
+            <p className="font-bold text-lg text-center my-2 text-red-700">Δ(AB) = Δ(A) · Δ(B)</p>
           </div>
         }
       >
-        <Proof>
-          <p className="font-bold text-emerald-900">הוכחה (מצורת המדרגות):</p>
-          <p>תהי <M>A ∈ M_(m×n)(F)</M>. נדרג את <M>A</M> לצורת מדרגות (אשלון) <M>R</M>.</p>
+        <Proof title="למה 1: Δ(EA) = Δ(E) · Δ(A) עבור E אלמנטרית">
+          <p className="font-bold text-emerald-900">הוכחה (למה 1 — בסיס למשפט):</p>
+          <p>תהי <M>E ∈ Mₙ(F)</M> אלמנטרית, <M>A ∈ Mₙ(F)</M>.</p>
+          <p>3 מקרים:</p>
 
-          <p className="mt-2"><strong>שלב 1 — הגדרות:</strong></p>
-          <p>• נסמן ב-<M>r</M> את מספר עמודות הציר (pivot columns) ב-<M>R</M>. זהו <M>rank(A) = r</M>.</p>
-          <p>• כל עמודה שאיננה עמודת ציר היא <strong>עמודה חופשית</strong>. מספר העמודות החופשיות = <M>n − r</M>.</p>
+          <p className="mt-2"><strong>1.</strong> <M>Iₙ →(Rᵢ → c·Rᵢ)→ E</M>:</p>
+          <p>EA מתקבלת מ-A ע&quot;י <M>Rᵢ → c·Rᵢ</M>.</p>
+          <p>ממשפט (*): <M>Δ(EA) = c · Δ(A)</M>.</p>
+          <p>כמו כן: <M>Δ(E) = c · Δ(Iₙ) = c</M>.</p>
+          <p>לכן: <M>Δ(EA) = c · Δ(A) = Δ(E) · Δ(A)</M>. ✓</p>
 
-          <p className="mt-2"><strong>שלב 2 — Nul(A):</strong></p>
-          <p>המערכת <M>Ax = 0</M> שקולה ל-<M>Rx = 0</M> (כי דירוג שומר על מרחב הפתרונות).</p>
-          <p>ב-<M>Rx = 0</M>, כל משתנה חופשי יכול לקבל כל ערך ב-<M>F</M>, ומשתני הציר נקבעים לפיהם.</p>
-          <p>לכן <M>dim Nul(A) = n − r</M> (מספר המשתנים החופשיים).</p>
+          <p className="mt-2"><strong>2.</strong> <M>Iₙ →(Rᵢ ↔ Rⱼ)→ E</M>:</p>
+          <p>ממשפט (*): <M>Δ(E) = −1_F</M> ו-<M>Δ(EA) = −Δ(A)</M>.</p>
+          <p>לכן: <M>Δ(EA) = −Δ(A) = Δ(E) · Δ(A)</M>. ✓</p>
 
-          <p className="mt-2"><strong>שלב 3 — סיכום:</strong></p>
-          <p className="text-center font-mono bg-white rounded p-1">rank(A) + dim Nul(A) = r + (n − r) = n</p>
-          <p>∎</p>
+          <p className="mt-2"><strong>3.</strong> <M>Iₙ →(Rᵢ → Rᵢ + αRⱼ)→ E</M>:</p>
+          <p>ממשפט (*): <M>Δ(E) = 1_F</M> ו-<M>Δ(EA) = Δ(A)</M>.</p>
+          <p>לכן: <M>Δ(EA) = Δ(A) = 1_F · Δ(A) = Δ(E) · Δ(A)</M>. ✓ ∎</p>
         </Proof>
 
-        <Proof title="מסקנה: עמודות A בת&quot;ל ⟺ Ax = 0 פתרון יחיד">
-          <p className="font-bold text-emerald-900">מסקנה (הרצאה 17, עמודים 7–8):</p>
-          <p>תהי <M>A ∈ M_(m×n)(F)</M>. עמודות <M>A</M> (כוקטורים ב-<M>Fᵐ</M>) בת&quot;ל ⟺ המערכת <M>Ax = 0</M> בעלת פתרון יחיד (<M>x = 0</M>).</p>
+        <Proof title="משפט: Δ(AB) = Δ(A) · Δ(B)">
+          <p className="font-bold text-emerald-900">הוכחה (המשפט עצמו):</p>
+
+          <p><strong>מקרה 1:</strong> A <strong>לא הפיכה</strong>.</p>
+          <p>אזי AB לא הפיכה (כי אם AB הפיכה אז A הפיכה — סתירה).</p>
+          <p className="text-center font-mono">Δ(AB) = 0_F = 0_F · Δ(B) = Δ(A) · Δ(B) ✓</p>
 
           <hr className="border-emerald-300 my-2" />
 
-          <p><strong>(⟸):</strong> נניח שעמודות <M>A</M> הן <M>C₁,...,Cₙ</M> והן בת&quot;ל.</p>
-          <p>אם <M>Ax = 0</M> אז <M>x₁C₁ + ... + xₙCₙ = 0</M>.</p>
-          <p>מבת&quot;ל: <M>x₁ = ... = xₙ = 0</M>. פתרון יחיד. ✓</p>
-
-          <p className="mt-2"><strong>(⟹):</strong> נניח ש-<M>Ax = 0</M> בעלת פתרון יחיד <M>x = 0</M>.</p>
-          <p>יהיו <M>α₁,...,αₙ ∈ F</M> כך ש-<M>α₁C₁ + ... + αₙCₙ = 0</M>.</p>
-          <p>אז <M>A(α₁,...,αₙ)ᵗ = 0</M>, לכן <M>(α₁,...,αₙ) = (0,...,0)</M> מהיחידות.</p>
-          <p>לכן עמודות <M>A</M> בת&quot;ל. ✓ ∎</p>
+          <p><strong>מקרה 2:</strong> A <strong>הפיכה</strong>.</p>
+          <p>אזי <M>A = E₁ · ... · Eₖ</M> (מכפלת מטריצות אלמנטריות).</p>
+          <p className="text-center font-mono">Δ(AB) = Δ(E₁ · ... · Eₖ · B)</p>
+          <p>שימוש חוזר בלמה 1 (k פעמים):</p>
+          <p className="text-center font-mono">= Δ(E₁) · Δ(E₂ · ... · Eₖ · B) = ... = Δ(E₁) · ... · Δ(Eₖ) · Δ(B)</p>
+          <p>שימוש חוזר בלמה 1 על <M>A = E₁ · ... · Eₖ</M>:</p>
+          <p className="text-center font-mono bg-white rounded p-1">= Δ(E₁ · ... · Eₖ) · Δ(B) = Δ(A) · Δ(B) ✓ ∎</p>
         </Proof>
 
         <Tip>
-          <strong>נוסחה קריטית:</strong> בכל מבחן שאלו שאלה שדורשת שימוש ב-rank + nullity = n. בד&quot;כ נותנים מטריצה או ה&quot;ל ושואלים על ממד תת-מרחב.
+          <strong>מבנה ההוכחה:</strong> קודם מוכיחים למה על מטריצה אלמנטרית (3 מקרים מ-(*)), ואז המשפט מתחלק ל-2 מקרים: A לא הפיכה (הכל 0) ו-A הפיכה (פירוק לאלמנטריות).
         </Tip>
+        <Warning>
+          <strong>חדש במבחן!</strong> זהו המשפט המרכזי של דטרמיננטות. ממנו נובעים: <M>det(A⁻¹) = (det A)⁻¹</M>, <M>det(Aᵗ) = det(A)</M>, ויחידות הדטרמיננטה. צפוי כשאלת הוכחה מלאה או חלקית (למה 1 בלבד).
+        </Warning>
       </TheoremCard>
 
       {/* ═══════════ THEOREM #5 ═══════════ */}
@@ -431,17 +423,17 @@ export default function Top5Page() {
                 <td className="py-2 px-3">הרצאה 12, עמ&apos; 5–7</td>
                 <td className="py-2 px-3 text-red-600 font-bold">5/7</td>
               </tr>
-              <tr className="border-b border-gray-100 bg-amber-50">
+              <tr className="border-b border-gray-100 bg-purple-50">
                 <td className="py-2 px-3 font-bold">🥉</td>
-                <td className="py-2 px-3">נוסחת הממדים לסכום</td>
-                <td className="py-2 px-3">הרצאה 15, עמ&apos; 2–5</td>
-                <td className="py-2 px-3 text-red-600 font-bold">6/7</td>
+                <td className="py-2 px-3">A · adj(A) = det(A) · Iₙ</td>
+                <td className="py-2 px-3">הרצאה 24</td>
+                <td className="py-2 px-3 text-purple-600 font-bold">חדש!</td>
               </tr>
-              <tr className="border-b border-gray-100">
+              <tr className="border-b border-gray-100 bg-purple-50">
                 <td className="py-2 px-3 font-bold">4️⃣</td>
-                <td className="py-2 px-3">Rank + Nullity = n</td>
-                <td className="py-2 px-3">הרצאה 26, עמ&apos; 5</td>
-                <td className="py-2 px-3 text-red-600 font-bold">7/7</td>
+                <td className="py-2 px-3">det(AB) = det(A) · det(B)</td>
+                <td className="py-2 px-3">הרצאה 22</td>
+                <td className="py-2 px-3 text-purple-600 font-bold">חדש!</td>
               </tr>
               <tr>
                 <td className="py-2 px-3 font-bold">5️⃣</td>

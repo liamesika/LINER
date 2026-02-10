@@ -29,6 +29,7 @@ import {
   Ruler,
   Trophy,
   Printer,
+  Link2,
 } from 'lucide-react';
 
 interface NavItem {
@@ -176,6 +177,12 @@ const navItems: NavItem[] = [
     label: 'Top 5 Theorems',
     labelHe: 'Top 5 משפטים למבחן',
     icon: <Trophy className="w-5 h-5" />,
+  },
+  {
+    href: '/steinitz',
+    label: 'Steinitz Deep Dive',
+    labelHe: 'שטייניץ + משפט המימדים',
+    icon: <Link2 className="w-5 h-5" />,
   },
   {
     href: '/review',

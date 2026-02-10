@@ -28,6 +28,7 @@ import {
   FileCheck,
   Ruler,
   Trophy,
+  Printer,
 } from 'lucide-react';
 
 interface NavItem {
@@ -115,6 +116,18 @@ const navItems: NavItem[] = [
     label: 'Full Summary',
     labelHe: 'סיכום מלא',
     icon: <ScrollText className="w-5 h-5" />,
+  },
+  {
+    href: '/print-dimensions',
+    label: 'Print Dimensions',
+    labelHe: 'ממדים להדפסה',
+    icon: <Printer className="w-5 h-5" />,
+  },
+  {
+    href: '/print-determinants',
+    label: 'Print Determinants',
+    labelHe: 'דטרמיננטות להדפסה',
+    icon: <Printer className="w-5 h-5" />,
   },
   {
     href: '/exam2023a',

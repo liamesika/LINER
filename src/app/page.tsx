@@ -210,7 +210,7 @@ export default function Dashboard() {
         </div>
         <div className="p-5">
           <div className="font-bold text-gray-900 mb-1">{today.title}</div>
-          <div className="text-sm text-gray-600 mb-3">{today.focus}</div>
+          <div className="text-sm text-gray-600 mb-3">{today.subtitle}</div>
           <div className="space-y-2">
             {today.blocks.slice(0, 4).map((b, i) => (
               <div key={i} className="flex items-center gap-3 text-sm">

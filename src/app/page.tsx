@@ -212,14 +212,14 @@ export default function Dashboard() {
           <div className="font-bold text-gray-900 mb-1">{today.title}</div>
           <div className="text-sm text-gray-600 mb-3">{today.subtitle}</div>
           <div className="space-y-2">
-            {today.blocks.slice(0, 4).map((b, i) => (
+            {today.slots.slice(0, 4).map((b, i) => (
               <div key={i} className="flex items-center gap-3 text-sm">
                 <span className="font-mono text-xs text-gray-500 w-24 flex-shrink-0">{b.time}</span>
-                <span className="text-gray-800 flex-1">{b.task}</span>
+                <span className="text-gray-800 flex-1">{b.title}</span>
               </div>
             ))}
             <Link href="/battle-plan" className="block text-center text-sm text-violet-600 hover:underline pt-2 border-t border-gray-50">
-              + עוד {today.blocks.length - 4} שעות פעילות
+              + עוד {today.slots.length - 4} שעות פעילות
             </Link>
           </div>
         </div>

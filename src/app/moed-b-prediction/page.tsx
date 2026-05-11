@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Crosshair, TrendingUp, TrendingDown, FileQuestion, Sparkles } from 'lucide-react';
+import { Crosshair, TrendingUp, TrendingDown, FileQuestion, Sparkles, GraduationCap, AlertTriangle } from 'lucide-react';
 import PageHeader from '@/components/PageHeader';
 import {
   predictedQuestions,
@@ -9,6 +9,7 @@ import {
   lowProbabilityMoedB,
   highProbabilityMoedB,
   examTacticTips,
+  top10HwToSolve,
 } from '@/data/moed-b-prediction';
 import { topTheorems } from '@/data/top-theorems';
 import { topHomework } from '@/data/top-homework';
@@ -26,9 +27,84 @@ export default function MoedBPredictionPage() {
       <PageHeader
         icon={<Crosshair className="w-6 h-6" />}
         title="חיזוי מועד ב — מה צפוי במבחן?"
-        subtitle="ניתוח מבוסס על מועד א 2025 (מה כבר נשאל), סימולציה 2025-26, ומבחני מועד ב 2022-2024. מטרה: לזהות מה צפוי לחזור ומה לא."
+        subtitle="ניתוח מבוסס על מועד א 2026 שלך (50/100), הסילבוס שנלמד, ומבחני מועד ב 2022-2024. הוצאתי כל מה שכבר נשאל + העתקות ליניאריות שלא נלמדו."
         gradient="from-rose-600 to-pink-700"
       />
+
+      {/* Top 10 HW box — the headline */}
+      <div className="bg-gradient-to-l from-violet-600 to-indigo-700 rounded-2xl p-1 shadow-xl">
+        <div className="bg-white rounded-xl p-5">
+          <div className="flex items-center gap-2 mb-4">
+            <GraduationCap className="w-6 h-6 text-violet-600" />
+            <h2 className="text-xl font-extrabold text-gray-900">Top 10 שאלות HW לפתור</h2>
+            <span className="text-xs px-2 py-0.5 rounded-full bg-violet-100 text-violet-700 font-semibold">
+              עדיפות מקסימלית
+            </span>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b-2 border-violet-200 text-violet-900 text-xs uppercase">
+                  <th className="py-2 px-2 text-right w-12">#</th>
+                  <th className="py-2 px-2 text-right">מקור</th>
+                  <th className="py-2 px-2 text-right">נושא</th>
+                  <th className="py-2 px-2 text-right">למה</th>
+                </tr>
+              </thead>
+              <tbody>
+                {top10HwToSolve.map((q) => {
+                  const hw = q.hwTopRank ? topHomework.find((h) => h.rank === q.hwTopRank) : undefined;
+                  return (
+                    <tr key={q.rank} className="border-b border-gray-100 hover:bg-violet-50/30 transition-colors">
+                      <td className="py-2.5 px-2 font-bold text-violet-700">
+                        {q.rank}.
+                      </td>
+                      <td className="py-2.5 px-2 font-mono text-xs font-semibold text-gray-800 whitespace-nowrap">
+                        {q.source}
+                      </td>
+                      <td className="py-2.5 px-2 text-gray-900 font-medium">
+                        {hw ? (
+                          <Link href={`/top-homework#${hw.rank}`} className="text-blue-700 hover:underline">
+                            {q.topic}
+                          </Link>
+                        ) : (
+                          q.topic
+                        )}
+                      </td>
+                      <td className="py-2.5 px-2 text-gray-600 text-xs leading-snug">
+                        {q.why}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+          <div className="mt-4 bg-amber-50 border border-amber-200 rounded-lg p-3 text-xs text-amber-900 flex items-start gap-2">
+            <AlertTriangle className="w-4 h-4 mt-0.5 shrink-0 text-amber-600" />
+            <div>
+              <strong>סדר עבודה מומלץ:</strong> 1→2→3→4→5 דחוף ביותר. 6→10 לסיים אם נשאר זמן. תרגילים מסומנים בכחול
+              יש להם פתרון מלא + תבנית ב-Top 10 תרגילים.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Excluded topics — important context */}
+      <div className="bg-gray-900 rounded-2xl p-5 text-white shadow-md">
+        <h3 className="font-bold mb-3 flex items-center gap-2">
+          <TrendingDown className="w-5 h-5 text-gray-400" />
+          ⛔ מה הוצאתי מהחיזוי
+        </h3>
+        <div className="grid md:grid-cols-2 gap-2">
+          {lowProbabilityMoedB.map((t, i) => (
+            <div key={i} className="bg-gray-800/60 rounded-lg p-2.5 text-sm">
+              <div className="font-medium text-gray-200">{t.topic}</div>
+              <div className="text-xs text-gray-500 mt-0.5">{t.reason}</div>
+            </div>
+          ))}
+        </div>
+      </div>
 
       {/* Structure */}
       <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
@@ -162,37 +238,20 @@ export default function MoedBPredictionPage() {
         ))}
       </div>
 
-      {/* High vs Low probability lists */}
-      <div className="grid md:grid-cols-2 gap-4">
-        <div className="bg-gradient-to-br from-red-50 to-orange-50 rounded-2xl border border-red-200 p-5">
-          <h3 className="font-bold text-red-900 mb-3 flex items-center gap-2">
-            <TrendingUp className="w-5 h-5 text-red-600" />
-            הסתברות גבוהה (לתת עדיפות)
-          </h3>
-          <ul className="space-y-2">
-            {highProbabilityMoedB.map((t, i) => (
-              <li key={i} className="bg-white rounded-lg p-3 border border-red-100 text-sm">
-                <div className="font-semibold text-gray-900">{t.topic}</div>
-                <div className="text-xs text-red-700 mt-0.5">{t.note}</div>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="bg-gradient-to-br from-gray-50 to-slate-50 rounded-2xl border border-gray-200 p-5">
-          <h3 className="font-bold text-gray-700 mb-3 flex items-center gap-2">
-            <TrendingDown className="w-5 h-5 text-gray-500" />
-            הסתברות נמוכה (כבר נשאל ב-מועד א/סימולציה)
-          </h3>
-          <ul className="space-y-2">
-            {lowProbabilityMoedB.map((t, i) => (
-              <li key={i} className="bg-white rounded-lg p-3 border border-gray-200 text-sm">
-                <div className="font-medium text-gray-700">{t.topic}</div>
-                <div className="text-xs text-gray-500 mt-0.5">{t.reason}</div>
-              </li>
-            ))}
-          </ul>
-        </div>
+      {/* High probability list */}
+      <div className="bg-gradient-to-br from-red-50 to-orange-50 rounded-2xl border border-red-200 p-5">
+        <h3 className="font-bold text-red-900 mb-3 flex items-center gap-2">
+          <TrendingUp className="w-5 h-5 text-red-600" />
+          ✅ הסתברות גבוהה (לתת עדיפות)
+        </h3>
+        <ul className="grid md:grid-cols-2 gap-2">
+          {highProbabilityMoedB.map((t, i) => (
+            <li key={i} className="bg-white rounded-lg p-3 border border-red-100 text-sm">
+              <div className="font-semibold text-gray-900">{t.topic}</div>
+              <div className="text-xs text-red-700 mt-0.5">{t.note}</div>
+            </li>
+          ))}
+        </ul>
       </div>
 
       {/* Exam tactics */}

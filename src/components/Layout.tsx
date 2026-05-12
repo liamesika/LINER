@@ -54,6 +54,7 @@ const navGroups: NavGroup[] = [
       { href: '/top-theorems', labelHe: '🏆 Top 10 משפטים + הוכחות', icon: <Trophy className="w-5 h-5" />, highlight: true },
       { href: '/top-homework', labelHe: '📝 Top 10 תרגילים', icon: <GraduationCap className="w-5 h-5" />, highlight: true },
       { href: '/moed-b-prediction', labelHe: '🎯 חיזוי המבחן', icon: <Crosshair className="w-5 h-5" />, highlight: true },
+      { href: '/deductions', labelHe: '💡 קיצורי הסקה', icon: <Target className="w-5 h-5" />, highlight: true },
     ],
   },
   {

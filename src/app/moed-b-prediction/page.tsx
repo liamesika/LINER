@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Crosshair, TrendingUp, TrendingDown, FileQuestion, Sparkles, GraduationCap, AlertTriangle } from 'lucide-react';
+import { Crosshair, TrendingUp, TrendingDown, FileQuestion, Sparkles, GraduationCap, AlertTriangle, Trophy, BookOpen, ShieldCheck } from 'lucide-react';
 import PageHeader from '@/components/PageHeader';
 import {
   predictedQuestions,
@@ -10,9 +10,24 @@ import {
   highProbabilityMoedB,
   examTacticTips,
   top10HwToSolve,
+  tieredProofs,
+  predictedDefinitions,
+  type ProofTier,
 } from '@/data/moed-b-prediction';
 import { topTheorems } from '@/data/top-theorems';
 import { topHomework } from '@/data/top-homework';
+
+function tierMeta(tier: ProofTier) {
+  if (tier === 1) return { label: 'Tier 1 — בטחון גבוה', cls: 'bg-red-50 border-red-300 text-red-900', dot: 'bg-red-500', range: '70-85%' };
+  if (tier === 2) return { label: 'Tier 2 — בטחון בינוני', cls: 'bg-orange-50 border-orange-300 text-orange-900', dot: 'bg-orange-500', range: '45-70%' };
+  return { label: 'Tier 3 — בטחון נמוך', cls: 'bg-gray-50 border-gray-300 text-gray-700', dot: 'bg-gray-500', range: '25-50%' };
+}
+
+function defCategoryMeta(c: 'must-memorize' | 'should-know' | 'recognize') {
+  if (c === 'must-memorize') return { label: 'חובה לשנן', cls: 'bg-red-100 text-red-700 border-red-300' };
+  if (c === 'should-know') return { label: 'לדעת לנסח', cls: 'bg-amber-100 text-amber-700 border-amber-300' };
+  return { label: 'רק להכיר', cls: 'bg-gray-100 text-gray-600 border-gray-300' };
+}
 
 function probColor(p: number) {
   if (p >= 80) return 'bg-red-500 text-white';
@@ -252,6 +267,135 @@ export default function MoedBPredictionPage() {
             </li>
           ))}
         </ul>
+      </div>
+
+      {/* ─────────── Tiered Proofs (calibrated) ─────────── */}
+      <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5">
+        <div className="flex items-start justify-between gap-3 mb-4 flex-wrap">
+          <div>
+            <h3 className="font-bold text-gray-900 text-lg flex items-center gap-2">
+              <Trophy className="w-5 h-5 text-violet-600" />
+              🎯 הוכחות מכוילות לפי 3 רמות בטחון
+            </h3>
+            <p className="text-xs text-gray-600 mt-1">
+              לא 95%+ על שום הוכחה. ההערכה כנה ומבוססת על מה שכבר נשאל ב-מועד א שלך + ניתוח מבחני עבר.
+            </p>
+          </div>
+          <div className="flex items-center gap-1.5 text-xs bg-blue-50 text-blue-700 px-3 py-1.5 rounded-full border border-blue-200">
+            <ShieldCheck className="w-3.5 h-3.5" />
+            הערכה כנה
+          </div>
+        </div>
+
+        {[1, 2, 3].map((t) => {
+          const tier = t as ProofTier;
+          const meta = tierMeta(tier);
+          const proofs = tieredProofs.filter((p) => p.tier === tier);
+          return (
+            <div key={t} className={`mb-4 rounded-xl border-2 ${meta.cls} p-4`}>
+              <div className="flex items-center gap-2 mb-3">
+                <span className={`w-2 h-2 rounded-full ${meta.dot}`} />
+                <span className="font-bold text-sm">{meta.label}</span>
+                <span className="text-xs opacity-70">({meta.range})</span>
+              </div>
+              <div className="space-y-2">
+                {proofs.map((p) => (
+                  <div key={p.rank} className="bg-white rounded-lg border border-gray-200 p-3">
+                    <div className="flex items-start justify-between gap-3 flex-wrap mb-1">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs px-2 py-0.5 rounded-full bg-violet-600 text-white font-bold">#{p.rank}</span>
+                        <span className="font-bold text-sm text-gray-900">{p.name}</span>
+                      </div>
+                      <span className={`text-xs px-2 py-0.5 rounded-full font-bold ${
+                        p.probabilityHigh >= 70 ? 'bg-red-100 text-red-700' :
+                        p.probabilityHigh >= 55 ? 'bg-orange-100 text-orange-700' :
+                        'bg-gray-100 text-gray-700'
+                      }`}>
+                        {p.probabilityLow}–{p.probabilityHigh}%
+                      </span>
+                    </div>
+                    <div className="text-xs text-gray-600 font-mono bg-gray-50 rounded p-2 mb-2" dir="ltr">
+                      {p.statement}
+                    </div>
+                    <div className="text-xs text-green-800 bg-green-50 rounded p-2 border border-green-100 mb-1.5">
+                      <strong>✓ למה בטוח:</strong> {p.whyConfident}
+                    </div>
+                    {p.whyNot && (
+                      <div className="text-xs text-amber-800 bg-amber-50 rounded p-2 border border-amber-100">
+                        <strong>⚠️ למה לא בטוח:</strong> {p.whyNot}
+                      </div>
+                    )}
+                    <Link
+                      href={`/top-theorems#${p.topTheoremRank}`}
+                      className="inline-flex items-center gap-1 text-xs text-violet-700 hover:text-violet-900 mt-2 font-semibold"
+                    >
+                      פתחי הוכחה מלאה →
+                    </Link>
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* ─────────── Definitions (calibrated) ─────────── */}
+      <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5">
+        <div className="mb-4">
+          <h3 className="font-bold text-gray-900 text-lg flex items-center gap-2">
+            <BookOpen className="w-5 h-5 text-blue-600" />
+            📚 הגדרות צפויות
+          </h3>
+          <p className="text-xs text-gray-600 mt-1">
+            כל שאלה במבחן בד"כ מתחילה ב-"הגדירי X" (2-3 נקודות). 12 הגדרות הכי סבירות.
+          </p>
+        </div>
+
+        {(['must-memorize', 'should-know', 'recognize'] as const).map((cat) => {
+          const meta = defCategoryMeta(cat);
+          const defs = predictedDefinitions.filter((d) => d.category === cat && !d.alreadyTested);
+          if (defs.length === 0) return null;
+          return (
+            <div key={cat} className="mb-4">
+              <div className="flex items-center gap-2 mb-2">
+                <span className={`text-xs px-2 py-0.5 rounded-full border font-bold ${meta.cls}`}>
+                  {meta.label}
+                </span>
+                <span className="text-xs text-gray-500">({defs.length} הגדרות)</span>
+              </div>
+              <div className="grid md:grid-cols-2 gap-2">
+                {defs.map((d) => (
+                  <div key={d.rank} className="bg-blue-50/50 rounded-lg border border-blue-200 p-3">
+                    <div className="flex items-start justify-between gap-2 mb-1">
+                      <span className="font-bold text-sm text-blue-900">{d.title}</span>
+                      <span className="text-xs px-1.5 py-0.5 rounded bg-blue-600 text-white font-bold">{d.probability}%</span>
+                    </div>
+                    <div className="text-xs text-gray-800 leading-relaxed mb-2">{d.body}</div>
+                    {d.pairedWith && (
+                      <div className="text-[10px] text-blue-700 font-semibold">🔗 {d.pairedWith}</div>
+                    )}
+                    <div className="text-[10px] text-gray-500 italic mt-1">{d.whyLikely}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+
+        {/* Already-tested definitions — collapsed */}
+        <details className="mt-3 bg-gray-50 rounded-lg border border-gray-200">
+          <summary className="cursor-pointer p-3 text-xs font-semibold text-gray-600 hover:text-gray-900">
+            הגדרות שכבר נשאלו במועד א ({predictedDefinitions.filter((d) => d.alreadyTested).length})
+          </summary>
+          <div className="p-3 pt-0 grid md:grid-cols-2 gap-2">
+            {predictedDefinitions.filter((d) => d.alreadyTested).map((d) => (
+              <div key={d.rank} className="bg-white rounded p-2 border border-gray-200 text-xs">
+                <div className="font-semibold text-gray-700 line-through">{d.title}</div>
+                <div className="text-[10px] text-gray-500 mt-0.5">{d.whyLikely}</div>
+              </div>
+            ))}
+          </div>
+        </details>
       </div>
 
       {/* Exam tactics */}

@@ -57,6 +57,7 @@ const navGroups: NavGroup[] = [
       { href: '/deductions', labelHe: '💡 קיצורי הסקה', icon: <Target className="w-5 h-5" />, highlight: true },
       { href: '/insights', labelHe: '🧠 תובנות מ-HW + מבחנים', icon: <Target className="w-5 h-5" />, highlight: true },
       { href: '/mock-exams', labelHe: '📝 מבחני הדמיה (3)', icon: <FileCheck className="w-5 h-5" />, highlight: true },
+      { href: '/hw-summaries', labelHe: '📓 HW9+10+12 — אינטואיציה', icon: <BookOpen className="w-5 h-5" />, highlight: true },
     ],
   },
   {

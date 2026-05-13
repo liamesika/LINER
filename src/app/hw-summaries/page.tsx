@@ -9,6 +9,10 @@ import {
   ChevronDown,
   ChevronUp,
   Target,
+  Eye,
+  PlayCircle,
+  Compass,
+  Brain,
 } from 'lucide-react';
 import PageHeader from '@/components/PageHeader';
 import {
@@ -45,44 +49,94 @@ function ProblemCard({ p, hwId }: { p: ProblemInsight; hwId: string }) {
             <ImportanceBadge imp={p.importance} />
           </div>
           <div className="text-sm font-bold text-gray-900 mb-1">{p.topic}</div>
-          <div className="text-xs text-gray-600 leading-relaxed">{p.tests}</div>
         </div>
         {open ? <ChevronUp className="w-5 h-5 text-gray-400 shrink-0" /> : <ChevronDown className="w-5 h-5 text-gray-400 shrink-0" />}
       </button>
 
       {open && (
-        <div className="px-4 pb-4 space-y-2 border-t border-gray-100 pt-3">
-          {/* Insight */}
-          <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
+        <div className="px-4 pb-4 space-y-3 border-t border-gray-100 pt-3">
+          {/* 1. Given */}
+          <div className="bg-slate-50 border border-slate-200 rounded-lg p-3">
             <div className="flex items-start gap-2">
-              <Lightbulb className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+              <Eye className="w-4 h-4 text-slate-600 shrink-0 mt-0.5" />
               <div className="flex-1 min-w-0">
-                <div className="text-xs font-bold text-amber-900 uppercase tracking-wide mb-1">האינטואיציה</div>
-                <div className="text-sm text-amber-900 leading-relaxed">{p.insight}</div>
+                <div className="text-xs font-bold text-slate-700 uppercase tracking-wide mb-1">1️⃣ הנתון</div>
+                <div className="text-sm text-slate-800 leading-relaxed">{p.given}</div>
               </div>
             </div>
           </div>
 
-          {/* Technique */}
+          {/* 2. Recognize */}
+          <div className="bg-purple-50 border border-purple-200 rounded-lg p-3">
+            <div className="flex items-start gap-2">
+              <Brain className="w-4 h-4 text-purple-600 shrink-0 mt-0.5" />
+              <div className="flex-1 min-w-0">
+                <div className="text-xs font-bold text-purple-700 uppercase tracking-wide mb-1">2️⃣ מה לזהות מהנתון</div>
+                <div className="text-sm text-purple-900 leading-relaxed">{p.recognize}</div>
+              </div>
+            </div>
+          </div>
+
+          {/* 3. First step */}
+          <div className="bg-green-50 border border-green-200 rounded-lg p-3">
+            <div className="flex items-start gap-2">
+              <Compass className="w-4 h-4 text-green-700 shrink-0 mt-0.5" />
+              <div className="flex-1 min-w-0">
+                <div className="text-xs font-bold text-green-800 uppercase tracking-wide mb-1">3️⃣ הצעד הראשון</div>
+                <div className="text-sm text-green-900 leading-relaxed">{p.firstStep}</div>
+              </div>
+            </div>
+          </div>
+
+          {/* 4. Walkthrough */}
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+            <div className="flex items-start gap-2">
+              <PlayCircle className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
+              <div className="flex-1 min-w-0">
+                <div className="text-xs font-bold text-blue-800 uppercase tracking-wide mb-2">4️⃣ הליכה מודרכת — צעד-צעד</div>
+                <ol className="space-y-1.5">
+                  {p.walkthrough.map((step, i) => (
+                    <li key={i} className="text-sm text-blue-900 leading-relaxed flex items-start gap-2">
+                      <span className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center mt-0.5">{i + 1}</span>
+                      <span className="flex-1">{step}</span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          {/* 5. What it means */}
+          <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
+            <div className="flex items-start gap-2">
+              <Lightbulb className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+              <div className="flex-1 min-w-0">
+                <div className="text-xs font-bold text-amber-800 uppercase tracking-wide mb-1">5️⃣ מה זה אומר — אינטואיציה</div>
+                <div className="text-sm text-amber-900 leading-relaxed">{p.whatItMeans}</div>
+              </div>
+            </div>
+          </div>
+
+          {/* 6. Technique */}
           {p.technique && (
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+            <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-3">
               <div className="flex items-start gap-2">
-                <Wrench className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
+                <Wrench className="w-4 h-4 text-indigo-600 shrink-0 mt-0.5" />
                 <div className="flex-1 min-w-0">
-                  <div className="text-xs font-bold text-blue-900 uppercase tracking-wide mb-1">טכניקה לזכור</div>
-                  <div className="text-sm text-blue-900 leading-relaxed">{p.technique}</div>
+                  <div className="text-xs font-bold text-indigo-800 uppercase tracking-wide mb-1">🔧 טכניקה לזכור</div>
+                  <div className="text-sm text-indigo-900 leading-relaxed">{p.technique}</div>
                 </div>
               </div>
             </div>
           )}
 
-          {/* Trap */}
+          {/* 7. Trap */}
           {p.trap && (
             <div className="bg-red-50 border border-red-200 rounded-lg p-3">
               <div className="flex items-start gap-2">
                 <AlertTriangle className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
                 <div className="flex-1 min-w-0">
-                  <div className="text-xs font-bold text-red-900 uppercase tracking-wide mb-1">מלכודת</div>
+                  <div className="text-xs font-bold text-red-800 uppercase tracking-wide mb-1">⚠️ מלכודת</div>
                   <div className="text-sm text-red-900 leading-relaxed">{p.trap}</div>
                 </div>
               </div>
@@ -160,14 +214,12 @@ function HwSection({ hw }: { hw: HwSummary }) {
 }
 
 export default function HwSummariesPage() {
-  const [filter, setFilter] = useState<'all' | 'critical' | 'high'>('all');
-
   return (
     <div className="space-y-6">
       <PageHeader
         icon={<BookOpen className="w-6 h-6" />}
-        title="סיכום HW9 + HW10 + HW12"
-        subtitle="האינטואיציה והטכניקות מאחורי כל שאלה. לא הוכחות מלאות — רק 'מה הטריק' ו'איפה נופלים'. לחיצה על כל שאלה פותחת את האינטואיציה, הטכניקה, והמלכודת."
+        title="HW9 + HW10 + HW12 — הסבר עמוק שאלה-שאלה"
+        subtitle="לכל שאלה: הנתון → איך לזהות → צעד ראשון → הליכה מודרכת → מה זה אומר. בעברית פשוטה. מבלי להעתיק פתרון רשמי — אבל מסביר בדיוק איך לחשוב."
         gradient="from-indigo-600 to-purple-700"
       />
 
@@ -175,15 +227,16 @@ export default function HwSummariesPage() {
       <div className="bg-gradient-to-l from-amber-50 to-orange-50 border-r-4 border-amber-500 rounded-2xl p-5">
         <h3 className="font-bold text-amber-900 mb-2 flex items-center gap-2">
           <Lightbulb className="w-5 h-5" />
-          מי שלא הצליחה לפתור שאלה אחת — תקראי בסדר הזה:
+          המבנה של כל שאלה:
         </h3>
-        <ol className="text-sm text-amber-900 space-y-1.5 pr-5" style={{ listStyleType: 'decimal' }}>
-          <li><strong>תמונה כללית</strong> של כל HW (הקופסה הסגולה למעלה) — לדעת מה לוב הכל</li>
-          <li><strong>קריטיות בלבד</strong> (תווית אדומה) — אלה השאלות שמופיעות בכל מבחן עבר</li>
-          <li><strong>"האינטואיציה"</strong> של כל שאלה — לפעמים זו רק שורה אחת, אבל מבהירה הכל</li>
-          <li><strong>"טכניקה לזכור"</strong> — הכלל הכללי שאת יכולה להשתמש בו במבחן</li>
-          <li>אם נשאר זמן — תקראי גם "מלכודת" כדי לדעת איפה לא ליפול</li>
-        </ol>
+        <div className="grid md:grid-cols-2 gap-2 text-sm text-amber-900">
+          <div>1️⃣ <strong>הנתון</strong> — מה השאלה מוסרת לך</div>
+          <div>2️⃣ <strong>מה לזהות</strong> — דפוסים, סימנים</div>
+          <div>3️⃣ <strong>הצעד הראשון</strong> — מה לעשות מיד</div>
+          <div>4️⃣ <strong>הליכה מודרכת</strong> — צעד-צעד</div>
+          <div>5️⃣ <strong>מה זה אומר</strong> — אינטואיציה עמוקה</div>
+          <div>🔧 <strong>טכניקה</strong> + ⚠️ <strong>מלכודת</strong></div>
+        </div>
       </div>
 
       {/* HW sections */}
@@ -195,9 +248,9 @@ export default function HwSummariesPage() {
       <div className="bg-gradient-to-l from-violet-600 to-indigo-700 rounded-2xl p-6 text-white text-center shadow-md">
         <div className="text-2xl font-extrabold mb-2">את לא תקועה — את חסרה אינטואיציה.</div>
         <div className="text-sm opacity-90 leading-relaxed">
-          כל שאלה ב-HW היא טריק ספציפי שצריך לזהות. ברגע שתזהי את הטריק — הפתרון נופל לבד.
+          כל שאלה היא טריק ספציפי. ברגע שתקראי "מה לזהות" ו"הצעד הראשון" — תראי שזה לא קסם, זה דפוס.
           <br />
-          הקפידי לקרוא את "האינטואיציה" של כל קריטית — זה 80% מהדרך.
+          קראי לפחות את כל הקריטיות (🔴) — זה 80% מהמבחן.
         </div>
       </div>
     </div>

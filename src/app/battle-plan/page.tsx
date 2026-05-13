@@ -652,10 +652,29 @@ export default function BattlePlanPage() {
     <div className="space-y-6">
       <PageHeader
         icon={<Swords className="w-6 h-6" />}
-        title="תוכנית קרב — מועד ב 14.5"
-        subtitle="כל יום מחולק לשעות. כל שעה: איזו הרצאה לקרוא, אילו הגדרות ומשפטים ללמוד היטב vs רק להכיר, ואילו תרגילים לפתור. סמני ✓ — נשמר אוטומטית."
+        title="תוכנית קרב — מועד ג 15.6"
+        subtitle="עברנו ממועד ב למועד ג. התוכנית המלאה והמפורטת (33 ימים) נמצאת בקובץ HTML מודפס. הסקירה כאן נשארת כרפרנס מהיר."
         gradient="from-violet-600 to-indigo-700"
       />
+
+      {/* ── Callout to HTML plan ── */}
+      <div className="bg-gradient-to-l from-amber-50 to-orange-50 border-2 border-amber-300 rounded-2xl p-5 shadow-sm">
+        <div className="flex items-start gap-3 flex-wrap">
+          <div className="text-3xl">📄</div>
+          <div className="flex-1 min-w-0">
+            <div className="font-bold text-amber-900 text-base mb-1">תוכנית הקרב המלאה — 33 ימים</div>
+            <div className="text-sm text-amber-900 mb-2">
+              התוכנית המפורטת (יום-יום, עם תיבות סימון, פאזות, תאריכים מדויקים) נמצאת בקובץ HTML עצמאי:
+            </div>
+            <code className="block bg-white border border-amber-200 rounded px-2 py-1 text-xs text-amber-900 font-mono mb-2" dir="ltr">
+              /Users/liamesika/Desktop/infi/LINER/battle-plan-moed-g.html
+            </code>
+            <div className="text-xs text-amber-800">
+              פתחי אותו בדפדפן (דאבל-קליק). אפשר להדפיס. כל המידע — פאזות 1-5, סקירה, ומבחנים.
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* Exam countdown */}
       <div className="bg-gradient-to-l from-red-500 to-orange-500 rounded-2xl p-5 text-white shadow-lg flex items-center justify-between flex-wrap gap-4">

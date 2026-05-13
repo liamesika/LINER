@@ -618,12 +618,12 @@ const day5: BattleDay = {
 export const battlePlan: BattleDay[] = [day1, day2, day3, day4, day5];
 
 export const examMeta = {
-  examDate: '2026-05-14',
-  examLabel: 'יום חמישי, 14 במאי 2026',
-  daysFromToday: 4,
-  totalStudyHours: 32,
-  hoursPerDay: 8,
-  studyDays: 4,
+  examDate: '2026-06-15',
+  examLabel: 'יום ב׳, 15 ביוני 2026',
+  daysFromToday: 33,
+  totalStudyHours: 45,
+  hoursPerDay: 1.5,
+  studyDays: 33,
 };
 
 export const goldenRules = [

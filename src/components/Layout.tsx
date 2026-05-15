@@ -31,6 +31,7 @@ import {
   Link2,
   Swords,
   Calculator,
+  Brain,
 } from 'lucide-react';
 
 interface NavItem {
@@ -59,6 +60,7 @@ const navGroups: NavGroup[] = [
       { href: '/insights', labelHe: '🧠 תובנות מ-HW + מבחנים', icon: <Target className="w-5 h-5" />, highlight: true },
       { href: '/mock-exams', labelHe: '📝 מבחני הדמיה (3)', icon: <FileCheck className="w-5 h-5" />, highlight: true },
       { href: '/hw-summaries', labelHe: '📓 HW9+10+12 — אינטואיציה', icon: <BookOpen className="w-5 h-5" />, highlight: true },
+      { href: '/study-game', labelHe: '🎮 משחק הגדרות', icon: <Brain className="w-5 h-5" />, highlight: true },
     ],
   },
   {

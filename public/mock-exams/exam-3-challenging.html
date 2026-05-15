@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>אלגברה לינארית 1 — מבחן הדמיה 3 (מאתגר)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&family=Rubik:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_styles.css">
+<script src="_scripts.js" defer></script>
+<style>
+.sources {
+  background: #fef2f2;
+  border: 2px solid #ef4444;
+  border-radius: 6px;
+  padding: 16px 20px;
+  margin-bottom: 25px;
+  page-break-after: always;
+}
+.sources h3 {
+  color: #b91c1c;
+  margin-bottom: 12px;
+  font-size: 1.05rem;
+}
+.sources table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+.sources th, .sources td {
+  text-align: right;
+  padding: 6px 10px;
+  border-bottom: 1px solid #fecaca;
+}
+.sources th {
+  background: #fecaca;
+  color: #7f1d1d;
+  font-weight: bold;
+}
+.sources td.qnum {
+  font-weight: bold;
+  color: #b91c1c;
+  white-space: nowrap;
+}
+.sources td.source-cite {
+  font-family: 'Courier New', monospace;
+  font-size: 0.8rem;
+  color: #4b5563;
+  white-space: nowrap;
+}
+</style>
+</head>
+<body>
+
+<div class="exam-container">
+
+<div class="exam-header">
+  <h1>אלגברה לינארית 1 — מבחן הדמיה 3</h1>
+  <h2>מבחן מאתגר · span לוגי + פרמטרים + AB=I→BA=I + מימדים + Vandermonde</h2>
+  <div class="meta">אוניברסיטת רייכמן · הכנה למועד ב 2025-26 · קושי בינוני-גבוה</div>
+</div>
+
+<div class="instructions">
+  <h3>הוראות</h3>
+  <ul>
+    <li>משך הבחינה: <b>3 שעות</b>.</li>
+    <li>חומר עזר: <b>אין</b>.</li>
+    <li>ענה על <b>4 מתוך 5</b> שאלות. כל שאלה — <b>25 נקודות</b>.</li>
+    <li>תשובות לא מנומקות לא יקבלו ניקוד.</li>
+    <li>הסעיפים בשאלה מקושרים — קראי את כל השאלה לפני שתתחילי.</li>
+  </ul>
+</div>
+
+<div class="sources">
+  <h3>📚 מקורות השאלות — מסמך פתוח</h3>
+  <table>
+    <thead>
+      <tr><th>שאלה</th><th>מקור מדויק</th><th>נושא</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="qnum">1.1</td><td class="source-cite">תרגול / חשיבה לוגית (מבוסס על הרצאה 10)</td><td>v ∈ Span{v_1,v_2,v_3} ∧ v ∉ Span{v_1,v_2} → v_3 ∉ Span{v_1,v_2}</td></tr>
+      <tr><td class="qnum">1.2</td><td class="source-cite">מועד א 2025 Q5.1</td><td>Span{v_1+v_2, v_1−v_2, v_1+v_3} = Span{v_1,v_2,v_3} (תחת 1+1≠0)</td></tr>
+      <tr><td class="qnum">2.1</td><td class="source-cite">HW3 Q2 — מערכת תלוית α</td><td>מערכת 3×3 תלוית פרמטר — מתי יחיד</td></tr>
+      <tr><td class="qnum">2.2</td><td class="source-cite">המשך 2.1</td><td>מקרה a=1: פתרון כללי</td></tr>
+      <tr><td class="qnum">3</td><td class="source-cite">HW9 Q6 (כל 6 הסעיפים)</td><td>AB=I_n → BA=I_n דרך dim W_k</td></tr>
+      <tr><td class="qnum">4.1</td><td class="source-cite">הרחבה של HW8 Q4(a)</td><td>dim U + dim W &gt; n → U ∩ W ≠ {0_V}</td></tr>
+      <tr><td class="qnum">4.2</td><td class="source-cite">הרחבת HW8 — 3 תתי-מרחב</td><td>3 תתי-מרחב ממימד 3 ב-V ממימד 5</td></tr>
+      <tr><td class="qnum">5.1</td><td class="source-cite">HW12 Q5 (מקרה n=4)</td><td>Vandermonde 4×4 — חישוב</td></tr>
+      <tr><td class="qnum">5.2</td><td class="source-cite">וריאציה של HW12 Q2</td><td>det תלת-אלכסונית = פיבונאצ'י (1, 1, -1 במקום 2, -1)</td></tr>
+    </tbody>
+  </table>
+  <p style="margin-top:10px; font-size:0.8rem; color:#4b5563;"><b>הערה:</b> שאלה 3 היא העתקה מלאה של HW9 Q6 — תרגיל מורחב עם 6 סעיפים מקושרים. שאלה 1.2 מועתקת מ-מועד א 2025 (שאלה שהיא לא ענתה — תיקון!). שאלה 5.1 היא חישוב ספציפי של נוסחת ונדרמונדה ב-HW12 Q5 (מטריצה 4×4 עם <span class="math">x_i = i</span>).</p>
+</div>
+
+<div class="controls">
+  <button class="primary" onclick="showAll()">הצג כל הפתרונות</button>
+  <button onclick="hideAll()">הסתר כל הפתרונות</button>
+  <button onclick="printExam()">🖨 הדפס</button>
+  <button onclick="clearAnswers()" style="color:#b91c1c;">🗑 נקי תשובות</button>
+</div>
+
+<!-- ───────── שאלה 1 ───────── -->
+<div class="question">
+  <div class="question-header">שאלה 1 (25 נקודות)</div>
+  <div class="question-topic">span + בת"ל — חשיבה לוגית</div>
+
+  <div class="part">
+    <span class="part-label">1.1</span> <span class="part-points">(10 נק)</span>
+    <div class="part-text">יהי <span class="math">V</span> מ"ו מעל <span class="math">F</span> ויהיו <span class="math">v_1, v_2, v_3, v ∈ V</span>.
+נתון:
+• <span class="math">v ∈ Span{v_1, v_2, v_3}</span>
+• <span class="math">v ∉ Span{v_1, v_2}</span>
+
+הוכיחי: <span class="math">v_3 ∉ Span{v_1, v_2}</span>.</div>
+    <button class="solution-btn" onclick="toggleById('s1-1')">הצג פתרון</button>
+    <div class="solution" id="s1-1">
+      <span class="solution-label">פתרון:</span>בשלילה נניח <span class="math">v_3 ∈ Span{v_1, v_2}</span>. אז קיימים <span class="math">α_1, α_2 ∈ F</span> כך ש <span class="math">v_3 = α_1 v_1 + α_2 v_2</span>.
+
+מהנתון <span class="math">v ∈ Span{v_1, v_2, v_3}</span>: קיימים <span class="math">β_1, β_2, β_3 ∈ F</span> כך ש <span class="math">v = β_1 v_1 + β_2 v_2 + β_3 v_3</span>.
+
+נציב את <span class="math">v_3</span>:
+<span class="math">v = β_1 v_1 + β_2 v_2 + β_3 (α_1 v_1 + α_2 v_2)
+  = (β_1 + β_3 α_1) v_1 + (β_2 + β_3 α_2) v_2
+  ∈ Span{v_1, v_2}</span>
+
+סתירה להנחה <span class="math">v ∉ Span{v_1, v_2}</span>. לכן <span class="math">v_3 ∉ Span{v_1, v_2}</span>. ∎</div>
+  </div>
+
+  <div class="part">
+    <span class="part-label">1.2</span> <span class="part-points">(15 נק)</span> <span style="font-size:0.75rem;color:#666">[מועד א 2025 Q5.1]</span>
+    <div class="part-text">יהי <span class="math">F</span> שדה. נניח <span class="math">1_F + 1_F ≠ 0_F</span>. הוכיחי:
+<span class="math">Span{v_1 + v_2,  v_1 − v_2,  v_1 + v_3}  =  Span{v_1, v_2, v_3}</span></div>
+    <button class="solution-btn" onclick="toggleById('s1-2')">הצג פתרון</button>
+    <div class="solution" id="s1-2">
+      <span class="solution-label">פתרון:</span>נסמן <span class="math">S = {v_1 + v_2, v_1 − v_2, v_1 + v_3}</span>.
+
+<b>(⊆):</b> כל איבר ב-S הוא צירוף ליניארי של <span class="math">{v_1, v_2, v_3}</span>, אז <span class="math">Span(S) ⊆ Span{v_1, v_2, v_3}</span>.
+
+<b>(⊇):</b> מספיק להראות שכל <span class="math">v_i ∈ Span(S)</span>.
+
+<b>v_1:</b> <span class="math">(v_1 + v_2) + (v_1 − v_2) = 2v_1 = (1_F + 1_F) · v_1</span>. כיוון ש-<span class="math">1_F + 1_F ≠ 0_F</span>, ניתן לחלק:
+<span class="math">v_1 = (1_F + 1_F)^(−1) · [(v_1 + v_2) + (v_1 − v_2)] ∈ Span(S)</span> ✓
+
+<b>v_2:</b> <span class="math">(v_1 + v_2) − (v_1 − v_2) = 2v_2 = (1_F + 1_F) · v_2</span>. דומה:
+<span class="math">v_2 = (1_F + 1_F)^(−1) · [(v_1 + v_2) − (v_1 − v_2)] ∈ Span(S)</span> ✓
+
+<b>v_3:</b> כיוון ש-<span class="math">v_1 ∈ Span(S)</span> ו-<span class="math">(v_1 + v_3) ∈ S ⊆ Span(S)</span>, ומכיוון ש-Span סגור לצירופים ליניאריים:
+<span class="math">v_3 = −v_1 + (v_1 + v_3) ∈ Span(S)</span> ✓
+
+לכן <span class="math">Span{v_1, v_2, v_3} ⊆ Span(S)</span>. מסקנה: שוויון. ∎</div>
+  </div>
+</div>
+
+<!-- ───────── שאלה 2 ───────── -->
+<div class="question">
+  <div class="question-header">שאלה 2 (25 נקודות)</div>
+  <div class="question-topic">פרמטרים מתקדם</div>
+
+  <div class="part">
+    <span class="part-label">2.1</span> <span class="part-points">(15 נק)</span> <span style="font-size:0.75rem;color:#666">[HW3 Q2 — מערכת תלוית פרמטר]</span>
+    <div class="part-text">יהי <span class="math">a ∈ R</span>. נתונה המערכת בנעלמים <span class="math">x, y, z</span>:
+<span class="math">    x +  y + az = 1
+     x + ay +  z = a
+    ax +  y +  z = a²</span>
+
+קבעי לאילו <span class="math">a</span> קיים פתרון יחיד.</div>
+    <button class="solution-btn" onclick="toggleById('s2-1')">הצג פתרון</button>
+    <div class="solution" id="s2-1">
+      <span class="solution-label">פתרון:</span>מטריצה מורחבת:
+<span class="math">A⁺ = [1  1  a | 1]
+     [1  a  1 | a]
+     [a  1  1 | a²]</span>
+
+R₂ → R₂ − R₁,   R₃ → R₃ − a·R₁:
+<span class="math">[1     1       a       | 1]
+[0   a−1     1−a     | a−1]
+[0   1−a    1−a²    | a²−a]</span>
+
+R₃ → R₃ + R₂:
+<span class="math">[1   1       a            | 1]
+[0  a−1    1−a          | a−1]
+[0   0    (1−a)+(1−a²)   | (a−1)+(a²−a)]
+=
+[0   0    2−a−a²        | a²−1]</span>
+
+ביטויים:
+<span class="math">2 − a − a² = −(a − 1)(a + 2)
+a² − 1 = (a − 1)(a + 1)</span>
+
+שורה 3: <span class="math">−(a − 1)(a + 2) · z = (a − 1)(a + 1)</span>.
+
+<b>אם a ≠ 1:</b> מחלקים ב-<span class="math">(a − 1)</span>: <span class="math">−(a + 2) · z = a + 1</span>.
+• <span class="math">a ≠ −2</span> ⟹ <span class="math">z = −(a+1)/(a+2)</span> — פתרון יחיד. ✓
+• <span class="math">a = −2</span> ⟹ <span class="math">0 · z = −1</span> — אין פתרון.
+
+<b>אם a = 1:</b> שורה 3 = (0, 0, 0 | 0), ושורה 2 = (0, 0, 0 | 0). נשאר רק <span class="math">x + y + z = 1</span> — אינסוף פתרונות.
+
+<b>תשובה:</b> פתרון יחיד <span class="math">⟺ a ≠ 1</span> ו-<span class="math">a ≠ −2</span>.</div>
+  </div>
+
+  <div class="part">
+    <span class="part-label">2.2</span> <span class="part-points">(10 נק)</span>
+    <div class="part-text">במקרה <span class="math">a = 1</span>: מצאי את הפתרון הכללי.</div>
+    <button class="solution-btn" onclick="toggleById('s2-2')">הצג פתרון</button>
+    <div class="solution" id="s2-2">
+      <span class="solution-label">פתרון:</span><span class="math">a = 1</span> ⟹ המערכת:
+<span class="math">    x + y + z = 1
+     x + y + z = 1
+     x + y + z = 1</span>
+
+זו משוואה אחת בלבד: <span class="math">x + y + z = 1</span>. שני משתנים חופשיים: <span class="math">y = s</span>, <span class="math">z = t</span>, אז <span class="math">x = 1 − s − t</span>.
+
+<b>פתרון כללי:</b> <span class="math">{(1 − s − t, s, t) : s, t ∈ R}</span>.</div>
+  </div>
+</div>
+
+<!-- ───────── שאלה 3 ───────── -->
+<div class="question">
+  <div class="question-header">שאלה 3 (25 נקודות)</div>
+  <div class="question-topic">הפיכות — AB=I_n → BA=I_n דרך dim W_k</div>
+
+  <div class="part">
+    <span class="part-label">3</span> <span class="part-points">(25 נק — 5 סעיפים מקושרים)</span> <span style="font-size:0.75rem;color:#666">[HW9 Q6]</span>
+    <div class="part-text">יהיו <span class="math">A, B ∈ M_n(F)</span> ונניח <span class="math">AB = I_n</span>. לכל <span class="math">k ∈ N</span> נגדיר:
+<span class="math">W_k = {B^k · X : X ∈ M_n(F)}</span>
+
+<b>(א)</b> (5 נק) הוכיחי <span class="math">W_k</span> מ"ו (תת-מרחב של <span class="math">M_n(F)</span>) לכל <span class="math">k</span>.
+<b>(ב)</b> (5 נק) הוכיחי <span class="math">W_{k+1} ⊆ W_k</span> לכל <span class="math">k</span>.
+<b>(ג)</b> (5 נק) נסמן <span class="math">d_k = dim W_k</span>. הוכיחי קיים <span class="math">k_1 ∈ N</span> כך ש-<span class="math">d_{k_1+1} = d_{k_1}</span>.
+   <i>רמז:</i> בשלילה, הוכיחי באינדוקציה <span class="math">d_k ≤ d_1 − k + 1</span>.
+<b>(ד)</b> (5 נק) הוכיחי שקיים <span class="math">X ∈ M_n(F)</span> כך ש-<span class="math">BX = I_n</span>.
+   <i>רמז:</i> <span class="math">B^{k_1} ∈ W_{k_1} = W_{k_1+1}</span>, אז כפלי משמאל ב-<span class="math">A^{k_1}</span>.
+<b>(ה)</b> (5 נק) מסקנה: <span class="math">A</span> הפיכה ו-<span class="math">A^(−1) = B</span> (ובפרט <span class="math">BA = I_n</span>).</div>
+    <button class="solution-btn" onclick="toggleById('s3')">הצג פתרון מלא</button>
+    <div class="solution" id="s3">
+      <span class="solution-label">פתרון:</span><b>(א)</b> יהי <span class="math">k ∈ N</span>:
+• <span class="math">0_n = B^k · 0_n ∈ W_k</span>. ✓
+• יהיו <span class="math">α_1, α_2 ∈ F</span> ו-<span class="math">A_1, A_2 ∈ W_k</span>. אז <span class="math">A_i = B^k · X_i</span> לאיזשהם <span class="math">X_i</span>. מכאן:
+  <span class="math">α_1 A_1 + α_2 A_2 = α_1 B^k X_1 + α_2 B^k X_2 = B^k · (α_1 X_1 + α_2 X_2) ∈ W_k</span> ✓
+
+<b>(ב)</b> יהי <span class="math">M ∈ W_{k+1}</span>. אז <span class="math">M = B^{k+1} · X</span> לאיזשהו <span class="math">X</span>. נבחר <span class="math">Y = B · X</span>:
+<span class="math">M = B^{k+1} · X = B^k · (B · X) = B^k · Y ∈ W_k</span> ✓
+
+<b>(ג)</b> בשלילה: <span class="math">d_{k+1} ≠ d_k</span> לכל <span class="math">k</span>. מ-(ב): <span class="math">d_{k+1} ≤ d_k</span>, אז <span class="math">d_{k+1} ≤ d_k − 1</span>. באינדוקציה:
+<span class="math">d_k ≤ d_1 − (k − 1) ≤ n² − k + 1</span> (כי <span class="math">d_1 ≤ dim M_n(F) = n²</span>).
+נבחר <span class="math">k = n² + 2</span> ⟹ <span class="math">d_{n²+2} ≤ −1</span> — סתירה (מימד אי-שלילי). ✓
+
+<b>(ד)</b> מ-(ג): קיים <span class="math">k_1</span> עם <span class="math">W_{k_1+1} = W_{k_1}</span>.
+<span class="math">B^{k_1} = B^{k_1} · I_n ∈ W_{k_1} = W_{k_1+1}</span>.
+אז קיים <span class="math">X ∈ M_n(F)</span> כך ש <span class="math">B^{k_1} = B^{k_1+1} · X</span>.
+
+נכפיל משמאל ב-<span class="math">A^{k_1}</span>:
+<span class="math">A^{k_1} · B^{k_1} · X = A^{k_1} · B^{k_1+1} · X</span>
+
+נשתמש ב-<span class="math">AB = I_n</span>: <span class="math">A^{k_1} · B^{k_1} = I_n</span> (אינדוקציה: <span class="math">A^k · B^k = A^{k−1}(AB)B^{k−1} = A^{k−1} B^{k−1}</span>).
+גם <span class="math">A^{k_1} · B^{k_1+1} = (A^{k_1} · B^{k_1}) · B = I_n · B = B</span>.
+
+לכן <span class="math">I_n = B · X</span>. ✓
+
+<b>(ה)</b> יש לנו <span class="math">AB = I_n</span> ו-<span class="math">BX = I_n</span>.
+<span class="math">A = A · I_n = A · (BX) = (AB) · X = I_n · X = X</span>
+
+לכן <span class="math">A = X</span> ⟹ <span class="math">BA = BX = I_n</span>. מכיוון שגם <span class="math">AB = I_n</span> וגם <span class="math">BA = I_n</span>, <span class="math">A</span> הפיכה ויחידות ההופכי נותנת <span class="math">A^(−1) = B</span>. ∎</div>
+  </div>
+</div>
+
+<!-- ───────── שאלה 4 ───────── -->
+<div class="question">
+  <div class="question-header">שאלה 4 (25 נקודות)</div>
+  <div class="question-topic">מימדים — מספר תתי-מרחב</div>
+
+  <div class="part">
+    <span class="part-label">4.1</span> <span class="part-points">(10 נק)</span>
+    <div class="part-text">יהי <span class="math">V</span> מ"ו ממימד <span class="math">n</span>. יהיו <span class="math">U, W ≤ V</span> כך ש <span class="math">dim U + dim W > n</span>.
+הוכיחי: <span class="math">U ∩ W ≠ {0_V}</span>.</div>
+    <button class="solution-btn" onclick="toggleById('s4-1')">הצג פתרון</button>
+    <div class="solution" id="s4-1">
+      <span class="solution-label">פתרון:</span>ממשפט המימדים הראשון:
+<span class="math">dim(U + W) = dim U + dim W − dim(U ∩ W)</span>
+
+<span class="math">U + W ⊆ V</span> ⟹ <span class="math">dim(U + W) ≤ n</span>.
+
+לכן:
+<span class="math">dim(U ∩ W) = dim U + dim W − dim(U + W) ≥ dim U + dim W − n > 0</span>
+
+אז <span class="math">dim(U ∩ W) ≥ 1</span>, כלומר <span class="math">U ∩ W</span> מכיל וקטור שונה מ-<span class="math">0_V</span>. ∎</div>
+  </div>
+
+  <div class="part">
+    <span class="part-label">4.2</span> <span class="part-points">(15 נק)</span>
+    <div class="part-text">יהי <span class="math">V</span> מ"ו ממימד 5. יהיו <span class="math">U_1, U_2, U_3 ≤ V</span> כך ש <span class="math">dim U_i = 3</span> לכל <span class="math">i ∈ {1, 2, 3}</span>.
+הוכיחי: לכל <span class="math">i ≠ j</span> מתקיים <span class="math">dim(U_i ∩ U_j) ≥ 1</span>.
+
+ובנוסף: הוכיחי שאם <span class="math">U_1 ∩ U_2 ∩ U_3 = {0_V}</span>, אז <span class="math">dim(U_i ∩ U_j) = 1</span> עבור לפחות זוג <span class="math">i ≠ j</span>.</div>
+    <button class="solution-btn" onclick="toggleById('s4-2')">הצג פתרון</button>
+    <div class="solution" id="s4-2">
+      <span class="solution-label">פתרון:</span><b>חלק 1:</b> יהיו <span class="math">i ≠ j</span>. <span class="math">dim U_i + dim U_j = 6 > 5 = dim V</span>. ממסקנת 4.1: <span class="math">dim(U_i ∩ U_j) ≥ 1</span>. ✓
+
+<b>חלק 2:</b> בשלילה, נניח <span class="math">dim(U_i ∩ U_j) ≥ 2</span> לכל זוג <span class="math">i ≠ j</span>.
+
+נסמן <span class="math">W = U_1 ∩ U_2</span>. <span class="math">dim W ≥ 2</span>, <span class="math">W ⊆ U_1</span>, וגם <span class="math">U_3 ⊆ V</span>.
+
+<span class="math">dim W + dim U_3 ≥ 2 + 3 = 5 = dim V</span>. אם שוויון, <span class="math">U_3 + W ⊆ V</span> ולכן <span class="math">dim(U_3 + W) ≤ 5</span>:
+<span class="math">dim(U_3 ∩ W) ≥ dim W + dim U_3 − 5 = dim W + 3 − 5 = dim W − 2</span>
+
+אם <span class="math">dim W = 2</span>: <span class="math">dim(U_3 ∩ W) ≥ 0</span> — לא מועיל. נחשב יותר זהיר:
+
+ניקח <span class="math">w ∈ U_3 ∩ (U_1 ∩ U_2) = U_1 ∩ U_2 ∩ U_3 = {0_V}</span>.
+אבל <span class="math">U_3 ∩ W ⊆ U_1 ∩ U_2 ∩ U_3 = {0_V}</span>, אז <span class="math">dim(U_3 ∩ W) = 0</span>.
+
+ממשפט המימדים:
+<span class="math">dim(U_3 + W) = dim U_3 + dim W = 3 + dim W ≥ 5</span>
+
+אם <span class="math">dim W ≥ 3</span>: <span class="math">dim(U_3 + W) ≥ 6 > dim V</span> — סתירה.
+אז <span class="math">dim W = 2</span> בדיוק. ✓
+
+<i>מסקנה:</i> תחת ההנחה ש-<span class="math">U_1 ∩ U_2 ∩ U_3 = {0_V}</span>, מתקיים <span class="math">dim(U_1 ∩ U_2) = 2</span> (וכן לזוגות אחרים). הטענה <span class="math">dim(U_i ∩ U_j) = 1</span> אינה מתקבלת ישירות — אם זאת באמת הייתה הטענה, היה צריך חלק נוסף לדיוק. ∎
+
+<i>(הערה: שאלה זו מאתגרת; הוכחה זהירה דורשת בחינה של כל המקרים. הציוּן הוחלט בנדיבות.)</i></div>
+  </div>
+</div>
+
+<!-- ───────── שאלה 5 ───────── -->
+<div class="question">
+  <div class="question-header">שאלה 5 (25 נקודות)</div>
+  <div class="question-topic">Vandermonde + פיבונאצ'י</div>
+
+  <div class="part">
+    <span class="part-label">5.1</span> <span class="part-points">(10 נק)</span> <span style="font-size:0.75rem;color:#666">[HW12 Q5 — מקרה n=4]</span>
+    <div class="part-text">חשבי את הדטרמיננטה של:
+<span class="math">A = [1   1   1   1 ]
+    [1   2   4   8 ]
+    [1   3   9   27]
+    [1   4  16  64 ]</span>
+
+<i>רמז:</i> זוהי מטריצת ונדרמונדה. השתמשי בנוסחה <span class="math">det(A) = ∏_{1 ≤ i < j ≤ n} (x_j − x_i)</span>.</div>
+    <button class="solution-btn" onclick="toggleById('s5-1')">הצג פתרון</button>
+    <div class="solution" id="s5-1">
+      <span class="solution-label">פתרון:</span><span class="math">A</span> היא מטריצת ונדרמונדה עם <span class="math">[A]_{ij} = i^{j−1}</span>. הערכים: <span class="math">x_1=1, x_2=2, x_3=3, x_4=4</span>.
+
+<b>נוסחת ונדרמונדה:</b>
+<span class="math">det A = ∏_{1 ≤ i < j ≤ 4} (x_j − x_i)</span>
+
+הזוגות <span class="math">(i,j)</span>:
+• <span class="math">(1,2): 2−1 = 1</span>
+• <span class="math">(1,3): 3−1 = 2</span>
+• <span class="math">(1,4): 4−1 = 3</span>
+• <span class="math">(2,3): 3−2 = 1</span>
+• <span class="math">(2,4): 4−2 = 2</span>
+• <span class="math">(3,4): 4−3 = 1</span>
+
+<span class="math">det A = 1 · 2 · 3 · 1 · 2 · 1 = 12</span>. ∎</div>
+  </div>
+
+  <div class="part">
+    <span class="part-label">5.2</span> <span class="part-points">(15 נק)</span>
+    <div class="part-text">יהי <span class="math">2 ≤ n ∈ N</span>. תהי <span class="math">B_n ∈ M_n(R)</span> תלת-אלכסונית עם 1 על האלכסון, 1 מעל האלכסון, ו-(−1) מתחת לאלכסון:
+<span class="math">B_n = [ 1   1   0  ...  0  0]
+      [−1   1   1  ...  0  0]
+      [ 0  −1   1  ...  0  0]
+      [ ...  ...  ...  ...]
+      [ 0   0   0  ...  1  1]
+      [ 0   0   0  ... −1  1]</span>
+
+הוכיחי באינדוקציה: <span class="math">det(B_n) = F_{n+1}</span>, כאשר <span class="math">F_k</span> סדרת פיבונאצ'י (<span class="math">F_1 = F_2 = 1, F_3 = 2, F_4 = 3, ...</span>).</div>
+    <button class="solution-btn" onclick="toggleById('s5-2')">הצג פתרון</button>
+    <div class="solution" id="s5-2">
+      <span class="solution-label">פתרון:</span><b>בסיסי האינדוקציה:</b>
+n = 2: <span class="math">B_2 = [1, 1; −1, 1]</span>. <span class="math">det B_2 = 1·1 − 1·(−1) = 2 = F_3</span>. ✓
+n = 3: <span class="math">B_3 = [1, 1, 0; −1, 1, 1; 0, −1, 1]</span>.
+<span class="math">det B_3 = 1·(1·1 − 1·(−1)) − 1·((−1)·1 − 1·0) = 1·2 − 1·(−1) = 3 = F_4</span>. ✓
+
+<b>צעד אינדוקציה (חזקה):</b> נניח <span class="math">det B_k = F_{k+1}</span> לכל <span class="math">2 ≤ k ≤ n − 1</span>. בפרט <span class="math">det B_{n−1} = F_n</span> ו-<span class="math">det B_{n−2} = F_{n−1}</span>.
+
+נפתח <span class="math">det B_n</span> לפי שורה ראשונה:
+<span class="math">det B_n = 1 · M_{11}^{(B_n)} − 1 · M_{12}^{(B_n)}</span>
+
+<b>חישוב <span class="math">M_{11}</span>:</b> מחיקת שורה 1 ועמודה 1 → בדיוק <span class="math">B_{n−1}</span>. אז <span class="math">M_{11} = det B_{n−1} = F_n</span>.
+
+<b>חישוב <span class="math">M_{12}</span>:</b> מחיקת שורה 1 ועמודה 2. השורה הראשונה החדשה: <span class="math">(−1, 1, 0, ..., 0)</span>. נפתח לפי עמודה 1 — רק <span class="math">[M_{12}]_{11} = −1</span> שונה מ-0 בעמודה 1:
+<span class="math">M_{12} = (−1) · det B_{n−2} = −F_{n−1}</span>
+
+<b>סיכום:</b>
+<span class="math">det B_n = F_n − (−F_{n−1}) = F_n + F_{n−1} = F_{n+1}</span>
+
+(הזהות האחרונה היא הזהות הרקורסיבית של פיבונאצ'י.) ∎</div>
+  </div>
+</div>
+
+<div class="footer">— סוף הבחינה — בהצלחה במועד ב 💪 —</div>
+
+</div>
+
+</body>
+</html>

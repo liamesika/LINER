@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>הגדרות — סיכום מלא · אלגברה לינארית 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&family=Rubik:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 14px; -webkit-font-smoothing: antialiased; }
+body {
+  font-family: 'Heebo', sans-serif;
+  background: #fafafa;
+  color: #1f2937;
+  line-height: 1.6;
+  padding: 16px;
+  direction: rtl;
+}
+.sheet {
+  max-width: 950px;
+  margin: 0 auto;
+  background: white;
+  padding: 24px 30px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+  border-radius: 8px;
+}
+.title {
+  text-align: center;
+  margin-bottom: 18px;
+}
+.title h1 {
+  font-family: 'Rubik', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #4338ca;
+}
+.title .sub { font-size: 0.78rem; color: #6b7280; margin-top: 2px; }
+
+.bar {
+  color: white;
+  padding: 8px 14px;
+  border-radius: 5px;
+  font-family: 'Rubik', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  margin: 20px 0 10px;
+}
+.bar.b1 { background: #6d28d9; }
+.bar.b2 { background: #c2410c; }
+.bar.b3 { background: #0d9488; }
+.bar.b4 { background: #0369a1; }
+.bar.b5 { background: #be185d; }
+.bar.b6 { background: #4338ca; }
+.bar.b7 { background: #15803d; }
+
+.def {
+  background: #eff6ff;
+  border-right: 3px solid #2563eb;
+  border-radius: 5px;
+  padding: 9px 14px;
+  margin: 6px 0;
+  font-size: 0.86rem;
+  line-height: 1.7;
+}
+.def .head {
+  font-weight: 700;
+  color: #1d4ed8;
+  font-size: 0.92rem;
+  margin-bottom: 3px;
+}
+.def .body { color: #1e3a8a; }
+.def .ex {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.8rem;
+  color: #475569;
+  font-style: italic;
+}
+.def .src {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: #64748b;
+  margin-right: 4px;
+}
+.tag {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 1px 7px;
+  border-radius: 3px;
+  background: #2563eb;
+  color: white;
+  margin-left: 6px;
+  vertical-align: 1px;
+  font-family: 'Rubik', sans-serif;
+}
+.tag.note { background: #ca8a04; }
+.tag.thm { background: #16a34a; }
+.tag.warn { background: #dc2626; }
+
+.note {
+  background: #fefce8;
+  border-right: 3px solid #ca8a04;
+  border-radius: 5px;
+  padding: 8px 14px;
+  margin: 6px 0;
+  font-size: 0.84rem;
+}
+.note .head { font-weight: 700; color: #a16207; margin-bottom: 3px; }
+
+.warn-card {
+  background: #fef2f2;
+  border-right: 3px solid #dc2626;
+  border-radius: 5px;
+  padding: 8px 14px;
+  margin: 6px 0;
+  font-size: 0.84rem;
+}
+.warn-card .head { font-weight: 700; color: #b91c1c; margin-bottom: 3px; }
+
+.math {
+  font-family: 'STIX Two Math', 'Cambria Math', serif;
+  font-style: italic;
+  direction: ltr;
+  unicode-bidi: embed;
+  padding: 0 2px;
+}
+.mathb {
+  font-family: 'STIX Two Math', 'Cambria Math', serif;
+  font-style: italic;
+  font-weight: 700;
+  direction: ltr;
+  unicode-bidi: embed;
+  padding: 0 2px;
+  color: #0f172a;
+}
+
+table.tbl {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+  margin: 6px 0;
+}
+.tbl th, .tbl td {
+  padding: 5px 8px;
+  border-bottom: 1px solid #e0e7ff;
+  text-align: right;
+}
+.tbl th {
+  background: #eff6ff;
+  color: #1e3a8a;
+  font-family: 'Rubik', sans-serif;
+  font-weight: 600;
+}
+
+@media print {
+  body { background: white; padding: 0; }
+  .sheet { box-shadow: none; padding: 16px; max-width: 100%; }
+  .bar { page-break-after: avoid; }
+  .def, .note, .warn-card { page-break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+
+<div class="sheet">
+
+<div class="title">
+  <h1>הגדרות — סיכום מלא</h1>
+  <div class="sub">אלגברה לינארית 1 · 15 פרקים לפי הסדר · הרצאות 1-23</div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<div class="bar b1">1 ◆ שדות (Fields) — הרצאות 1-4</div>
+
+<div class="def">
+  <div class="head">שדה <span class="tag">הגדרה</span></div>
+  <div class="body">
+    קבוצה <span class="mathb">F</span> עם שתי פעולות בינאריות — חיבור (+) וכפל (·) — שמקיימת את 9 האקסיומות הבאות. <strong>חיבור:</strong> סגירות, חילופיות (<span class="mathb">a+b = b+a</span>), קיבוציות, איבר אדיש <span class="mathb">0_F</span> (<span class="mathb">a+0 = a</span>), נגדי לכל <span class="mathb">a</span>. <strong>כפל:</strong> סגירות, חילופיות, קיבוציות, איבר יחידה <span class="mathb">1_F</span> (<span class="mathb">a·1 = a</span>), הופכי לכל <span class="mathb">a≠0</span>. <strong>פילוג:</strong> <span class="mathb">a·(b+c) = a·b + a·c</span>. תנאי חיוני: <span class="mathb">0_F ≠ 1_F</span>.
+  </div>
+  <span class="src">הרצ' 1</span>
+</div>
+
+<div class="def">
+  <div class="head">חלוקה עם שארית <span class="tag">הגדרה</span></div>
+  <div class="body">
+    לכל <span class="mathb">a ∈ ℤ</span> ו-<span class="mathb">b ∈ ℕ</span> קיימים <span class="mathb">q, r</span> יחידים כך ש: <span class="mathb">a = q·b + r</span> עם <span class="mathb">0 ≤ r &lt; b</span>. סימון: <span class="mathb">a mod b = r</span>.
+  </div>
+  <span class="src">הרצ' 3</span>
+</div>
+
+<div class="def">
+  <div class="head">מחלק <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <span class="mathb">a</span> מחלק את <span class="mathb">b</span> (סימון: <span class="mathb">a | b</span>) אם קיים <span class="mathb">k ∈ ℤ</span> כך ש <span class="mathb">b = k·a</span>.
+  </div>
+  <span class="src">הרצ' 3</span>
+</div>
+
+<div class="def">
+  <div class="head">שקילות מודולו n <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <span class="mathb">a ≡ b (mod n)</span> אם <span class="mathb">n | (a-b)</span>, כלומר ההפרש מתחלק ב-<span class="mathb">n</span>.
+  </div>
+  <span class="src">הרצ' 3</span>
+</div>
+
+<div class="def">
+  <div class="head"><span class="mathb">ℤ_n</span> <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <span class="mathb">ℤ_n = {0, 1, 2, ..., n-1}</span> — קבוצת השאריות מודולו <span class="mathb">n</span>. חיבור: <span class="mathb">a ⊕ b = (a+b) mod n</span>. כפל: <span class="mathb">a ⊙ b = (a·b) mod n</span>.
+    <span class="ex">מסקנה חשובה: <span class="mathb">ℤ_n</span> שדה ⟺ <span class="mathb">n</span> ראשוני.</span>
+  </div>
+  <span class="src">הרצ' 3</span>
+</div>
+
+<div class="def">
+  <div class="head">מספר ראשוני <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <span class="mathb">p ≥ 2</span> שמחלקיו היחידים הם <span class="mathb">1</span> ו-<span class="mathb">p</span>.
+  </div>
+  <span class="src">הרצ' 3</span>
+</div>
+
+<div class="def">
+  <div class="head">מספרים זרים (coprime) <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <span class="mathb">a, b</span> זרים אם המחלק המשותף היחיד שלהם הוא <span class="mathb">±1</span>.
+  </div>
+  <span class="src">הרצ' 3</span>
+</div>
+
+<div class="def">
+  <div class="head">תת-שדה <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <span class="mathb">F_1 ⊆ F</span> הוא תת-שדה אם הוא בעצמו שדה עם אותן פעולות.
+    <span class="ex">תנאי מקוצר: <span class="mathb">F_1</span> סגור לחיבור, לכפל, לנגדי ולהופכי, וגם <span class="mathb">0_F, 1_F ∈ F_1</span>.</span>
+  </div>
+  <span class="src">הרצ' 4</span>
+</div>
+
+<div class="def">
+  <div class="head">מספר מרוכב <span class="mathb">z = a + bi</span> <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <span class="mathb">a, b ∈ ℝ</span>, <span class="mathb">i² = -1</span>. חלק ממשי: <span class="mathb">Re(z) = a</span>. חלק מדומה: <span class="mathb">Im(z) = b</span>.
+    <span class="ex">צמוד: <span class="mathb">z̄ = a - bi</span>. מודול: <span class="mathb">|z| = √(a² + b²)</span>. הופכי: <span class="mathb">z⁻¹ = z̄ / |z|²</span>.</span>
+  </div>
+  <span class="src">הרצ' 4</span>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<div class="bar b2">2 ◆ מערכות ליניאריות — הרצאות 4-6</div>
+
+<div class="def">
+  <div class="head">מערכת ליניארית <span class="tag">הגדרה</span></div>
+  <div class="body">
+    מערכת של <span class="mathb">m</span> משוואות עם <span class="mathb">n</span> נעלמים <span class="mathb">x_1, ..., x_n</span> מעל שדה <span class="mathb">F</span>. כל משוואה: <span class="mathb">a_1 x_1 + a_2 x_2 + ... + a_n x_n = b</span>.
+  </div>
+  <span class="src">הרצ' 4</span>
+</div>
+
+<div class="def">
+  <div class="head">מטריצת מקדמים מורחבת <span class="mathb">A⁺</span> <span class="tag">הגדרה</span></div>
+  <div class="body">
+    טבלה שמייצגת את המערכת: כל שורה = משוואה, כל עמודה = מקדם של משתנה, ועמודה אחרונה = הוקטור החופשי (<span class="mathb">b</span>-ים).
+  </div>
+  <span class="src">הרצ' 4</span>
+</div>
+
+<div class="def">
+  <div class="head">מטריצת מקדמים מנותקת <span class="mathb">A</span> <span class="tag">הגדרה</span></div>
+  <div class="body">
+    כמו המורחבת, אבל בלי העמודה האחרונה של ה-<span class="mathb">b</span>-ים.
+  </div>
+  <span class="src">הרצ' 4</span>
+</div>
+
+<div class="def">
+  <div class="head"><span class="mathb">M_{m×n}(F)</span> <span class="tag">הגדרה</span></div>
+  <div class="body">
+    קבוצת כל המטריצות מסדר <span class="mathb">m × n</span> עם איברים מהשדה <span class="mathb">F</span>. כש-<span class="mathb">n=1</span> מסמנים <span class="mathb">F^m</span> (וקטורי עמודה).
+  </div>
+  <span class="src">הרצ' 4</span>
+</div>
+
+<div class="def">
+  <div class="head">פתרון פרטי <span class="tag">הגדרה</span></div>
+  <div class="body">
+    רשימה <span class="mathb">(s_1, ..., s_n)</span> שכשמציבים אותה במערכת — כל המשוואות מתקיימות.
+  </div>
+  <span class="src">הרצ' 5</span>
+</div>
+
+<div class="def">
+  <div class="head">פתרון כללי <span class="tag">הגדרה</span></div>
+  <div class="body">
+    קבוצת <strong>כל</strong> הפתרונות הפרטיים של המערכת.
+  </div>
+  <span class="src">הרצ' 5</span>
+</div>
+
+<div class="def">
+  <div class="head">מערכות שקולות <span class="tag">הגדרה</span></div>
+  <div class="body">
+    שתי מערכות שקולות אם יש להן <strong>אותה</strong> קבוצת פתרונות.
+  </div>
+  <span class="src">הרצ' 5</span>
+</div>
+
+<div class="def">
+  <div class="head">פעולות שורה אלמנטריות <span class="tag">הגדרה</span></div>
+  <div class="body">
+    שלוש פעולות שלא משנות את קבוצת הפתרונות:
+    <ol style="margin-right: 18px; margin-top: 4px;">
+      <li><strong>כפל שורה בסקלר:</strong> <span class="mathb">R_i → α·R_i</span> כש-<span class="mathb">α ≠ 0</span></li>
+      <li><strong>החלפת שורות:</strong> <span class="mathb">R_i ↔ R_j</span></li>
+      <li><strong>הוספת כפולה:</strong> <span class="mathb">R_i → R_i + α·R_j</span></li>
+    </ol>
+  </div>
+  <span class="src">הרצ' 5</span>
+</div>
+
+<div class="def">
+  <div class="head">מקדם מוביל <span class="tag">הגדרה</span></div>
+  <div class="body">
+    האיבר השמאלי ביותר שאינו 0 בשורה.
+  </div>
+  <span class="src">הרצ' 5</span>
+</div>
+
+<div class="def">
+  <div class="head">מטריצה מדורגת (EF) <span class="tag">הגדרה</span></div>
+  <div class="body">
+    מטריצה המקיימת:
+    <ol style="margin-right: 18px; margin-top: 4px;">
+      <li>שורות אפסים (אם יש) — בתחתית.</li>
+      <li>המקדם המוביל של כל שורה נמצא ימינה מהמקדם המוביל של השורה שמעליו.</li>
+    </ol>
+  </div>
+  <span class="src">הרצ' 5</span>
+</div>
+
+<div class="def">
+  <div class="head">מטריצה מדורגת קנונית (RREF) <span class="tag">הגדרה</span></div>
+  <div class="body">
+    מטריצה מדורגת המקיימת גם:
+    <ol style="margin-right: 18px; margin-top: 4px;">
+      <li>כל מקדם מוביל שווה ל-<span class="mathb">1</span>.</li>
+      <li>כל מקדם מוביל הוא האיבר היחיד שאינו 0 בעמודתו.</li>
+    </ol>
+    <span class="ex">הצורה הקנונית של מטריצה היא <strong>יחידה</strong>.</span>
+  </div>
+  <span class="src">הרצ' 5</span>
+</div>
+
+<div class="def">
+  <div class="head">משתנה קשור / חופשי <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <strong>קשור:</strong> עמודה שיש בה מקדם מוביל — המשתנה נקבע על-ידי האחרים. <strong>חופשי:</strong> עמודה ללא מקדם מוביל — אפשר לבחור לו כל ערך.
+  </div>
+  <span class="src">הרצ' 6</span>
+</div>
+
+<div class="def">
+  <div class="head">דרגה <span class="mathb">rank(A)</span> <span class="tag">הגדרה</span></div>
+  <div class="body">
+    מספר המקדמים המובילים בצורה הקנונית של <span class="mathb">A</span>.
+  </div>
+  <span class="src">הרצ' 6</span>
+</div>
+
+<div class="def">
+  <div class="head">מערכת הומוגנית <span class="tag">הגדרה</span></div>
+  <div class="body">
+    מערכת שבה כל ה-<span class="mathb">b_i = 0</span>. תמיד יש לה את הפתרון הטריוויאלי <span class="mathb">(0, ..., 0)</span>.
+  </div>
+  <span class="src">הרצ' 6</span>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<div class="bar b3">3 ◆ מרחב וקטורי — הרצאות 7-8</div>
+
+<div class="def">
+  <div class="head">מרחב וקטורי <span class="mathb">V</span> מעל שדה <span class="mathb">F</span> <span class="tag">הגדרה</span></div>
+  <div class="body">
+    קבוצה <span class="mathb">V</span> של "וקטורים" עם שתי פעולות (חיבור וקטורים, כפל בסקלר) המקיימת 10 אקסיומות:
+    <strong>חיבור:</strong> סגירות, חילופיות, קיבוציות, איבר אדיש <span class="mathb">0_V</span>, נגדי לכל <span class="mathb">v</span>.
+    <strong>כפל בסקלר:</strong> סגירות, קיבוציות (<span class="mathb">α(βv) = (αβ)v</span>), אדיש (<span class="mathb">1·v = v</span>).
+    <strong>פילוג:</strong> <span class="mathb">α(u+v) = αu + αv</span> ו-<span class="mathb">(α+β)v = αv + βv</span>.
+    <span class="ex">דוגמאות: <span class="mathb">F^n</span>, <span class="mathb">M_{m×n}(F)</span>, <span class="mathb">F[x]</span>.</span>
+  </div>
+  <span class="src">הרצ' 7</span>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<div class="bar b3">4 ◆ תת-מרחב (Subspace)</div>
+
+<div class="def">
+  <div class="head">תת-מרחב <span class="mathb">W ⊆ V</span> <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <span class="mathb">W</span> הוא תת-מרחב של <span class="mathb">V</span> אם הוא בעצמו מרחב וקטורי עם אותן פעולות.
+    <span class="ex"><strong>קריטריון מקוצר:</strong> <span class="mathb">W ≠ ∅</span> (או <span class="mathb">0_V ∈ W</span>), סגור לחיבור, סגור לכפל בסקלר. שווה ערך: סגור לצירוף ליניארי.</span>
+  </div>
+  <span class="src">הרצ' 8</span>
+</div>
+
+<div class="def">
+  <div class="head">תת-מרחבים טריוויאליים <span class="tag">הגדרה</span></div>
+  <div class="body">
+    לכל מ"ו יש שני תת-מרחבים טריוויאליים: <span class="mathb">V</span> עצמו, ו-<span class="mathb">{0_V}</span> (תת-מרחב האפס).
+  </div>
+  <span class="src">הרצ' 8</span>
+</div>
+
+<div class="def">
+  <div class="head">סכום <span class="mathb">U + W</span> <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <span class="mathb">U + W = {u + w : u ∈ U, w ∈ W}</span> — אוסף כל החיבורים של איבר מ-<span class="mathb">U</span> עם איבר מ-<span class="mathb">W</span>.
+  </div>
+  <span class="src">הרצ' 8</span>
+</div>
+
+<div class="def">
+  <div class="head">סכום ישר <span class="mathb">U ⊕ W</span> <span class="tag">הגדרה</span></div>
+  <div class="body">
+    הסכום <span class="mathb">U + W</span> נקרא <strong>סכום ישר</strong> כאשר <span class="mathb">U ∩ W = {0_V}</span>. כל איבר ב-<span class="mathb">U + W</span> ניתן אז לכתיבה <strong>יחידה</strong> בצורה <span class="mathb">u + w</span>.
+  </div>
+  <span class="src">הרצ' 8</span>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<div class="bar b3">5 ◆ מרחב פולינומים</div>
+
+<div class="def">
+  <div class="head"><span class="mathb">F[x]</span> <span class="tag">הגדרה</span></div>
+  <div class="body">
+    קבוצת כל הפולינומים מעל שדה <span class="mathb">F</span>: <span class="mathb">F[x] = {a_0 + a_1 x + ... + a_n x^n : n ≥ 0, a_i ∈ F}</span>. זהו מרחב וקטורי.
+  </div>
+  <span class="src">הרצ' 8</span>
+</div>
+
+<div class="def">
+  <div class="head">דרגת פולינום <span class="tag">הגדרה</span></div>
+  <div class="body">
+    אם <span class="mathb">p(x) = a_0 + a_1 x + ... + a_n x^n</span> עם <span class="mathb">a_n ≠ 0</span>: <span class="mathb">deg(p) = n</span>. אם כל המקדמים 0: <span class="mathb">deg(p) = -∞</span>.
+  </div>
+  <span class="src">הרצ' 8</span>
+</div>
+
+<div class="def">
+  <div class="head"><span class="mathb">F_n[x]</span> — פולינומים מדרגה ≤ n <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <span class="mathb">F_n[x] = {p(x) ∈ F[x] : deg(p) ≤ n}</span>. זהו תת-מרחב של <span class="mathb">F[x]</span>.
+  </div>
+  <span class="src">הרצ' 8</span>
+</div>
+
+<div class="def">
+  <div class="head">שוויון פולינומים <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <span class="mathb">p = q</span> ⟺ <span class="mathb">deg(p) = deg(q)</span> ולכל <span class="mathb">i</span> מתקיים <span class="mathb">a_i = b_i</span>.
+  </div>
+  <span class="src">הרצ' 8</span>
+</div>
+
+<div class="def">
+  <div class="head">הצבה ושורש <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <strong>הצבה:</strong> <span class="mathb">p(α) = a_0 + a_1 α + ... + a_n α^n</span>. <strong>שורש:</strong> <span class="mathb">α</span> שורש של <span class="mathb">p</span> אם <span class="mathb">p(α) = 0</span>.
+  </div>
+  <span class="src">הרצ' 8</span>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<div class="bar b6">6 ◆ Span (פרישה) — הרצאות 9-10</div>
+
+<div class="def">
+  <div class="head">צירוף ליניארי (LC) <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <span class="mathb">v</span> הוא צירוף ליניארי של <span class="mathb">v_1, ..., v_k</span> אם קיימים סקלרים <span class="mathb">α_1, ..., α_k ∈ F</span> כך ש: <span class="mathb">v = α_1 v_1 + α_2 v_2 + ... + α_k v_k</span>.
+  </div>
+  <span class="src">הרצ' 9</span>
+</div>
+
+<div class="def">
+  <div class="head"><span class="mathb">Span{v_1, ..., v_k}</span> <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <span class="mathb">Span{v_1, ..., v_k} = {α_1 v_1 + ... + α_k v_k : α_i ∈ F}</span> — קבוצת <strong>כל</strong> הצירופים הליניאריים. הסכמה: <span class="mathb">Span(∅) = {0_V}</span>.
+    <span class="ex">משפט: <span class="mathb">Span</span> תמיד תת-מרחב של <span class="mathb">V</span>.</span>
+  </div>
+  <span class="src">הרצ' 9</span>
+</div>
+
+<div class="def">
+  <div class="head">קבוצה פורשת (spanning set) <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <span class="mathb">S</span> פורשת את <span class="mathb">V</span> אם <span class="mathb">Span(S) = V</span>, כלומר כל וקטור ב-<span class="mathb">V</span> ניתן לכתיבה כצירוף ליניארי של איברי <span class="mathb">S</span>.
+  </div>
+  <span class="src">הרצ' 9</span>
+</div>
+
+<div class="def">
+  <div class="head">נוצר סופית (finitely generated) <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <span class="mathb">V</span> נוצר סופית אם קיימת קבוצה <strong>סופית</strong> <span class="mathb">S</span> כך ש-<span class="mathb">V = Span(S)</span>.
+    <span class="ex">דוגמאות: <span class="mathb">F^n</span> ו-<span class="mathb">F_n[x]</span> נוצרים סופית. <span class="mathb">F[x]</span> — לא.</span>
+  </div>
+  <span class="src">הרצ' 9</span>
+</div>
+
+<div class="def">
+  <div class="head"><span class="mathb">Span</span> של קבוצה כללית <span class="tag">הגדרה</span></div>
+  <div class="body">
+    לקבוצה <span class="mathb">S</span> (סופית או אינסופית): <span class="mathb">Span(S) = {α_1 v_1 + ... + α_k v_k : k ∈ ℕ, α_i ∈ F, v_i ∈ S}</span> — צירופים <strong>סופיים</strong> בלבד.
+  </div>
+  <span class="src">הרצ' 10</span>
+</div>
+
+<div class="def">
+  <div class="head">פרישה מינימלית <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <span class="mathb">v_1, ..., v_n</span> פורשים מינימלית את <span class="mathb">V</span> אם: (1) הם פורשים את <span class="mathb">V</span>, (2) הסרת כל וקטור אחד הופכת אותם ללא-פורשים.
+  </div>
+  <span class="src">הרצ' 10</span>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<div class="bar b5">7 ◆ תלות ליניארית — הרצאות 10-11</div>
+
+<div class="def">
+  <div class="head">בלתי תלות ליניארית (בת"ל) <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <span class="mathb">v_1, ..., v_k</span> בת"ל אם: <span class="mathb">α_1 v_1 + ... + α_k v_k = 0_V</span> ⟹ <span class="mathb">α_1 = α_2 = ... = α_k = 0</span>.
+    <span class="ex">אינטואיציה: אף וקטור לא "מיותר" — לא ניתן לבטא אחד כצירוף של האחרים.</span>
+  </div>
+  <span class="src">הרצ' 10</span>
+</div>
+
+<div class="def">
+  <div class="head">תלות ליניארית (ת"ל) <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <span class="mathb">v_1, ..., v_k</span> ת"ל אם <strong>קיימים</strong> <span class="mathb">α_1, ..., α_k</span> <strong>לא כולם 0</strong> כך ש <span class="mathb">α_1 v_1 + ... + α_k v_k = 0_V</span>.
+  </div>
+  <span class="src">הרצ' 10</span>
+</div>
+
+<div class="def">
+  <div class="head">בת"ל לקבוצה כללית <span class="mathb">S ⊆ V</span> <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <span class="mathb">S</span> בת"ל אם <strong>כל</strong> תת-קבוצה סופית שלה היא בת"ל.
+  </div>
+  <span class="src">הרצ' 11</span>
+</div>
+
+<div class="def">
+  <div class="head">בת"ל מקסימלית <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <span class="mathb">v_1, ..., v_n</span> בת"ל מקסימלית אם: (1) הם בת"ל, (2) לכל <span class="mathb">v ∈ V</span>, הקבוצה <span class="mathb">{v_1, ..., v_n, v}</span> כבר ת"ל.
+  </div>
+  <span class="src">הרצ' 11</span>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<div class="bar b7">8 ◆ בסיס (Basis) — הרצאות 11-12</div>
+
+<div class="def">
+  <div class="head">בסיס של <span class="mathb">V</span> <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <span class="mathb">v_1, ..., v_n</span> בסיס של <span class="mathb">V</span> אם:
+    <ol style="margin-right: 18px; margin-top: 4px;">
+      <li><span class="mathb">v_1, ..., v_n</span> בת"ל.</li>
+      <li><span class="mathb">v_1, ..., v_n</span> פורשים את <span class="mathb">V</span>.</li>
+    </ol>
+    <span class="ex"><strong>תוצאה:</strong> כל <span class="mathb">v ∈ V</span> ניתן לכתיבה <strong>יחידה</strong> כצירוף ליניארי של איברי הבסיס.</span>
+  </div>
+  <span class="src">הרצ' 11</span>
+</div>
+
+<div class="def">
+  <div class="head">בסיס סטנדרטי של <span class="mathb">F^n</span> <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <span class="mathb">e_1 = (1, 0, 0, ..., 0)</span>, <span class="mathb">e_2 = (0, 1, 0, ..., 0)</span>, ..., <span class="mathb">e_n = (0, 0, ..., 0, 1)</span>.
+  </div>
+  <span class="src">הרצ' 11</span>
+</div>
+
+<div class="def">
+  <div class="head">בסיס סטנדרטי של <span class="mathb">M_{m×n}(F)</span> <span class="tag">הגדרה</span></div>
+  <div class="body">
+    המטריצות <span class="mathb">E_{ij}</span> — 1 במקום <span class="mathb">(i,j)</span> ו-0 בכל מקום אחר.
+  </div>
+  <span class="src">הרצ' 11</span>
+</div>
+
+<div class="def">
+  <div class="head">בסיס סטנדרטי של <span class="mathb">F_n[x]</span> <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <span class="mathb">1, x, x², x³, ..., x^n</span>.
+  </div>
+  <span class="src">הרצ' 11</span>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<div class="bar b4">9 ◆ מימד (Dimension) — הרצאות 13-18</div>
+
+<div class="def">
+  <div class="head">מימד <span class="mathb">dim V</span> <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <ul style="margin-right: 18px; margin-top: 4px; list-style-type: disc;">
+      <li>אם <span class="mathb">V = {0_V}</span>: <span class="mathb">dim V = 0</span>.</li>
+      <li>אם <span class="mathb">V ≠ {0_V}</span> ונוצר סופית: <span class="mathb">dim V = </span> מספר הוקטורים בבסיס (לא תלוי בבחירת הבסיס).</li>
+      <li>אם <span class="mathb">V</span> לא נוצר סופית: <span class="mathb">dim V = ∞</span>.</li>
+    </ul>
+  </div>
+  <span class="src">הרצ' 13</span>
+</div>
+
+<div class="def">
+  <div class="head">פרישה מינימלית / בת"ל מקסימלית <span class="tag">הגדרה</span></div>
+  <div class="body">
+    שתי תכונות שקולות לבסיס — קבוצה פורשת מינימלית = בסיס; קבוצה בת"ל מקסימלית = בסיס.
+  </div>
+  <span class="src">הרצ' 13</span>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<div class="bar b2">10 ◆ מטריצות — שוויון, חיבור, כפל בסקלר</div>
+
+<div class="def">
+  <div class="head">שוויון מטריצות <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <span class="mathb">A = B</span> ⟺ <span class="mathb">[A]_{ij} = [B]_{ij}</span> לכל <span class="mathb">i, j</span> (כל כניסה שווה).
+  </div>
+  <span class="src">הרצ' 14</span>
+</div>
+
+<div class="def">
+  <div class="head">חיבור מטריצות <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <span class="mathb">[A + B]_{ij} = [A]_{ij} + [B]_{ij}</span>. דורש <span class="mathb">A, B</span> מאותו סדר.
+  </div>
+  <span class="src">הרצ' 14</span>
+</div>
+
+<div class="def">
+  <div class="head">כפל בסקלר <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <span class="mathb">[α·A]_{ij} = α · [A]_{ij}</span>.
+    <span class="ex">משפט: <span class="mathb">M_{m×n}(F)</span> עם פעולות אלה הוא מרחב וקטורי, ו-<span class="mathb">dim = m·n</span>.</span>
+  </div>
+  <span class="src">הרצ' 14</span>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<div class="bar b4">11 ◆ כפל מטריצות — הרצאות 16-18</div>
+
+<div class="def">
+  <div class="head">כפל מטריצות <span class="mathb">AB</span> <span class="tag">הגדרה</span></div>
+  <div class="body">
+    אם <span class="mathb">A ∈ M_{m×n}(F)</span> ו-<span class="mathb">B ∈ M_{n×r}(F)</span>, אז <span class="mathb">AB ∈ M_{m×r}(F)</span> מוגדרת ע"י:
+    <div style="text-align: center; margin: 4px 0; font-size: 1rem;" class="mathb">[AB]_{ij} = Σ_{k=1}^{n} [A]_{ik} · [B]_{kj}</div>
+    <span class="ex"><strong>דרישה:</strong> מספר עמודות <span class="mathb">A</span> = מספר שורות <span class="mathb">B</span>.</span>
+  </div>
+  <span class="src">הרצ' 16</span>
+</div>
+
+<div class="def">
+  <div class="head">מטריצות מתחלפות (commute) <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <span class="mathb">A, B</span> מתחלפות אם <span class="mathb">AB = BA</span>.
+    <span class="ex"><strong>כפל מטריצות אינו קומוטטיבי בכלל!</strong></span>
+  </div>
+  <span class="src">הרצ' 16</span>
+</div>
+
+<div class="def">
+  <div class="head">מטריצת היחידה <span class="mathb">I_n</span> <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <span class="mathb">[I_n]_{ij} = 1</span> אם <span class="mathb">i = j</span>, ו-<span class="mathb">0</span> אחרת. מקיימת: <span class="mathb">I_m · A = A · I_n = A</span> לכל <span class="mathb">A ∈ M_{m×n}(F)</span>.
+  </div>
+  <span class="src">הרצ' 16</span>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<div class="bar b5">12 ◆ מטריצה הפיכה — הרצאות 16-18</div>
+
+<div class="def">
+  <div class="head">הפיכה משמאל <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <span class="mathb">A</span> הפיכה משמאל אם קיימת <span class="mathb">B</span> כך ש <span class="mathb">BA = I_n</span>.
+  </div>
+  <span class="src">הרצ' 17</span>
+</div>
+
+<div class="def">
+  <div class="head">הפיכה מימין <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <span class="mathb">A</span> הפיכה מימין אם קיימת <span class="mathb">C</span> כך ש <span class="mathb">AC = I_n</span>.
+  </div>
+  <span class="src">הרצ' 17</span>
+</div>
+
+<div class="def">
+  <div class="head">מטריצה הפיכה <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <span class="mathb">A ∈ M_n(F)</span> הפיכה אם קיימת <span class="mathb">B</span> <strong>יחידה</strong> כך ש <span class="mathb">AB = BA = I_n</span>. מסמנים <span class="mathb">B = A⁻¹</span>.
+    <span class="ex"><strong>במטריצות ריבועיות:</strong> הפיכה משמאל ⟺ הפיכה מימין ⟺ הפיכה.</span>
+  </div>
+  <span class="src">הרצ' 17</span>
+</div>
+
+<div class="def">
+  <div class="head">מטריצה אלמנטרית <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <span class="mathb">E ∈ M_n(F)</span> אלמנטרית אם היא מתקבלת מ-<span class="mathb">I_n</span> ע"י פעולת שורה אלמנטרית <strong>אחת</strong>. שלושת הסוגים:
+    <ol style="margin-right: 18px; margin-top: 4px;">
+      <li><span class="mathb">I_n</span> עם כפל שורה <span class="mathb">i</span> ב-<span class="mathb">c ≠ 0</span></li>
+      <li><span class="mathb">I_n</span> עם החלפת שורות <span class="mathb">i ↔ j</span></li>
+      <li><span class="mathb">I_n</span> עם הוספת <span class="mathb">α</span> כפולת שורה <span class="mathb">j</span> לשורה <span class="mathb">i</span></li>
+    </ol>
+    <span class="ex">כל מטריצה אלמנטרית <strong>הפיכה</strong>, וההופכי שלה גם אלמנטרי.</span>
+  </div>
+  <span class="src">הרצ' 17</span>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<div class="bar b6">13 ◆ מטריצה משוכלפת (Transpose)</div>
+
+<div class="def">
+  <div class="head">שחלוף <span class="mathb">A^t</span> <span class="tag">הגדרה</span></div>
+  <div class="body">
+    אם <span class="mathb">A ∈ M_{m×n}(F)</span>, אז <span class="mathb">A^t ∈ M_{n×m}(F)</span> מוגדרת: <span class="mathb">[A^t]_{ij} = [A]_{ji}</span> (החלפת שורות ועמודות).
+  </div>
+  <span class="src">הרצ' 18</span>
+</div>
+
+<div class="def">
+  <div class="head">מטריצה סימטרית <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <span class="mathb">A</span> סימטרית אם <span class="mathb">A = A^t</span>. שקול ל-<span class="mathb">[A]_{ij} = [A]_{ji}</span> לכל <span class="mathb">i, j</span>.
+  </div>
+  <span class="src">הרצ' 18</span>
+</div>
+
+<div class="def">
+  <div class="head">מטריצה אנטי-סימטרית <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <span class="mathb">A</span> אנטי-סימטרית אם <span class="mathb">A = -A^t</span>. שקול ל-<span class="mathb">[A]_{ij} = -[A]_{ji}</span>. בפרט: על האלכסון <span class="mathb">[A]_{ii} = 0</span>.
+  </div>
+  <span class="src">הרצ' 18</span>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<div class="bar b3">14 ◆ NulA · ColA · RowA</div>
+
+<div class="def">
+  <div class="head">מרחב האפס <span class="mathb">Nul(A)</span> <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <span class="mathb">Nul(A) = {x̄ ∈ F^n : A·x̄ = 0̄}</span> — קבוצת הפתרונות של המערכת ההומוגנית. תת-מרחב של <span class="mathb">F^n</span>.
+    <span class="ex"><strong>מציאת בסיס:</strong> מדרגים, אז מציבים 1 בכל משתנה חופשי בנפרד.</span>
+  </div>
+  <span class="src">הרצ' 19</span>
+</div>
+
+<div class="def">
+  <div class="head">מרחב העמודות <span class="mathb">Col(A)</span> <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <span class="mathb">Col(A) = Span{C̄_1, ..., C̄_n}</span> — תת-מרחב של <span class="mathb">F^m</span>, כאשר <span class="mathb">C̄_i</span> הן עמודות <span class="mathb">A</span>.
+  </div>
+  <span class="src">הרצ' 19</span>
+</div>
+
+<div class="def">
+  <div class="head">מרחב השורות <span class="mathb">Row(A)</span> <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <span class="mathb">Row(A) = Span{R̄_1, ..., R̄_m}</span> — תת-מרחב של <span class="mathb">F^n</span>, כאשר <span class="mathb">R̄_i</span> הן שורות <span class="mathb">A</span>. מתקיים <span class="mathb">Row(A) = Col(A^t)</span>.
+  </div>
+  <span class="src">הרצ' 19</span>
+</div>
+
+<div class="def">
+  <div class="head">דרגת עמודות / שורות <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <span class="mathb">col-rank(A) = dim Col(A)</span>. <span class="mathb">row-rank(A) = dim Row(A)</span>.
+    <span class="ex"><strong>משפט:</strong> <span class="mathb">dim Col(A) = dim Row(A) = rank(A)</span>.</span>
+  </div>
+  <span class="src">הרצ' 19</span>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<div class="bar b1">15 ◆ דטרמיננטות — הרצאות 20-23</div>
+
+<div class="def">
+  <div class="head">לינאריות בשורה <span class="mathb">i</span> <span class="tag">הגדרה</span></div>
+  <div class="body">
+    פונקציה <span class="mathb">Δ: M_n(F) → F</span> נקראת לינארית בשורה <span class="mathb">i</span> אם — כאשר משנים רק את שורה <span class="mathb">i</span> והשאר נשאר — הפונקציה מתנהגת לינארית:
+    <div style="text-align: center; margin: 4px 0; font-size: 0.95rem;" class="mathb">Δ(..., αu + βv, ...) = α·Δ(..., u, ...) + β·Δ(..., v, ...)</div>
+  </div>
+  <span class="src">הרצ' 20</span>
+</div>
+
+<div class="def">
+  <div class="head">מולטי-לינאריות <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <span class="mathb">Δ</span> מולטי-לינארית אם היא לינארית בכל שורה (כל אחת בנפרד).
+  </div>
+  <span class="src">הרצ' 20</span>
+</div>
+
+<div class="def">
+  <div class="head">מתחלפת (alternating) <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <span class="mathb">Δ</span> מתחלפת אם — לכל <span class="mathb">A</span> עם שתי שורות זהות — מתקיים <span class="mathb">Δ(A) = 0</span>.
+  </div>
+  <span class="src">הרצ' 20</span>
+</div>
+
+<div class="def">
+  <div class="head">דטרמיננטה <span class="mathb">det</span> <span class="tag">הגדרה</span></div>
+  <div class="body">
+    פונקציה <span class="mathb">Δ: M_n(F) → F</span> שמקיימת:
+    <ol style="margin-right: 18px; margin-top: 4px;">
+      <li>מולטי-לינארית בשורות.</li>
+      <li>מתחלפת (alternating).</li>
+      <li>נורמליזציה: <span class="mathb">Δ(I_n) = 1</span>.</li>
+    </ol>
+    <span class="ex"><strong>משפט חשוב 3:</strong> פונקציה כזו <strong>קיימת ויחידה</strong> לכל <span class="mathb">n</span>. מסמנים אותה <span class="mathb">det</span>.</span>
+  </div>
+  <span class="src">הרצ' 20-22</span>
+</div>
+
+<div class="def">
+  <div class="head">מינור <span class="mathb">M_{ij}^{(A)}</span> <span class="tag">הגדרה</span></div>
+  <div class="body">
+    הדטרמיננטה של המטריצה <span class="mathb">(n-1) × (n-1)</span> שמתקבלת מ-<span class="mathb">A</span> ע"י <strong>מחיקת</strong> שורה <span class="mathb">i</span> ועמודה <span class="mathb">j</span>.
+  </div>
+  <span class="src">הרצ' 22</span>
+</div>
+
+<div class="def">
+  <div class="head"><span class="mathb">det</span> רקורסיבית <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <ul style="margin-right: 18px; margin-top: 4px; list-style-type: disc;">
+      <li><span class="mathb">n = 1</span>: <span class="mathb">det(a) = a</span></li>
+      <li><span class="mathb">n = 2</span>: <span class="mathb">det = ad - bc</span></li>
+      <li><span class="mathb">n ≥ 2</span> — פיתוח לפי עמודה 1: <span class="mathb">det(A) = Σ_{i=1}^{n} (-1)^{i+1} · [A]_{i,1} · M_{i,1}^{(A)}</span></li>
+    </ul>
+  </div>
+  <span class="src">הרצ' 22</span>
+</div>
+
+<div class="def">
+  <div class="head">פיתוח לפי עמודה <span class="mathb">j</span> <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <span class="mathb">det(A) = Σ_{i=1}^{n} (-1)^{i+j} · [A]_{ij} · M_{ij}^{(A)}</span>
+  </div>
+  <span class="src">הרצ' 22</span>
+</div>
+
+<div class="def">
+  <div class="head">פיתוח לפי שורה <span class="mathb">i</span> <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <span class="mathb">det(A) = Σ_{j=1}^{n} (-1)^{i+j} · [A]_{ij} · M_{ij}^{(A)}</span>
+  </div>
+  <span class="src">הרצ' 22</span>
+</div>
+
+<div class="def">
+  <div class="head">מטריצה משולשית עליונה / תחתונה <span class="tag">הגדרה</span></div>
+  <div class="body">
+    <strong>משולשית עליונה:</strong> <span class="mathb">[A]_{ij} = 0</span> לכל <span class="mathb">i > j</span> (אפסים מתחת לאלכסון).
+    <strong>משולשית תחתונה:</strong> <span class="mathb">[A]_{ij} = 0</span> לכל <span class="mathb">i &lt; j</span> (אפסים מעל לאלכסון).
+    <span class="ex"><strong>משפט:</strong> <span class="mathb">det(A) = ∏_{i=1}^{n} [A]_{ii}</span> (מכפלת איברי האלכסון).</span>
+  </div>
+  <span class="src">הרצ' 21</span>
+</div>
+
+<div class="def">
+  <div class="head">מטריצת בלוקים <span class="tag">הגדרה</span></div>
+  <div class="body">
+    מטריצה גדולה <span class="mathb">K</span> שמחולקת לתתי-מטריצות "בלוקים". מבנה לדוגמה: <span class="mathb">K = [[A, C], [O, B]]</span> כאשר <span class="mathb">A ∈ M_n(F)</span>, <span class="mathb">B ∈ M_m(F)</span>, <span class="mathb">O</span> בלוק אפסים.
+    <span class="ex"><strong>משפט:</strong> אם <span class="mathb">K</span> משולשית-בלוקים (<span class="mathb">O</span> בפינה התחתונה-שמאלית או העליונה-ימנית): <span class="mathb">det(K) = det(A) · det(B)</span>.</span>
+  </div>
+  <span class="src">הרצ' 23</span>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<div class="bar b1">סוף — תזכורות כלליות</div>
+
+<div class="note">
+  <div class="head">📌 איך להשתמש בדף הזה</div>
+  קראי לפי הסדר — כל סעיף בונה על הקודם. ה-<strong>בולד</strong> מסמן סימני מתמטיקה ושמות חשובים. הציטוטים בכתב מודגש (הרצ' X) מציינים מאיזו הרצאה הגיעה ההגדרה. בכל פעם שאת לא בטוחה במשפט במבחן — בדקי קודם את ההגדרות המעורבות.
+</div>
+
+<div class="note">
+  <div class="head">⚠️ הגדרות הכי קריטיות (לרענון אחרון)</div>
+  <ol style="margin-right: 18px; margin-top: 4px;">
+    <li><strong>שדה</strong> (סעיף 1) — דרוש לכל הגדרה אחרת.</li>
+    <li><strong>מרחב וקטורי + תת-מרחב</strong> (סעיפים 3-4).</li>
+    <li><strong>Span, בת"ל, בסיס, מימד</strong> (סעיפים 6-9) — הלב של הקורס.</li>
+    <li><strong>הפיכה</strong> + הקריטריון המקוצר (סעיף 12).</li>
+    <li><strong>Nul, Col, Row + rank</strong> (סעיף 14).</li>
+    <li><strong>דטרמיננטה האקסיומטית</strong> (סעיף 15).</li>
+  </ol>
+</div>
+
+</div>
+
+</body>
+</html>

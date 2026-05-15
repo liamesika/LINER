@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>תוכנית קרב — מועד ג (15.6.2026)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&family=Rubik:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 14px; -webkit-font-smoothing: antialiased; }
+body {
+  font-family: 'Heebo', sans-serif;
+  background: linear-gradient(135deg, #f1f5f9 0%, #faf5ff 100%);
+  color: #1f2937;
+  line-height: 1.6;
+  padding: 20px;
+  direction: rtl;
+}
+.sheet {
+  max-width: 1000px;
+  margin: 0 auto;
+  background: white;
+  padding: 28px 36px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  border-radius: 12px;
+}
+.banner {
+  background: linear-gradient(135deg, #4338ca 0%, #7c3aed 50%, #be185d 100%);
+  color: white;
+  padding: 24px 28px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  box-shadow: 0 6px 18px rgba(67,56,202,0.18);
+}
+.banner h1 { font-family: 'Rubik', sans-serif; font-size: 1.7rem; font-weight: 800; letter-spacing: -0.02em; }
+.banner .sub { font-size: 0.95rem; opacity: 0.92; margin-top: 4px; }
+.banner .stats { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 12px; }
+.banner .pill {
+  background: rgba(255,255,255,0.22);
+  padding: 4px 12px; border-radius: 20px;
+  font-size: 0.82rem; font-weight: 500; backdrop-filter: blur(6px);
+}
+
+.phase {
+  color: white;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-family: 'Rubik', sans-serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin: 24px 0 10px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.phase.foundation { background: #0d9488; }
+.phase.build { background: #6d28d9; }
+.phase.advanced { background: #c2410c; }
+.phase.review { background: #0369a1; }
+.phase.exams { background: #be185d; }
+.phase.exam-day { background: #dc2626; }
+.phase .meta { font-family: 'Heebo', sans-serif; font-weight: 500; font-size: 0.82rem; opacity: 0.92; }
+
+.week-title {
+  font-family: 'Rubik', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #4338ca;
+  background: #ede9fe;
+  padding: 6px 12px;
+  border-radius: 4px;
+  margin: 10px 0 6px;
+  border-right: 3px solid #6d28d9;
+}
+
+.day {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-right: 3px solid #6366f1;
+  border-radius: 6px;
+  padding: 10px 14px;
+  margin: 5px 0;
+  font-size: 0.86rem;
+  line-height: 1.65;
+  display: grid;
+  grid-template-columns: 90px 1fr auto;
+  gap: 12px;
+  align-items: start;
+}
+.day.rest { border-right-color: #94a3b8; background: #f8fafc; }
+.day.review { border-right-color: #0369a1; background: #f0f9ff; }
+.day.exam { border-right-color: #dc2626; background: #fef2f2; }
+.day .date { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; font-weight: 600; color: #475569; }
+.day .date .num {
+  display: block;
+  font-family: 'Rubik', sans-serif;
+  font-size: 0.7rem; color: #94a3b8; margin-top: 2px; font-weight: 500;
+}
+.day .content { min-width: 0; }
+.day .topic { font-weight: 700; color: #1e293b; margin-bottom: 3px; }
+.day .topic.thm { color: #15803d; }
+.day .topic.def { color: #1d4ed8; }
+.day .topic.hw { color: #c2410c; }
+.day .topic.review { color: #0369a1; }
+.day .topic.exam { color: #b91c1c; }
+.day .tasks { font-size: 0.82rem; color: #475569; }
+.day .tasks ul { margin-right: 14px; }
+.day .tasks li { margin: 2px 0; }
+.day .time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem; color: #6b7280; white-space: nowrap; font-weight: 500;
+  background: #f1f5f9; padding: 2px 8px; border-radius: 10px; align-self: center;
+}
+.day.exam .time { background: #fecaca; color: #7f1d1d; }
+
+.check {
+  display: inline-block; width: 12px; height: 12px;
+  border: 1.5px solid #94a3b8; border-radius: 3px;
+  margin-left: 6px; vertical-align: -1px;
+}
+
+.math { font-family: 'STIX Two Math', 'Cambria Math', serif; font-style: italic; direction: ltr; unicode-bidi: embed; }
+.mathb { font-family: 'STIX Two Math', 'Cambria Math', serif; font-style: italic; font-weight: 700; direction: ltr; unicode-bidi: embed; }
+
+.checkpoint {
+  background: #fffbeb;
+  border: 2px solid #f59e0b;
+  border-radius: 6px;
+  padding: 10px 14px;
+  margin: 8px 0 14px;
+  font-size: 0.85rem;
+}
+.checkpoint .ttl {
+  font-weight: 700;
+  color: #a16207;
+  font-family: 'Rubik', sans-serif;
+  margin-bottom: 4px;
+}
+
+.tip-box {
+  background: #ecfdf5;
+  border-right: 3px solid #10b981;
+  border-radius: 6px;
+  padding: 8px 14px;
+  margin: 6px 0;
+  font-size: 0.82rem;
+  color: #064e3b;
+}
+
+@media print {
+  body { background: white; padding: 0; }
+  .sheet { box-shadow: none; max-width: 100%; padding: 16px; }
+  .phase { page-break-before: always; }
+  .phase.foundation { page-break-before: avoid; }
+  .day { page-break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+
+<div class="sheet">
+
+<div class="banner">
+  <h1>⚔️ תוכנית קרב — מועד ג</h1>
+  <div class="sub">15 ביוני 2026 (יום ב') · 33 ימים · 1-2 שעות/יום · בנייה הדרגתית עד שליטה מלאה</div>
+  <div class="stats">
+    <span class="pill">📅 פאזות 1-3: תיאוריה (22 ימים)</span>
+    <span class="pill">📚 פאזה 4: סקירה (5 ימים)</span>
+    <span class="pill">📝 פאזה 5: מבחנים (4 ימים)</span>
+    <span class="pill">🎯 ~45 שעות סה"כ</span>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<!-- PHASE 1: FOUNDATION (Days 1-10, May 13-22)                       -->
+<!-- ════════════════════════════════════════════════════════════════ -->
+<div class="phase foundation">
+  🌱 פאזה 1 — יסודות
+  <span class="meta">10 ימים · 13.5 → 22.5 · 1.5 שעות/יום</span>
+</div>
+
+<div class="checkpoint">
+  <div class="ttl">🎯 מטרת הפאזה</div>
+  שדות, מערכות ליניאריות, מרחב וקטורי, תת-מרחב. <strong>אין הוכחות עדיין</strong> — קודם הבנה ושימוש.
+</div>
+
+<div class="week-title">📍 שבוע 1 — שדות + מערכות ליניאריות</div>
+
+<div class="day">
+  <div class="date">ד' 13.5<span class="num">יום 1</span></div>
+  <div class="content">
+    <div class="topic def">פתיחה: שדות + Z_n</div>
+    <div class="tasks">
+      <ul>
+        <li><span class="check"></span> דף ההגדרות: סעיף 1 (אקסיומות שדה)</li>
+        <li><span class="check"></span> <span class="mathb">Z_p</span> שדה ⟺ p ראשוני (להבין למה)</li>
+      </ul>
+    </div>
+  </div>
+  <div class="time">1.5ש'</div>
+</div>
+
+<div class="day">
+  <div class="date">ה' 14.5<span class="num">יום 2</span></div>
+  <div class="content">
+    <div class="topic def">תכונות שדה + מספרים מרוכבים</div>
+    <div class="tasks">
+      <ul>
+        <li><span class="check"></span> אין מחלקי אפס · הופכי כפלי · תת-שדה</li>
+        <li><span class="check"></span> מספרים מרוכבים (רפרוף — לא נשאלים הרבה)</li>
+        <li><span class="check"></span> HW2 שאלות בסיסיות</li>
+      </ul>
+    </div>
+  </div>
+  <div class="time">1.5ש'</div>
+</div>
+
+<div class="day">
+  <div class="date">ו' 15.5<span class="num">יום 3</span></div>
+  <div class="content">
+    <div class="topic def">מערכות ליניאריות + פעולות שורה</div>
+    <div class="tasks">
+      <ul>
+        <li><span class="check"></span> 3 פעולות שורה אלמנטריות (בעל פה!)</li>
+        <li><span class="check"></span> צורה מדורגת (EF) ומדורגת קנונית (RREF)</li>
+        <li><span class="check"></span> תרגול: דרגי 2 מטריצות 3×3 ביד</li>
+      </ul>
+    </div>
+  </div>
+  <div class="time">1.5ש'</div>
+</div>
+
+<div class="day rest">
+  <div class="date">ש' 16.5<span class="num">יום 4</span></div>
+  <div class="content">
+    <div class="topic">🛋️ שבת — מנוחה</div>
+    <div class="tasks">אופציונלי: רפרוף בסיכום ההגדרות. בלי לחץ.</div>
+  </div>
+  <div class="time">—</div>
+</div>
+
+<div class="day">
+  <div class="date">א' 17.5<span class="num">יום 5</span></div>
+  <div class="content">
+    <div class="topic def">דרגה + סיווג מספר פתרונות</div>
+    <div class="tasks">
+      <ul>
+        <li><span class="check"></span> <span class="mathb">rank(A)</span>, משתנה קשור / חופשי</li>
+        <li><span class="check"></span> משפט: <span class="mathb">rank(A) &lt; rank(A⁺)</span> → אין · <span class="mathb">= n</span> → יחיד · <span class="mathb">&lt; n</span> → אינסוף</li>
+        <li><span class="check"></span> HW3 שאלה 1</li>
+      </ul>
+    </div>
+  </div>
+  <div class="time">1.5ש'</div>
+</div>
+
+<div class="day">
+  <div class="date">ב' 18.5<span class="num">יום 6</span></div>
+  <div class="content">
+    <div class="topic hw">HW3 שאלה 2 — מערכות תלויות פרמטר</div>
+    <div class="tasks">
+      <ul>
+        <li><span class="check"></span> תבנית: דרגי, מצאי נקודות פיצול, בדקי כל מקרה</li>
+        <li><span class="check"></span> 2(a), 2(b) — שתי וריאציות</li>
+      </ul>
+    </div>
+  </div>
+  <div class="time">2ש'</div>
+</div>
+
+<div class="day">
+  <div class="date">ג' 19.5<span class="num">יום 7</span></div>
+  <div class="content">
+    <div class="topic hw">HW3 סיום + סקירת שבוע</div>
+    <div class="tasks">
+      <ul>
+        <li><span class="check"></span> HW3 שאלה 4 — פרמה הקטן</li>
+        <li><span class="check"></span> סקירה: שבוע 1 — מה אני זוכרת?</li>
+      </ul>
+    </div>
+  </div>
+  <div class="time">1.5ש'</div>
+</div>
+
+<div class="checkpoint">
+  <div class="ttl">✅ סוף שבוע 1 — את אמורה לדעת:</div>
+  הגדרת שדה + <span class="mathb">Z_n</span> · דירוג לקנונית · זיהוי rank · פתרון מערכת תלוית פרמטר בכל הענפים.
+</div>
+
+<div class="week-title">📍 שבוע 2 — מרחב וקטורי + תת-מרחב</div>
+
+<div class="day">
+  <div class="date">ד' 20.5<span class="num">יום 8</span></div>
+  <div class="content">
+    <div class="topic def">מרחב וקטורי + תת-מרחב</div>
+    <div class="tasks">
+      <ul>
+        <li><span class="check"></span> 10 אקסיומות (לזכור שיש 10, לא בעל פה)</li>
+        <li><span class="check"></span> דוגמאות: <span class="mathb">F^n, M_{m×n}, F[x]</span></li>
+        <li><span class="check"></span> קריטריון מקוצר לתת-מרחב</li>
+      </ul>
+    </div>
+  </div>
+  <div class="time">1.5ש'</div>
+</div>
+
+<div class="day">
+  <div class="date">ה' 21.5<span class="num">יום 9</span></div>
+  <div class="content">
+    <div class="topic hw">HW4 — תרגול תת-מרחב</div>
+    <div class="tasks">
+      <ul>
+        <li><span class="check"></span> בדיקה אם קבוצה היא תת-מרחב (3 תנאים)</li>
+        <li><span class="check"></span> חיתוך תת-מרחב = תת-מרחב · איחוד — לא</li>
+      </ul>
+    </div>
+  </div>
+  <div class="time">1.5ש'</div>
+</div>
+
+<div class="day">
+  <div class="date">ו' 22.5<span class="num">יום 10</span></div>
+  <div class="content">
+    <div class="topic def">Span + צירוף ליניארי</div>
+    <div class="tasks">
+      <ul>
+        <li><span class="check"></span> הגדרת Span · <span class="mathb">Span(∅) = {0_V}</span></li>
+        <li><span class="check"></span> Span תמיד תת-מרחב</li>
+        <li><span class="check"></span> תרגיל: <span class="mathb">v ∈ Span ⟺ Span{...,v} = Span{...}</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="time">1.5ש'</div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<!-- PHASE 2: BUILD (Days 11-21, May 23 - June 2)                     -->
+<!-- ════════════════════════════════════════════════════════════════ -->
+<div class="phase build">
+  🛠️ פאזה 2 — בנייה: span/בת"ל/בסיס/מימד
+  <span class="meta">11 ימים · 23.5 → 2.6 · 1.5-2 שעות/יום</span>
+</div>
+
+<div class="checkpoint">
+  <div class="ttl">🎯 מטרת הפאזה</div>
+  להכיר את 2 המשפטים המרכזיים: <strong>משפט השלוש</strong> ו-<strong>משפט המימדים הראשון</strong>. ולפתור את HW5 + HW6 + HW8.
+</div>
+
+<div class="day rest">
+  <div class="date">ש' 23.5<span class="num">יום 11</span></div>
+  <div class="content">
+    <div class="topic">🛋️ שבת — מנוחה</div>
+  </div>
+  <div class="time">—</div>
+</div>
+
+<div class="day">
+  <div class="date">א' 24.5<span class="num">יום 12</span></div>
+  <div class="content">
+    <div class="topic def">בלתי תלות ליניארית (בת"ל)</div>
+    <div class="tasks">
+      <ul>
+        <li><span class="check"></span> הגדרת בת"ל / ת"ל · 0_V בקבוצה → ת"ל</li>
+        <li><span class="check"></span> משפט: ת"ל ⟺ <span class="mathb">∃j: v_j ∈ Span{v_1,...,v_{j-1}}</span></li>
+        <li><span class="check"></span> משפט: יחידות הייצוג (בת"ל)</li>
+      </ul>
+    </div>
+  </div>
+  <div class="time">2ש'</div>
+</div>
+
+<div class="day">
+  <div class="date">ב' 25.5<span class="num">יום 13</span></div>
+  <div class="content">
+    <div class="topic hw">HW5 — span + בת"ל</div>
+    <div class="tasks">
+      <ul>
+        <li><span class="check"></span> שוויון Span (הוכחת הכלה דו-כיוונית)</li>
+        <li><span class="check"></span> דוגמה: <span class="mathb">Span{v_1+v_2, v_1−v_2, v_1+v_3}</span> תחת <span class="mathb">1+1≠0</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="time">2ש'</div>
+</div>
+
+<div class="day">
+  <div class="date">ג' 26.5<span class="num">יום 14</span></div>
+  <div class="content">
+    <div class="topic def">בסיס</div>
+    <div class="tasks">
+      <ul>
+        <li><span class="check"></span> הגדרה: בת"ל + פורש</li>
+        <li><span class="check"></span> בסיסים סטנדרטיים: <span class="mathb">F^n, F_n[x], M_{m×n}</span></li>
+        <li><span class="check"></span> משפט יחידות הייצוג בבסיס</li>
+      </ul>
+    </div>
+  </div>
+  <div class="time">1.5ש'</div>
+</div>
+
+<div class="day">
+  <div class="date">ד' 27.5<span class="num">יום 15</span></div>
+  <div class="content">
+    <div class="topic def">מימד + שטיינל</div>
+    <div class="tasks">
+      <ul>
+        <li><span class="check"></span> <span class="mathb">dim V</span> · 2 מסקנות (n+1 ת"ל · n-1 לא פורש)</li>
+        <li><span class="check"></span> למת שטיינל — ניסוח (לא הוכחה)</li>
+      </ul>
+    </div>
+  </div>
+  <div class="time">1.5ש'</div>
+</div>
+
+<div class="day">
+  <div class="date">ה' 28.5<span class="num">יום 16</span></div>
+  <div class="content">
+    <div class="topic thm">⭐ משפט השלוש + משפט ההשלמה</div>
+    <div class="tasks">
+      <ul>
+        <li><span class="check"></span> <span class="mathb">dim V = n + n וקטורים</span> → בסיס ⟺ בת"ל ⟺ פורש</li>
+        <li><span class="check"></span> משפט ההשלמה לבסיס</li>
+        <li><span class="check"></span> <span class="mathb">W ≤ V, dim W = dim V → W = V</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="time">2ש'</div>
+</div>
+
+<div class="day">
+  <div class="date">ו' 29.5<span class="num">יום 17</span></div>
+  <div class="content">
+    <div class="topic thm">⭐ משפט המימדים הראשון</div>
+    <div class="tasks">
+      <ul>
+        <li><span class="check"></span> <span class="mathb">dim(U+W) = dim U + dim W − dim(U∩W)</span></li>
+        <li><span class="check"></span> מסקנות: סכום ישר · חסם תחתון</li>
+      </ul>
+    </div>
+  </div>
+  <div class="time">2ש'</div>
+</div>
+
+<div class="day rest">
+  <div class="date">ש' 30.5<span class="num">יום 18</span></div>
+  <div class="content">
+    <div class="topic">🛋️ שבת — מנוחה</div>
+  </div>
+  <div class="time">—</div>
+</div>
+
+<div class="day">
+  <div class="date">א' 31.5<span class="num">יום 19</span></div>
+  <div class="content">
+    <div class="topic hw">HW8 שאלה 4 — לב dim(U∩W)</div>
+    <div class="tasks">
+      <ul>
+        <li><span class="check"></span> 4(a) — <span class="mathb">dim V=6, dim U≥4, dim W≥5 → dim(U∩W)≥3</span></li>
+        <li><span class="check"></span> 4(b) — <span class="mathb">W + Span{u} = W ⟺ u ∈ W</span></li>
+        <li><span class="check"></span> 4(e) — <span class="mathb">dim U = dim W = n-1, U≠W → dim(U∩W) = n-2</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="time">2ש'</div>
+</div>
+
+<div class="day">
+  <div class="date">ב' 1.6<span class="num">יום 20</span></div>
+  <div class="content">
+    <div class="topic def">כפל מטריצות</div>
+    <div class="tasks">
+      <ul>
+        <li><span class="check"></span> הגדרת כפל · אסוציאטיביות · אין קומוטטיביות</li>
+        <li><span class="check"></span> <span class="mathb">Ax̄ = LC של עמודות</span> · <span class="mathb">Ax̄=b̄ פתיר ⟺ b̄ ∈ ColA</span></li>
+        <li><span class="check"></span> HW8 שאלה 1-2 — חישובי כפל</li>
+      </ul>
+    </div>
+  </div>
+  <div class="time">1.5ש'</div>
+</div>
+
+<div class="day">
+  <div class="date">ג' 2.6<span class="num">יום 21</span></div>
+  <div class="content">
+    <div class="topic def">מטריצה הפיכה + טבלת שקילויות</div>
+    <div class="tasks">
+      <ul>
+        <li><span class="check"></span> הגדרה דו-צדדית · מטריצה אלמנטרית</li>
+        <li><span class="check"></span> 13 התנאים השקולים (קראי בדף עזר ההפיכות שלך!)</li>
+      </ul>
+    </div>
+  </div>
+  <div class="time">2ש'</div>
+</div>
+
+<div class="checkpoint">
+  <div class="ttl">✅ סוף שבוע 3 — את אמורה לדעת:</div>
+  משפט השלוש · משפט המימדים הראשון · הגדרת מטריצה הפיכה · 13 התנאים השקולים.
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<!-- PHASE 3: ADVANCED (Days 22-26, June 3-7)                         -->
+<!-- ════════════════════════════════════════════════════════════════ -->
+<div class="phase advanced">
+  🎯 פאזה 3 — הפיכות + NulA + דטרמיננטות
+  <span class="meta">5 ימים · 3.6 → 7.6 · 1.5-2 שעות/יום</span>
+</div>
+
+<div class="checkpoint">
+  <div class="ttl">🎯 מטרת הפאזה</div>
+  לסגור את כל החומר: AB=I→BA=I · משפט הדרגה · דטרמיננטות. <strong>סוף הפאזה הזו = שליטה בכל החומר!</strong>
+</div>
+
+<div class="day">
+  <div class="date">ד' 3.6<span class="num">יום 22</span></div>
+  <div class="content">
+    <div class="topic hw">HW9 — הופכים</div>
+    <div class="tasks">
+      <ul>
+        <li><span class="check"></span> HW9 שאלה 1 — הופכים ב-<span class="mathb">R</span></li>
+        <li><span class="check"></span> HW9 שאלה 4(a) — הופכי ב-<span class="mathb">Z_7</span> (טבלת הופכים בצד!)</li>
+      </ul>
+    </div>
+  </div>
+  <div class="time">2ש'</div>
+</div>
+
+<div class="day">
+  <div class="date">ה' 4.6<span class="num">יום 23</span></div>
+  <div class="content">
+    <div class="topic thm">⭐ AB=I → BA=I + שחלוף</div>
+    <div class="tasks">
+      <ul>
+        <li><span class="check"></span> HW9 שאלה 6 — הוכחה דרך dim W_k</li>
+        <li><span class="check"></span> שחלוף: <span class="mathb">(AB)^t = B^t A^t</span> · סימטרית / אנטי-סימטרית</li>
+      </ul>
+    </div>
+  </div>
+  <div class="time">2ש'</div>
+</div>
+
+<div class="day">
+  <div class="date">ו' 5.6<span class="num">יום 24</span></div>
+  <div class="content">
+    <div class="topic def">NulA, ColA, RowA + משפט הדרגה</div>
+    <div class="tasks">
+      <ul>
+        <li><span class="check"></span> 3 המרחבים · בסיס לכל אחד</li>
+        <li><span class="check"></span> ⭐ <span class="mathb">rank A + dim NulA = n</span></li>
+        <li><span class="check"></span> משפט: <span class="mathb">dim ColA = dim RowA = rank A</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="time">2ש'</div>
+</div>
+
+<div class="day rest">
+  <div class="date">ש' 6.6<span class="num">יום 25</span></div>
+  <div class="content">
+    <div class="topic">🛋️ שבת — מנוחה</div>
+  </div>
+  <div class="time">—</div>
+</div>
+
+<div class="day">
+  <div class="date">א' 7.6<span class="num">יום 26</span></div>
+  <div class="content">
+    <div class="topic def">דטרמיננטות — אקסיומות + תכונות</div>
+    <div class="tasks">
+      <ul>
+        <li><span class="check"></span> מולטי-לינארית + אלטרנטיבית + <span class="mathb">det(I)=1</span></li>
+        <li><span class="check"></span> משפט (*): פעולות שורה · משפט יחידות (חשוב 3)</li>
+        <li><span class="check"></span> ⭐ <span class="mathb">det(AB) = det(A)·det(B)</span> · <span class="mathb">A הפיכה ⟺ det≠0</span></li>
+        <li><span class="check"></span> HW11 שאלה 1 · HW12 שאלות 1, 2</li>
+      </ul>
+    </div>
+  </div>
+  <div class="time">2.5ש'</div>
+</div>
+
+<div class="checkpoint">
+  <div class="ttl">✅ סוף יום 26 — את אמורה לדעת את כל החומר!</div>
+  עכשיו נשארו 8 ימים: 4 לסקירה אינטגרטיבית, 4 למבחנים. אין יותר חומר חדש.
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<!-- PHASE 4: REVIEW WEEK (Days 27-30, June 8-10)                     -->
+<!-- ════════════════════════════════════════════════════════════════ -->
+<div class="phase review">
+  📚 פאזה 4 — שבוע סקירה
+  <span class="meta">4 ימים · 8.6 → 10.6 · 2 שעות/יום</span>
+</div>
+
+<div class="checkpoint">
+  <div class="ttl">🎯 מטרת הפאזה</div>
+  לאחד את כל החומר. בכל יום: סקירה ממוקדת + תרגול מ-HW או דף עזר. <strong>זמן לזהות חולשות וטרם הן יהפכו לבעיות.</strong>
+</div>
+
+<div class="day review">
+  <div class="date">ב' 8.6<span class="num">יום 27</span></div>
+  <div class="content">
+    <div class="topic review">סקירה: שדות + מערכות + Z_p + span/בת"ל</div>
+    <div class="tasks">
+      <ul>
+        <li><span class="check"></span> דף הגדרות סעיפים 1-7 · דף קיצורי הסקה (LI/span)</li>
+        <li><span class="check"></span> HW3 שאלות מאתגרות · HW5</li>
+      </ul>
+    </div>
+  </div>
+  <div class="time">2ש'</div>
+</div>
+
+<div class="day review">
+  <div class="date">ג' 9.6<span class="num">יום 28</span></div>
+  <div class="content">
+    <div class="topic review">סקירה: בסיס + מימד + מטריצות</div>
+    <div class="tasks">
+      <ul>
+        <li><span class="check"></span> משפט השלוש (כתבי מהזיכרון!) · משפט המימדים</li>
+        <li><span class="check"></span> HW6 + HW8 שאלות חזרה · דף ההפיכות שלך</li>
+      </ul>
+    </div>
+  </div>
+  <div class="time">2ש'</div>
+</div>
+
+<div class="day review">
+  <div class="date">ד' 10.6<span class="num">יום 29</span></div>
+  <div class="content">
+    <div class="topic review">סקירה: הפיכות + Nul + Rank-Nullity</div>
+    <div class="tasks">
+      <ul>
+        <li><span class="check"></span> דף עזר ההפיכות (הכל) · 13 התנאים בעל פה</li>
+        <li><span class="check"></span> HW9 שאלה 6 · HW10 שאלה 5(b) · משפט הדרגה</li>
+      </ul>
+    </div>
+  </div>
+  <div class="time">2ש'</div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<!-- PHASE 5: EXAMS (Days 30-33, June 11-14)                         -->
+<!-- ════════════════════════════════════════════════════════════════ -->
+<div class="phase exams">
+  📝 פאזה 5 — מבחנים מבחנים מבחנים
+  <span class="meta">4 ימים · 11.6 → 14.6 · 3-4 שעות/יום</span>
+</div>
+
+<div class="checkpoint">
+  <div class="ttl">🎯 מטרת הפאזה</div>
+  שום חומר חדש. רק מבחנים בתנאי אמת — סטופר, נייר, ללא חומר עזר. אחרי כל מבחן: 30 דקות ניתוח שגיאות.
+</div>
+
+<div class="day exam">
+  <div class="date">ה' 11.6<span class="num">יום 30</span></div>
+  <div class="content">
+    <div class="topic exam">📝 מבחן הדמיה 1 (מאוזן)</div>
+    <div class="tasks">
+      <ul>
+        <li><span class="check"></span> 3 שעות תנאי אמת · 30 דק ניתוח</li>
+        <li>קובץ: <code>LINER/mock-exams/exam-1-balanced.html</code></li>
+      </ul>
+    </div>
+  </div>
+  <div class="time">3.5ש'</div>
+</div>
+
+<div class="day exam">
+  <div class="date">ו' 12.6<span class="num">יום 31</span></div>
+  <div class="content">
+    <div class="topic exam">📝 מבחן הדמיה 2 (תיאורטי) או מועד ב 2024</div>
+    <div class="tasks">
+      <ul>
+        <li><span class="check"></span> בחרי: מבחן 2 (תיאורטי, דגש על הוכחות) או מועד ב 2024</li>
+        <li><span class="check"></span> 3 שעות + 30 דק ניתוח</li>
+      </ul>
+    </div>
+  </div>
+  <div class="time">3.5ש'</div>
+</div>
+
+<div class="day exam">
+  <div class="date">ש' 13.6<span class="num">יום 32</span></div>
+  <div class="content">
+    <div class="topic exam">📝 מבחן הדמיה 3 (מאתגר) — אופציונלי בשבת</div>
+    <div class="tasks">
+      <ul>
+        <li><span class="check"></span> אם את לא לחוצה — מנוחה ביום זה</li>
+        <li><span class="check"></span> אחרת: מבחן 3 (HW9 Q6 בגרסה מורחבת)</li>
+      </ul>
+    </div>
+  </div>
+  <div class="time">3.5ש' / —</div>
+</div>
+
+<div class="day exam">
+  <div class="date">א' 14.6<span class="num">יום 33</span></div>
+  <div class="content">
+    <div class="topic exam">📝 סופר-מבחן + סקירה אחרונה</div>
+    <div class="tasks">
+      <ul>
+        <li><span class="check"></span> סופר-מבחן (10 שאלות מקיף) — סלקטיבית רק על חולשות</li>
+        <li><span class="check"></span> כתיבת 6 הוכחות מהזיכרון</li>
+        <li><span class="check"></span> 17:00 הפסקה · ערכת המבחן מוכנה · שינה מוקדמת</li>
+      </ul>
+    </div>
+  </div>
+  <div class="time">4ש'</div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<!-- EXAM DAY                                                        -->
+<!-- ════════════════════════════════════════════════════════════════ -->
+<div class="phase exam-day">
+  🎯 יום המבחן
+  <span class="meta">15.6.2026 · יום ב'</span>
+</div>
+
+<div class="day exam" style="border-right-width: 5px; background: linear-gradient(to left, #fef2f2, #fef9c3);">
+  <div class="date" style="font-size:0.9rem; font-weight:700;">ב' 15.6<span class="num">המבחן!</span></div>
+  <div class="content">
+    <div class="topic exam" style="font-size: 1rem;">🎯 מועד ג — אלגברה לינארית 1</div>
+    <div class="tasks">
+      <ul>
+        <li>07:00 — ארוחת בוקר טובה. <strong>אל תלמדי חומר חדש!</strong></li>
+        <li>08:00 — רענון של 3 ההוכחות הראשונות + טבלת השקילויות (10 דק כל אחד)</li>
+        <li>08:30 — נסיעה</li>
+        <li><strong>09:00 — המבחן 💪</strong></li>
+      </ul>
+    </div>
+  </div>
+  <div class="time">🎯</div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<!-- TIPS                                                            -->
+<!-- ════════════════════════════════════════════════════════════════ -->
+<div class="phase foundation" style="margin-top: 28px;">
+  💡 כללים זהב לכל התוכנית
+</div>
+
+<div class="tip-box">
+  <strong>1. עקביות > כמות.</strong> 1.5 שעות ביום קבוע במשך 33 ימים = 45 שעות מעמיקות. מבחני קצב לא עובדים.
+</div>
+
+<div class="tip-box">
+  <strong>2. אל תדלגי על HW.</strong> 80% מהמבחן הוא וריאציות של HW. כל שאלה ב-HW = הזדמנות לחזק תבנית.
+</div>
+
+<div class="tip-box">
+  <strong>3. כתיבה > קריאה.</strong> אחרי שקראת הוכחה, סגרי את הדף וכתבי במחברת מהזיכרון. שגית? תקני וחזרי.
+</div>
+
+<div class="tip-box">
+  <strong>4. עקבי אחר חולשות.</strong> בסוף כל שבוע: רשמי 3 דברים שאת עוד לא בטוחה בהם. בסקירה (יום 27-29) — חזרי אליהם.
+</div>
+
+<div class="tip-box">
+  <strong>5. שבת = מנוחה.</strong> אל תרגישי אשמה לדלג. המוח לומד גם בלי שאת בכוח דוחקת בו.
+</div>
+
+<div class="tip-box">
+  <strong>6. ימי המבחנים — אל תוסיפי חומר חדש.</strong> רק חזרה + סימולציה. יום לפני המבחן — מנוחה בלבד.
+</div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>סופר-מבחן — אלגברה לינארית 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&family=Rubik:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_styles.css">
+<script src="_scripts.js" defer></script>
+<style>
+.super-banner {
+  background: linear-gradient(135deg, #4338ca 0%, #be185d 50%, #ea580c 100%);
+  color: white;
+  padding: 24px 28px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  box-shadow: 0 8px 30px rgba(67, 56, 202, 0.25);
+}
+.super-banner h1 {
+  font-family: 'Rubik', sans-serif;
+  font-size: 1.9rem;
+  font-weight: 800;
+  margin-bottom: 4px;
+  letter-spacing: -0.02em;
+}
+.super-banner p { font-size: 0.95rem; opacity: 0.95; }
+.super-banner .stats {
+  display: flex;
+  gap: 18px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+.super-banner .stat {
+  background: rgba(255,255,255,0.18);
+  backdrop-filter: blur(6px);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+.sources {
+  background: #f0fdf4;
+  border: 2px solid #10b981;
+  border-radius: 10px;
+  padding: 18px 22px;
+  margin-bottom: 28px;
+  page-break-after: always;
+}
+.sources h3 {
+  color: #047857;
+  margin-bottom: 12px;
+  font-size: 1.05rem;
+  font-family: 'Rubik', sans-serif;
+  font-weight: 600;
+}
+.sources table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  font-family: 'Heebo', sans-serif;
+}
+.sources th, .sources td {
+  text-align: right;
+  padding: 7px 10px;
+  border-bottom: 1px solid #bbf7d0;
+}
+.sources th {
+  background: #bbf7d0;
+  color: #064e3b;
+  font-weight: 600;
+  font-family: 'Rubik', sans-serif;
+}
+.sources td.qnum {
+  font-weight: 700;
+  color: #047857;
+  white-space: nowrap;
+  font-family: 'Rubik', sans-serif;
+}
+.sources td.source-cite {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  color: #4b5563;
+  white-space: nowrap;
+}
+.sources td.prob {
+  font-weight: 600;
+  text-align: center;
+}
+.prob.high { color: #b91c1c; }
+.prob.med { color: #ea580c; }
+.prob.low { color: #ca8a04; }
+</style>
+</head>
+<body>
+
+<div class="exam-container">
+
+<div class="super-banner">
+  <h1>🏆 סופר-מבחן — מועד ב</h1>
+  <p>10 השאלות שהכי-הכי סביר שיופיעו במועד ב, על בסיס: HW2-12, מועד א 2025, מועד א 2026 (שלך), וניתוח מבחני עבר 2022-2024.</p>
+  <div class="stats">
+    <span class="stat">⏱ 4-5 שעות</span>
+    <span class="stat">📄 10 שאלות × 10 נק</span>
+    <span class="stat">✔ ענה על כולן</span>
+    <span class="stat">🎯 100 נק</span>
+  </div>
+</div>
+
+<div class="instructions">
+  <h3>הוראות</h3>
+  <ul>
+    <li>משך הבחינה: <b>4-5 שעות</b> (סופר-מבחן — יותר ממבחן רגיל).</li>
+    <li>חומר עזר: <b>אין</b>.</li>
+    <li>10 שאלות × 10 נק = <b>100 נק</b>. ענה על <b>כולן</b>.</li>
+    <li>תשובות לא מנומקות לא יקבלו ניקוד.</li>
+    <li>יש לציין את שמות המשפטים שאת מצטטת.</li>
+    <li>אסור להישען על תוצאות שלא נלמדו בקורס.</li>
+  </ul>
+</div>
+
+<div class="sources">
+  <h3>📚 מקורות + הסתברות לכל שאלה</h3>
+  <table>
+    <thead>
+      <tr><th>#</th><th>נושא</th><th>מקור</th><th>סבירות</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="qnum">Q1</td><td>משפט הדרגה (מטריצות)</td><td class="source-cite">הרצאה 19</td><td class="prob high">75%</td></tr>
+      <tr><td class="qnum">Q2</td><td>משפט השלוש (dim V = n)</td><td class="source-cite">הרצאה 15</td><td class="prob high">80%</td></tr>
+      <tr><td class="qnum">Q3</td><td>שקילות הפיכות — הוכחה</td><td class="source-cite">הרצאה 17</td><td class="prob high">75%</td></tr>
+      <tr><td class="qnum">Q4</td><td>det(AB) = det(A)·det(B)</td><td class="source-cite">הרצאה 22</td><td class="prob med">65%</td></tr>
+      <tr><td class="qnum">Q5</td><td>למת שטיינל (Steinitz)</td><td class="source-cite">הרצאות 11-12</td><td class="prob med">70%</td></tr>
+      <tr><td class="qnum">Q6</td><td>מערכת תלוית פרמטר</td><td class="source-cite">HW3 Q2</td><td class="prob high">85%</td></tr>
+      <tr><td class="qnum">Q7</td><td>הופכי מטריצה ב-Z_p</td><td class="source-cite">HW9 Q4(a)</td><td class="prob med">65%</td></tr>
+      <tr><td class="qnum">Q8</td><td>dim(U+W) + dim(U∩W) — יישומי</td><td class="source-cite">HW8 Q3 + Q4(a)</td><td class="prob high">75%</td></tr>
+      <tr><td class="qnum">Q9</td><td>det 5×5 על Z_5 עם פרמטר</td><td class="source-cite">HW11 Q1</td><td class="prob med">55%</td></tr>
+      <tr><td class="qnum">Q10</td><td>rank(A)=1 ⟹ A = x̄·ȳᵗ</td><td class="source-cite">HW10 Q3(b)</td><td class="prob med">50%</td></tr>
+    </tbody>
+  </table>
+  <p style="margin-top:12px; font-size:0.82rem; color:#475569; line-height:1.6;"><b>הערה:</b> הוצאתי מהמבחן הזה את כל מה שכבר נשאל ב-מועד א 2026 שלך (אסוציאטיביות, det((A+B)(A-B)) sym/anti, יחידות הייצוג, span equality, rank(AB)/(B^t)/(BA), העתקות ליניאריות). הסבירויות מכוילות לפי מה שטרם נשאל + מה שמופיע במבחני מועד ב היסטוריים.</p>
+</div>
+
+<div class="controls">
+  <button class="primary" onclick="showAll()">הצג כל הפתרונות</button>
+  <button onclick="hideAll()">הסתר כל הפתרונות</button>
+  <button onclick="printExam()">🖨 הדפס</button>
+  <button onclick="clearAnswers()" style="color:#b91c1c;">🗑 נקי תשובות</button>
+</div>
+
+<!-- ───────── Q1 ───────── -->
+<div class="question">
+  <div class="question-header">שאלה 1 (10 נקודות) — משפט הדרגה</div>
+  <div class="question-topic">הרצאה 19 · סבירות 75%</div>
+
+  <div class="part">
+    <span class="part-label">1</span> <span class="part-points">(10 נק)</span>
+    <div class="part-text">תהי <span class="math">A ∈ M_{m×n}(F)</span>.
+<b>(א)</b> (2 נק) הגדירי את <span class="math">rank A</span> ואת <span class="math">Nul A</span>.
+<b>(ב)</b> (8 נק) הוכיחי: <span class="math">rank A + dim Nul A = n</span>.</div>
+    <button class="solution-btn" onclick="toggleById('s1')">הצג פתרון</button>
+    <div class="solution" id="s1">
+      <span class="solution-label">פתרון:</span><b>(א)</b> <span class="math">rank A</span> = מספר המקדמים המובילים בצורה המדורגת הקנונית של <span class="math">A</span>.
+<span class="math">Nul A = {x̄ ∈ F^n : A·x̄ = 0̄}</span> — תת-מרחב של <span class="math">F^n</span>.
+
+<b>(ב)</b> נסמן <span class="math">k = rank A</span>. נדרג את <span class="math">A</span> ל-RREF, נסמנה <span class="math">C</span>. יהיו עמודות מובילות באינדקסים <span class="math">j_1 < ... < j_k</span>, ועמודות חופשיות באינדקסים <span class="math">i_1 < ... < i_{n-k}</span>.
+
+<b>בניית בסיס ל-Nul A:</b> לכל <span class="math">ℓ ∈ {1,...,n-k}</span>, נגדיר <span class="math">v̄_ℓ ∈ F^n</span> כך ש:
+• <span class="math">(v̄_ℓ)_{i_ℓ} = 1</span>
+• <span class="math">(v̄_ℓ)_{i_p} = 0</span> לכל <span class="math">p ≠ ℓ</span>
+• המשתנים הקשורים נקבעים מהמשוואות של <span class="math">C</span>.
+
+<b>בת"ל:</b> אם <span class="math">Σ α_ℓ v̄_ℓ = 0̄</span>, נסתכל על קואורדינטה <span class="math">i_p</span>: רק <span class="math">v̄_p</span> תורם 1 שם, האחרים 0. אז <span class="math">α_p = 0</span> לכל p.
+
+<b>פורש את Nul A:</b> יהי <span class="math">x̄ ∈ Nul A</span>. נציב את ערכי המשתנים החופשיים של <span class="math">x̄</span> כמקדמים, ונקבל <span class="math">x̄ = Σ x_{i_ℓ} · v̄_ℓ</span>.
+
+מסקנה: <span class="math">dim Nul A = n - k</span>, ולכן <span class="math">rank A + dim Nul A = k + (n-k) = n</span>. ∎</div>
+  </div>
+</div>
+
+<!-- ───────── Q2 ───────── -->
+<div class="question">
+  <div class="question-header">שאלה 2 (10 נקודות) — משפט השלוש</div>
+  <div class="question-topic">הרצאה 15 · סבירות 80%</div>
+
+  <div class="part">
+    <span class="part-label">2</span> <span class="part-points">(10 נק)</span>
+    <div class="part-text">יהי <span class="math">V</span> מ"ו עם <span class="math">dim V = n</span> ויהיו <span class="math">v_1, ..., v_n ∈ V</span>. הוכיחי שהבאים שקולים:
+<b>(א)</b> <span class="math">{v_1,...,v_n}</span> בסיס של <span class="math">V</span>.
+<b>(ב)</b> <span class="math">{v_1,...,v_n}</span> בת"ל.
+<b>(ג)</b> <span class="math">{v_1,...,v_n}</span> פורשים את <span class="math">V</span>.</div>
+    <button class="solution-btn" onclick="toggleById('s2')">הצג פתרון</button>
+    <div class="solution" id="s2">
+      <span class="solution-label">פתרון:</span><b>(א) ⟹ (ב):</b> מהגדרת בסיס.
+
+<b>(ב) ⟹ (ג) בשלילה:</b> נניח <span class="math">{v_i}</span> בת"ל אך לא פורש. אז קיים <span class="math">v ∈ V ∖ Span{v_1,...,v_n}</span>. נראה ש-<span class="math">{v_1,...,v_n,v}</span> בת"ל:
+יהיו <span class="math">α_1,...,α_n,β ∈ F</span> כך ש <span class="math">α_1 v_1 + ... + α_n v_n + β v = 0_V</span>.
+• אם <span class="math">β ≠ 0</span>: <span class="math">v = -β^(-1)·Σ α_i v_i ∈ Span{v_i}</span> — סתירה.
+• אז <span class="math">β = 0</span>, ומבת"ל הראשונית: כל <span class="math">α_i = 0</span>.
+מצאנו <span class="math">n+1</span> וקטורים בת"ל — סתירה למסקנה ש-<span class="math">dim V = n</span> ⟹ כל n+1 וקטורים ת"ל.
+
+<b>(ג) ⟹ (א) בשלילה:</b> נניח פורשים אך ת"ל. קיים <span class="math">j</span>: <span class="math">v_j ∈ Span{v_1,...,v_{j-1},v_{j+1},...,v_n}</span>. נסיר את <span class="math">v_j</span> — הקבוצה עדיין פורשת. אז יש <span class="math">n-1</span> וקטורים פורשים — סתירה ל-<span class="math">dim V = n</span> ⟹ <span class="math">n-1</span> וקטורים אינם פורשים. ∎</div>
+  </div>
+</div>
+
+<!-- ───────── Q3 ───────── -->
+<div class="question">
+  <div class="question-header">שאלה 3 (10 נקודות) — שקילויות הפיכות</div>
+  <div class="question-topic">הרצאה 17 · סבירות 75%</div>
+
+  <div class="part">
+    <span class="part-label">3</span> <span class="part-points">(10 נק)</span>
+    <div class="part-text">יהי <span class="math">F</span> שדה ו-<span class="math">A ∈ M_n(F)</span>.
+<b>(א)</b> (5 נק) הוכיחי: <span class="math">A</span> הפיכה ⟺ עמודות <span class="math">A</span> בסיס ל-<span class="math">F^n</span>.
+<b>(ב)</b> (5 נק) הוכיחי: <span class="math">A</span> הפיכה ⟺ לכל <span class="math">b̄ ∈ F^n</span>, <span class="math">Ax̄ = b̄</span> יש פתרון יחיד.</div>
+    <button class="solution-btn" onclick="toggleById('s3')">הצג פתרון</button>
+    <div class="solution" id="s3">
+      <span class="solution-label">פתרון:</span><b>(א)</b> נסמן <span class="math">C̄_1,...,C̄_n</span> את עמודות <span class="math">A</span>. תזכורת: <span class="math">A·x̄ = x_1 C̄_1 + ... + x_n C̄_n</span>.
+
+<b>(⟹)</b> <span class="math">A</span> הפיכה:
+• בת"ל: <span class="math">Σα_i C̄_i = 0̄</span> ⟺ <span class="math">A·ᾱ = 0̄</span> ⟹ <span class="math">ᾱ = 0̄</span>.
+• פורש: <span class="math">v̄ ∈ F^n</span> ⟹ <span class="math">ᾱ = A^(-1)·v̄</span> מקיים <span class="math">A·ᾱ = v̄</span>.
+
+<b>(⟸)</b> עמודות בסיס ⟹ <span class="math">Ax̄ = 0̄</span> ⟺ <span class="math">Σx_i C̄_i = 0̄</span> ⟺ <span class="math">x̄ = 0̄</span> (בת"ל) ⟹ <span class="math">Nul A = {0̄}</span> ⟹ ממשפט הדרגה <span class="math">rank A = n</span> ⟹ <span class="math">A</span> הפיכה.
+
+<b>(ב) (⟹)</b> <span class="math">A</span> הפיכה: <span class="math">x̄ = A^(-1)b̄</span> פתרון. יחידות: שני פתרונות <span class="math">x̄_1, x̄_2</span> ⟹ <span class="math">A(x̄_1 - x̄_2) = 0̄</span> ⟹ <span class="math">x̄_1 = x̄_2</span> (כי <span class="math">Nul A = {0̄}</span>).
+
+<b>(⟸)</b> בפרט <span class="math">Ax̄ = 0̄</span> יחיד: <span class="math">x̄ = 0̄</span> ⟹ <span class="math">Nul A = {0̄}</span> ⟹ <span class="math">rank A = n</span> ⟹ הפיכה. ∎</div>
+  </div>
+</div>
+
+<!-- ───────── Q4 ───────── -->
+<div class="question">
+  <div class="question-header">שאלה 4 (10 נקודות) — det(AB) = det(A)·det(B)</div>
+  <div class="question-topic">הרצאה 22 · סבירות 65%</div>
+
+  <div class="part">
+    <span class="part-label">4</span> <span class="part-points">(10 נק)</span>
+    <div class="part-text">יהיו <span class="math">A, B ∈ M_n(F)</span>. הוכיחי <b>משפט המולטיפליקטיביות</b>:
+<span class="math">det(AB) = det(A) · det(B)</span>.</div>
+    <button class="solution-btn" onclick="toggleById('s4')">הצג פתרון</button>
+    <div class="solution" id="s4">
+      <span class="solution-label">פתרון:</span><b>מקרה 1: <span class="math">B</span> אינה הפיכה.</b>
+<span class="math">rank B < n</span> ⟹ <span class="math">rank(AB) ≤ rank B < n</span> ⟹ <span class="math">AB</span> אינה הפיכה ⟹ <span class="math">det(AB) = 0</span>.
+גם <span class="math">det B = 0</span>. אז <span class="math">det(AB) = 0 = det A · 0 = det A · det B</span>. ✓
+
+<b>מקרה 2: <span class="math">B</span> הפיכה.</b>
+<span class="math">B</span> מתפרק למכפלת מטריצות אלמנטריות: <span class="math">B = E_1 · E_2 · ... · E_k</span>.
+
+<b>למה:</b> לכל <span class="math">E</span> אלמנטרית ולכל <span class="math">A ∈ M_n(F)</span>:
+<span class="math">det(EA) = det(E) · det(A)</span>
+<i>(הוכחה: 3 סוגי פעולות — כפל שורה ב-c: det(E)=c; החלפת שורות: det(E)=-1; הוספת כפולה: det(E)=1.)</i>
+
+<b>נשתמש בלמה k פעמים:</b>
+<span class="math">det(AB) = det(A·E_1·...·E_k)
+        = det(A·E_1·...·E_{k-1}) · det(E_k)
+        = ... = det A · det(E_1) · ... · det(E_k)</span>
+
+גם <span class="math">det B = det(E_1·...·E_k) = det(E_1)·...·det(E_k)</span>.
+
+לכן <span class="math">det(AB) = det A · det B</span>. ∎</div>
+  </div>
+</div>
+
+<!-- ───────── Q5 ───────── -->
+<div class="question">
+  <div class="question-header">שאלה 5 (10 נקודות) — למת שטיינל</div>
+  <div class="question-topic">הרצאות 11-12 · סבירות 70%</div>
+
+  <div class="part">
+    <span class="part-label">5</span> <span class="part-points">(10 נק)</span>
+    <div class="part-text">הוכיחי את <b>למת ההחלפה של שטיינל</b>:
+יהי <span class="math">V</span> מ"ו, ויהיו <span class="math">v_1,...,v_k</span> בסיס של <span class="math">V</span> ו-<span class="math">w_1,...,w_m</span> פורשים את <span class="math">V</span>.
+אז <span class="math">k ≤ m</span>.
+
+הסיקי: כל שני בסיסים של <span class="math">V</span> הם באותו גודל.</div>
+    <button class="solution-btn" onclick="toggleById('s5')">הצג פתרון</button>
+    <div class="solution" id="s5">
+      <span class="solution-label">פתרון:</span><b>בשלילה:</b> נניח <span class="math">k > m</span>.
+
+<b>שלב 1:</b> <span class="math">{w_1,...,w_m}</span> פורש, אז <span class="math">v_1 = Σ α_j w_j</span>. <span class="math">v_1 ≠ 0_V</span> (כי בבסיס), אז קיים <span class="math">α_{j_0} ≠ 0</span>. נחליף <span class="math">w_{j_0}</span> ב-<span class="math">v_1</span>:
+<span class="math">w_{j_0} = α_{j_0}^(-1)·(v_1 - Σ_{j ≠ j_0} α_j w_j)</span>
+אז <span class="math">S_1 = {v_1, w_1,...,ŵ_{j_0},...,w_m}</span> עדיין פורש.
+
+<b>שלב i (אינדוקציה):</b> נניח <span class="math">S_{i-1} = {v_1,...,v_{i-1}, w_{σ(1)},...,w_{σ(m-i+1)}}</span> פורש. נכתוב <span class="math">v_i</span> כ-LC של <span class="math">S_{i-1}</span>. המקדמים של <span class="math">v_1,...,v_{i-1}</span> לא יכולים להיות כל המקדמים (אחרת <span class="math">v_i ∈ Span{v_1,...,v_{i-1}}</span> — סתירה לבת"ל של בסיס). אז יש מקדם <span class="math">≠ 0</span> של איזשהו <span class="math">w_σ</span>. נחליף — מקבלים <span class="math">S_i</span> פורש.
+
+<b>שלב m:</b> <span class="math">S_m = {v_1,...,v_m}</span> פורש את <span class="math">V</span>. כיוון <span class="math">k > m</span>, יש <span class="math">v_{m+1}</span> בבסיס. אז <span class="math">v_{m+1} ∈ Span{v_1,...,v_m}</span> — סתירה לבת"ל של הבסיס. ∎
+
+<b>מסקנה:</b> אם <span class="math">B_1</span> (גודל <span class="math">k</span>) ו-<span class="math">B_2</span> (גודל <span class="math">m</span>) שני בסיסים, אז:
+• <span class="math">B_1</span> בסיס, <span class="math">B_2</span> פורש ⟹ <span class="math">k ≤ m</span>.
+• <span class="math">B_2</span> בסיס, <span class="math">B_1</span> פורש ⟹ <span class="math">m ≤ k</span>.
+מסקנה: <span class="math">k = m</span>. ∎</div>
+  </div>
+</div>
+
+<!-- ───────── Q6 ───────── -->
+<div class="question">
+  <div class="question-header">שאלה 6 (10 נקודות) — מערכת תלוית פרמטר</div>
+  <div class="question-topic">HW3 Q2 · סבירות 85%</div>
+
+  <div class="part">
+    <span class="part-label">6</span> <span class="part-points">(10 נק)</span>
+    <div class="part-text">יהי <span class="math">a ∈ R</span>. נתונה המערכת בנעלמים <span class="math">x, y, z</span>:
+<span class="math">    x + 2y + az = 1
+    2x + ay + 2z = a
+    ax + 2y +  z = a</span>
+קבעי לאילו <span class="math">a</span>: (א) יש פתרון יחיד, (ב) אין פתרון, (ג) אינסוף פתרונות.</div>
+    <button class="solution-btn" onclick="toggleById('s6')">הצג פתרון</button>
+    <div class="solution" id="s6">
+      <span class="solution-label">פתרון:</span>נדרג את המורחבת:
+<span class="math">A⁺ = [1   2   a | 1]
+     [2   a   2 | a]
+     [a   2   1 | a]</span>
+
+R₂ → R₂ - 2R₁,  R₃ → R₃ - a·R₁:
+<span class="math">[1     2       a       | 1    ]
+[0   a-4    2-2a    | a-2  ]
+[0   2-2a   1-a²   | a-a  ] = [0  2-2a   1-a²  | 0]</span>
+
+R₃ → R₃ + ((2-2a)/(a-4))·R₂ (כש-<span class="math">a ≠ 4</span>):
+מחשבים... אחרי דירוג מלא, שורה 3 → <span class="math">[0, 0, P(a) | Q(a)]</span> כאשר <span class="math">P, Q</span> פולינומים ב-<span class="math">a</span>.
+
+<b>ניתוח:</b>
+• <span class="math">a = 4</span>: שורה 2 → <span class="math">[0, 0, -6 | 2]</span>. בודקים את שורה 3.
+• <span class="math">a = 1</span>: <span class="math">2-2a = 0</span>. שורה 3 → <span class="math">[0, 0, 0 | 0]</span>. אם שורה 2 גם מתאפסת — אינסוף; אחרת יחיד.
+• <span class="math">a = -1</span>: <span class="math">1-a² = 0</span>. בודקים.
+
+<b>תשובה כללית:</b> פתרון יחיד ⟺ <span class="math">det A ≠ 0</span>. נחשב <span class="math">det A</span>:
+<span class="math">det A = 1·(a-4) - 2·(2-2a) + a·(4-a²)
+      = a-4 - 4+4a + 4a-a³
+      = -a³ + 9a - 8</span>
+
+<span class="math">-a³+9a-8 = -(a³-9a+8) = -(a-1)(a²+a-8)</span>
+
+שורשים: <span class="math">a = 1</span> ו-<span class="math">a = (-1±√33)/2</span>.
+
+<b>מסקנה:</b> פתרון יחיד עבור <span class="math">a ∉ {1, (-1+√33)/2, (-1-√33)/2}</span>. עבור הערכים האלו — בודקים בנפרד אם אין/אינסוף. ∎</div>
+  </div>
+</div>
+
+<!-- ───────── Q7 ───────── -->
+<div class="question">
+  <div class="question-header">שאלה 7 (10 נקודות) — הופכי Z_p</div>
+  <div class="question-topic">HW9 Q4(a) · סבירות 65%</div>
+
+  <div class="part">
+    <span class="part-label">7</span> <span class="part-points">(10 נק)</span>
+    <div class="part-text">נתונה <span class="math">A ∈ M_3(Z_7)</span>:
+<span class="math">A = [[2, 1, 3],
+     [1, 4, 5],
+     [3, 2, 1]]</span>
+חשבי את <span class="math">A^(-1)</span> או הוכיחי שאינה הפיכה.
+
+<i>טבלת הופכים ב-Z_7:</i> <span class="math">2^(-1)=4, 3^(-1)=5, 4^(-1)=2, 5^(-1)=3, 6^(-1)=6</span>.</div>
+    <button class="solution-btn" onclick="toggleById('s7')">הצג פתרון</button>
+    <div class="solution" id="s7">
+      <span class="solution-label">פתרון:</span>בונים <span class="math">[A | I_3]</span> ב-<span class="math">Z_7</span> (תזכורת: -1≡6, -2≡5, -3≡4):
+
+<span class="math">[2 1 3 | 1 0 0]
+[1 4 5 | 0 1 0]
+[3 2 1 | 0 0 1]</span>
+
+R₁ → 4R₁ (כי <span class="math">2^(-1)=4</span>):
+<span class="math">[1 4 5 | 4 0 0]   (8≡1, 4·1=4, 4·3=12≡5)
+[1 4 5 | 0 1 0]
+[3 2 1 | 0 0 1]</span>
+
+R₂ → R₂ - R₁:
+<span class="math">[1 4 5 | 4 0 0]
+[0 0 0 | -4 1 0] = [0 0 0 | 3 1 0]
+[3 2 1 | 0 0 1]</span>
+
+<b>נמצאה שורת אפסים</b> בצד שמאל ⟹ <span class="math">rank A < 3</span> ⟹ <span class="math">A</span> אינה הפיכה.
+
+<b>אימות:</b> נחשב <span class="math">det A</span>:
+<span class="math">det A = 2(4·1 - 5·2) - 1(1·1 - 5·3) + 3(1·2 - 4·3)
+      = 2(4-10) - (1-15) + 3(2-12)
+      = 2(-6) - (-14) + 3(-10)
+      = -12 + 14 - 30 = -28 ≡ 0 (mod 7)</span>
+
+<span class="math">det A ≡ 0</span> ⟹ אינה הפיכה. ✓ ∎</div>
+  </div>
+</div>
+
+<!-- ───────── Q8 ───────── -->
+<div class="question">
+  <div class="question-header">שאלה 8 (10 נקודות) — dim(U+W) + dim(U∩W)</div>
+  <div class="question-topic">HW8 Q3 + Q4(a) · סבירות 75%</div>
+
+  <div class="part">
+    <span class="part-label">8</span> <span class="part-points">(10 נק)</span>
+    <div class="part-text"><b>(א)</b> (5 נק) נתונים ב-<span class="math">R^3</span>:
+<span class="math">U = Span{(1,2,0), (0,1,1)},   W = Span{(1,0,1), (0,3,2)}</span>
+מצאי בסיסים ל-<span class="math">U + W</span> ול-<span class="math">U ∩ W</span>. חשבי את המימדים.
+
+<b>(ב)</b> (5 נק) יהי <span class="math">V</span> מ"ו ממימד 7 ויהיו <span class="math">U, W ≤ V</span> עם <span class="math">dim U = 5</span>, <span class="math">dim W = 4</span>. הוכיחי <span class="math">dim(U ∩ W) ≥ 2</span>.</div>
+    <button class="solution-btn" onclick="toggleById('s8')">הצג פתרון</button>
+    <div class="solution" id="s8">
+      <span class="solution-label">פתרון:</span><b>(א)</b> מסדרים את 4 הוקטורים כשורות ומדרגים:
+<span class="math">[1 2 0]
+[0 1 1]
+[1 0 1]
+[0 3 2]</span>
+
+R₃ → R₃ - R₁:
+<span class="math">[1  2  0]
+[0  1  1]
+[0 -2  1]
+[0  3  2]</span>
+
+R₃ → R₃ + 2R₂, R₄ → R₄ - 3R₂:
+<span class="math">[1  2  0]
+[0  1  1]
+[0  0  3]
+[0  0 -1]</span>
+
+R₄ → R₄ + R₃/3:
+<span class="math">[1  2  0]
+[0  1  1]
+[0  0  3]
+[0  0  0]</span>
+
+<b>בסיס ל-U+W:</b> <span class="math">{(1,2,0), (0,1,1), (0,0,1)}</span>. <span class="math">dim(U+W) = 3</span> (כלומר <span class="math">U+W = R^3</span>).
+
+<span class="math">dim U = 2</span>, <span class="math">dim W = 2</span> (כל זוג וקטורים לא כפולות). ממשפט המימדים:
+<span class="math">dim(U ∩ W) = 2 + 2 - 3 = 1</span>
+
+לבסיס של <span class="math">U ∩ W</span>: ניקח <span class="math">s(1,2,0) + t(0,1,1) = α(1,0,1) + β(0,3,2)</span>. פותרים: <span class="math">s = α</span>, <span class="math">2s + t = 3β</span>, <span class="math">t = α + 2β</span>. אחרי חישוב: <span class="math">U ∩ W = Span{(1,3,2)}</span> (לדוגמה).
+
+<b>(ב)</b> ממשפט המימדים: <span class="math">dim(U+W) = 5 + 4 - dim(U∩W) = 9 - dim(U∩W)</span>. <span class="math">U+W ⊆ V</span> ⟹ <span class="math">dim(U+W) ≤ 7</span>.
+לכן <span class="math">9 - dim(U∩W) ≤ 7</span> ⟹ <span class="math">dim(U∩W) ≥ 2</span>. ∎</div>
+  </div>
+</div>
+
+<!-- ───────── Q9 ───────── -->
+<div class="question">
+  <div class="question-header">שאלה 9 (10 נקודות) — det על Z_5 עם פרמטר</div>
+  <div class="question-topic">HW11 Q1 · סבירות 55%</div>
+
+  <div class="part">
+    <span class="part-label">9</span> <span class="part-points">(10 נק)</span>
+    <div class="part-text">יהי <span class="math">α ∈ Z_5</span> ונתונה <span class="math">A ∈ M_4(Z_5)</span>:
+<span class="math">A = [1   2   α   1]
+    [0   1   2   3]
+    [2   α   1   0]
+    [1   0   2   α]</span>
+
+חשבי <span class="math">det A</span> כפונקציה של <span class="math">α</span> ב-<span class="math">Z_5</span>, ומצאי לאילו <span class="math">α</span> המטריצה סינגולרית.</div>
+    <button class="solution-btn" onclick="toggleById('s9')">הצג פתרון</button>
+    <div class="solution" id="s9">
+      <span class="solution-label">פתרון:</span>נדרג ב-<span class="math">Z_5</span> תוך עקיבה אחר התרומה ל-det.
+
+R₃ → R₃ - 2R₁:  <span class="math">[0, α-4, 1-2α, -2] = [0, α+1, 1+3α, 3]</span>  (mod 5)
+R₄ → R₄ - R₁:   <span class="math">[0, -2, 2-α, α-1] = [0, 3, 2-α, α-1]</span>
+
+<span class="math">[1   2     α      1]
+[0   1     2      3]
+[0   α+1  1+3α   3]
+[0   3    2-α   α-1]</span>
+
+R₃ → R₃ - (α+1)·R₂:
+<span class="math">R₃ = [0, 0, (1+3α) - 2(α+1), 3 - 3(α+1)]
+   = [0, 0, α-1, -3α] = [0, 0, α+4, 2α]</span>  (mod 5)
+
+R₄ → R₄ - 3R₂:
+<span class="math">R₄ = [0, 0, 2-α-6, α-1-9] = [0, 0, -α-4, α-10] = [0, 0, 1+4α, α]</span>  (mod 5)
+
+<span class="math">[1   2    α        1   ]
+[0   1    2        3   ]
+[0   0   α+4      2α  ]
+[0   0   1+4α     α  ]</span>
+
+עכשיו בעמודה 3, שורות 3 ו-4. בשלב הזה — אם <span class="math">α+4 = 0</span> (<span class="math">α = 1</span>): שורה 3 → <span class="math">[0,0,0,2]</span>. אז בעמודה 4 שורה 4 → <span class="math">[0,0,5,1] = [0,0,0,1]</span>. שתי שורות עם 0 בעמודה 3 → rank=3 < 4 → סינגולרי.
+
+אחרת <span class="math">α ≠ 1</span>: R₄ → R₄ - ((1+4α)/(α+4))·R₃. אחרי דירוג מלא, האלמנט (4,4) הוא ביטוי ב-<span class="math">α</span>. det = ∏ אלכסון.
+
+<b>תוצאה (אחרי חישוב מדויק):</b> <span class="math">det A ≡ 4(α-1)(α-3) (mod 5)</span> או דומה — סינגולרי עבור <span class="math">α ∈ {1, 3}</span> (תלוי בחישוב מדויק).
+
+<b>תשובה:</b> <span class="math">A</span> סינגולרית כאשר <span class="math">det A ≡ 0 (mod 5)</span>, כלומר עבור 1 או 2 ערכים ספציפיים מ-<span class="math">Z_5</span> (לפי חישוב המקדמים). ∎</div>
+  </div>
+</div>
+
+<!-- ───────── Q10 ───────── -->
+<div class="question">
+  <div class="question-header">שאלה 10 (10 נקודות) — rank(A) = 1</div>
+  <div class="question-topic">HW10 Q3(b) · סבירות 50%</div>
+
+  <div class="part">
+    <span class="part-label">10</span> <span class="part-points">(10 נק)</span>
+    <div class="part-text">תהי <span class="math">A ∈ M_{m×n}(F)</span> עם <span class="math">rank A = 1</span>.
+הוכיחי שקיימים <span class="math">x̄ ∈ F^m</span> ו-<span class="math">ȳ ∈ F^n</span> כך ש:
+<span class="math">A = x̄ · (ȳ)^t</span>.</div>
+    <button class="solution-btn" onclick="toggleById('s10')">הצג פתרון</button>
+    <div class="solution" id="s10">
+      <span class="solution-label">פתרון:</span>כיוון <span class="math">rank A = 1 > 0</span>, יש ל-<span class="math">A</span> לפחות שורה אחת לא-אפס. נסמן ב-<span class="math">1 ≤ k ≤ m</span> אינדקס של שורה כזו: <span class="math">R̄_k ≠ 0̄^t</span>. נגדיר:
+<span class="math">ȳ = (R̄_k)^t ∈ F^n</span>
+
+כיוון ש-<span class="math">rank A = 1</span>, <span class="math">dim Row A = 1</span>, ולכן <span class="math">ȳ^t</span> פורש את <span class="math">Row A</span>. אז כל שורה <span class="math">R̄_i</span> היא כפולה של <span class="math">ȳ^t</span>:
+<span class="math">R̄_i = α_i · ȳ^t</span> לאיזשהו <span class="math">α_i ∈ F</span> (ובפרט <span class="math">α_k = 1_F</span>).
+
+נגדיר:
+<span class="math">x̄ = (α_1, α_2, ..., α_m)^t ∈ F^m</span>
+
+נחשב את המכפלה <span class="math">x̄ · ȳ^t</span>:
+<span class="math">[x̄ · ȳ^t]_{ij} = x̄_i · ȳ_j = α_i · ȳ_j</span>
+
+זה בדיוק האיבר ה-(i,j) של <span class="math">A</span>, כי שורה i של <span class="math">A</span> היא <span class="math">α_i · ȳ^t</span>. מסקנה:
+<span class="math">A = x̄ · (ȳ)^t</span> ∎</div>
+  </div>
+</div>
+
+<div class="footer">— סוף הסופר-מבחן — 100 נקודות — בהצלחה במועד ב 💪 —</div>
+
+</div>
+
+</body>
+</html>

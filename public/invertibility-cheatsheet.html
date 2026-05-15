@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>הפיכות — סיכום מפורט</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&family=Rubik:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 14px; -webkit-font-smoothing: antialiased; }
+body {
+  font-family: 'Heebo', sans-serif;
+  background: #fafafa;
+  color: #1f2937;
+  line-height: 1.55;
+  padding: 16px;
+  direction: rtl;
+  letter-spacing: -0.005em;
+}
+.sheet {
+  max-width: 900px;
+  margin: 0 auto;
+  background: white;
+  padding: 24px 30px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+  border-radius: 8px;
+}
+
+/* ── Title ── */
+.title {
+  text-align: center;
+  margin-bottom: 18px;
+}
+.title h1 {
+  font-family: 'Rubik', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #4338ca;
+  letter-spacing: -0.01em;
+}
+.title .sub {
+  font-size: 0.78rem;
+  color: #6b7280;
+  margin-top: 2px;
+}
+
+/* ── Section bars (like PDF) ── */
+.bar {
+  background: #6d28d9;
+  color: white;
+  padding: 7px 14px;
+  border-radius: 5px;
+  font-family: 'Rubik', sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin: 16px 0 10px;
+}
+.bar.purple { background: #6d28d9; }
+.bar.red { background: #dc2626; }
+.bar.teal { background: #0d9488; }
+.bar.orange { background: #ea580c; }
+.bar.indigo { background: #4338ca; }
+
+/* ── Cards ── */
+.card {
+  border-radius: 5px;
+  padding: 8px 12px;
+  margin: 6px 0;
+  font-size: 0.84rem;
+  line-height: 1.65;
+  position: relative;
+}
+.card.def { background: #eff6ff; border-right: 3px solid #2563eb; }
+.card.thm { background: #f0fdf4; border-right: 3px solid #16a34a; }
+.card.tech { background: #fdf4ff; border-right: 3px solid #c026d3; }
+.card.note { background: #fefce8; border-right: 3px solid #ca8a04; }
+.card.warn { background: #fef2f2; border-right: 3px solid #dc2626; }
+.card.cor { background: #fff7ed; border-right: 3px solid #ea580c; }
+
+.tag {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 1px 7px;
+  border-radius: 3px;
+  margin-left: 6px;
+  vertical-align: 1px;
+  font-family: 'Rubik', sans-serif;
+}
+.tag.def { background: #2563eb; color: white; }
+.tag.thm { background: #16a34a; color: white; }
+.tag.tech { background: #c026d3; color: white; }
+.tag.note { background: #ca8a04; color: white; }
+.tag.warn { background: #dc2626; color: white; }
+.tag.cor { background: #ea580c; color: white; }
+.tag.critical { background: #dc2626; color: white; }
+
+.card .ttl {
+  font-weight: 700;
+  color: #1f2937;
+  font-size: 0.9rem;
+}
+.card .ttl.blue { color: #1d4ed8; }
+.card .ttl.green { color: #15803d; }
+.card .ttl.pink { color: #a21caf; }
+.card .ttl.yellow { color: #a16207; }
+.card .ttl.red { color: #b91c1c; }
+.card .ttl.orange { color: #c2410c; }
+
+.card .src {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: #6b7280;
+  margin-right: 6px;
+}
+
+.math {
+  font-family: 'STIX Two Math', 'Cambria Math', serif;
+  font-style: italic;
+  direction: ltr;
+  unicode-bidi: embed;
+  padding: 0 2px;
+}
+.math.b, .mathb {
+  font-family: 'STIX Two Math', 'Cambria Math', serif;
+  font-style: italic;
+  font-weight: 700;
+  direction: ltr;
+  unicode-bidi: embed;
+  padding: 0 2px;
+  color: #111827;
+}
+
+/* ── 2-col table layout ── */
+.row2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 6px 0;
+}
+@media (max-width: 700px) {
+  .row2 { grid-template-columns: 1fr; }
+}
+
+/* ── Compact equivalence list ── */
+.eqlist {
+  background: #f0fdf4;
+  border-right: 3px solid #16a34a;
+  padding: 10px 14px;
+  border-radius: 5px;
+  margin: 8px 0;
+  font-size: 0.85rem;
+}
+.eqlist .lead {
+  font-weight: 700;
+  color: #15803d;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+.eqlist ul {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 16px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.eqlist li {
+  position: relative;
+  padding-right: 14px;
+  font-size: 0.83rem;
+}
+.eqlist li::before {
+  content: '◆';
+  position: absolute;
+  right: 0;
+  top: 0;
+  color: #16a34a;
+  font-size: 0.7rem;
+}
+
+/* ── Implication arrow ── */
+.imp .arrow { color: #16a34a; font-weight: 700; margin: 0 4px; }
+.imp.warn .arrow { color: #ea580c; }
+.imp.critical .arrow { color: #dc2626; }
+.imp .conc { font-weight: 600; color: #15803d; }
+.imp.warn .conc { color: #c2410c; }
+.imp.critical .conc { color: #b91c1c; }
+
+/* ── Algo code block ── */
+.algo {
+  background: #0f172a;
+  color: #e2e8f0;
+  padding: 10px 14px;
+  border-radius: 5px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  line-height: 1.6;
+  direction: ltr;
+  text-align: left;
+  margin: 6px 0;
+}
+.algo .cmt { color: #64748b; }
+.algo .kw { color: #fbbf24; }
+
+/* ── Yellow golden rules at bottom ── */
+.golden {
+  background: #fffbeb;
+  border: 2px solid #f59e0b;
+  border-radius: 5px;
+  padding: 10px 14px;
+  margin: 6px 0;
+}
+.golden .ttl { color: #a16207; font-weight: 700; font-size: 0.85rem; margin-bottom: 4px; }
+.golden .body { font-size: 0.82rem; color: #78350f; }
+
+/* ── Print ── */
+@media print {
+  body { background: white; padding: 0; }
+  .sheet { box-shadow: none; padding: 16px; max-width: 100%; }
+  .bar { page-break-after: avoid; }
+  .card { page-break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+
+<div class="sheet">
+
+<div class="title">
+  <h1>הפיכות — סיכום מפורט</h1>
+  <div class="sub">הרצאות 17-19 · HW9 + HW10 · מותאם למבחני 2026</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="bar indigo">◆ ההגדרה הבסיסית + 4 התנאים השקולים הראשונים</div>
+
+<div class="card def">
+  <span class="tag def">הגדרה</span>
+  <span class="ttl blue">מטריצה הפיכה</span> · <span class="mathb">A ∈ M_n(F)</span> הפיכה אם קיימת <span class="mathb">B</span> יחידה כך ש-<span class="mathb">AB = BA = I_n</span>. נכתוב <span class="mathb">B = A⁻¹</span>.
+  <span class="src">הרצ' 17</span>
+</div>
+
+<div class="card thm">
+  <span class="tag thm">משפט</span>
+  <span class="ttl green">⭐ <span class="mathb">A</span> הפיכה ⟺ אחד מאלה מתקיים</span> · 4 תנאים שקולים מרכזיים:
+  <ol style="margin: 6px 22px 0; font-size: 0.85rem; line-height: 1.85;">
+    <li><span class="mathb">det(A) ≠ 0</span> &nbsp;— <em>"הנפח" של עמודות A אינו 0; A לא מקריסת מימדים.</em></li>
+    <li><span class="mathb">rank(A) = n</span> &nbsp;— <em>A מנצלת את כל המימדים האפשריים.</em></li>
+    <li><span class="mathb">dim&nbsp;Nul(A) = 0</span>, &nbsp;כלומר &nbsp;<span class="mathb">A·x̄ = 0̄ &nbsp;⟹&nbsp; x̄ = 0̄</span> &nbsp;— <em>A לא "מאפסת" וקטור לא-טריוויאלי.</em></li>
+    <li>עמודות (או שורות) <span class="mathb">A</span> מהוות בסיס ל-<span class="mathb">F^n</span> &nbsp;— <em>כל וקטור ב-<span class="mathb">F^n</span> ניתן לייצוג יחיד.</em></li>
+  </ol>
+  <span class="src">הרצ' 17 · 23</span>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="bar indigo">◆ טבלת השקילויות המלאה — 13 ניסוחים</div>
+
+<div class="eqlist">
+  <div class="lead">עבור <span class="mathb">A ∈ M_n(F)</span> — <strong>הבאים שקולים זה לזה</strong>:</div>
+  <ul>
+    <li><span class="mathb">A</span> הפיכה (קיים <span class="mathb">A⁻¹</span>)</li>
+    <li><span class="mathb">rank(A) = n</span></li>
+    <li><span class="mathb">det(A) ≠ 0</span></li>
+    <li>עמודות <span class="mathb">A</span> בת"ל</li>
+    <li>עמודות <span class="mathb">A</span> בסיס ל-<span class="mathb">F^n</span></li>
+    <li>שורות <span class="mathb">A</span> בת"ל</li>
+    <li>שורות <span class="mathb">A</span> בסיס ל-<span class="mathb">F^n</span></li>
+    <li><span class="mathb">A·x̄ = b̄</span> פתיר יחיד לכל <span class="mathb">b̄</span></li>
+    <li><span class="mathb">A·x̄ = 0̄</span> רק טריוויאלי</li>
+    <li><span class="mathb">Nul(A) = {0̄}</span></li>
+    <li><span class="mathb">Col(A) = Row(A) = F^n</span></li>
+    <li><span class="mathb">A</span> = מכפלת אלמנטריות</li>
+    <li>צורה קנונית של <span class="mathb">A</span> &nbsp;= &nbsp;<span class="mathb">I_n</span></li>
+    <li><span class="mathb">A^t</span> הפיכה</li>
+  </ul>
+</div>
+
+<!-- ── Note about determinant function ── -->
+<div class="card note" style="margin: 8px 0 14px;">
+  <span class="tag note">פתק</span>
+  <span class="ttl yellow">"det" — פונקצית הדטרמיננטה</span> · כל הופעה של <span class="mathb">det</span> בדף זה היא <strong>פונקצית הדטרמיננטה היחידה</strong> מ-<span class="mathb">M_n(F) → F</span> שמקיימת: מולטי-לינארית בשורות + אלטרנטיבית + <span class="mathb">det(I_n) = 1</span>. <strong>קיומה ויחידותה — משפט חשוב 3</strong> (הרצ' 22). כשתשתמשי בה במבחן בהוכחה — חייב לציין "<em>לפי משפט יחידות הדטרמיננטה</em>".
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="bar teal">◆ תכונות אלגבריות</div>
+
+<div class="row2">
+  <div class="card thm">
+    <span class="tag thm">משפט</span>
+    <span class="ttl green"><span class="math">(A⁻¹)⁻¹ = A</span></span> · ההופכי של ההופכי הוא המקור.
+    <span class="src">הרצ' 17</span>
+  </div>
+  <div class="card thm">
+    <span class="tag thm">משפט</span> <span class="tag critical">חובה הוכחה</span>
+    <span class="ttl red"><span class="math">(AB)⁻¹ = B⁻¹A⁻¹</span></span> · <strong>היפוך סדר!</strong> בדיקה: <span class="math">(AB)(B⁻¹A⁻¹) = I</span>.
+    <span class="src">הרצ' 17</span>
+  </div>
+  <div class="card thm">
+    <span class="tag thm">משפט</span>
+    <span class="ttl green"><span class="math">(A^t)⁻¹ = (A⁻¹)^t</span></span> · הפיכות נשמרת תחת שחלוף.
+    <span class="src">הרצ' 18</span>
+  </div>
+  <div class="card thm">
+    <span class="tag thm">משפט</span>
+    <span class="ttl green"><span class="math">(αA)⁻¹ = α⁻¹·A⁻¹</span></span> עבור <span class="math">α ≠ 0</span>. כפל בסקלר הופכי.
+    <span class="src">הרצ' 17</span>
+  </div>
+  <div class="card thm">
+    <span class="tag thm">משפט</span> <span class="tag critical">חובה הוכחה</span>
+    <span class="ttl red"><span class="math">det(A⁻¹) = 1/det(A)</span></span> · ממולטיפליקטיביות: <span class="math">det(A)·det(A⁻¹) = det(I) = 1</span>.
+    <span class="src">הרצ' 23</span>
+  </div>
+  <div class="card thm">
+    <span class="tag thm">משפט</span>
+    <span class="ttl green"><span class="math">(A^k)⁻¹ = (A⁻¹)^k</span></span> · חזקות הפיכות שמרניות.
+    <span class="src">הרצ' 17</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="bar orange">◆ גרירות — מה ניתן להסיק על מכפלות</div>
+
+<div class="card thm imp critical">
+  <span class="tag thm">משפט</span> <span class="tag critical">חובה הוכחה</span>
+  <span class="ttl red"><span class="math">AB</span> הפיכה</span> <span class="arrow">⟹</span> <span class="conc"><span class="math">A</span> ו-<span class="math">B</span> הפיכות (שתיהן)</span>
+  <div style="font-size:0.78rem;color:#6b7280;margin-top:2px;">הוכחה: <span class="math">rank(AB) = n ≤ rank(A), rank(B)</span> ⟹ שניהם <span class="math">= n</span>.</div>
+  <span class="src">הרצ' 17 + 19</span>
+</div>
+
+<div class="card thm imp">
+  <span class="tag thm">מסקנה</span>
+  <span class="ttl green"><span class="math">A, B</span> הפיכות</span> <span class="arrow">⟹</span> <span class="conc"><span class="math">AB</span> הפיכה, <span class="math">(AB)⁻¹ = B⁻¹A⁻¹</span></span>
+  <span class="src">הרצ' 17</span>
+</div>
+
+<div class="card thm imp">
+  <span class="tag thm">משפט</span>
+  <span class="ttl green"><span class="math">A</span> הפיכה</span> <span class="arrow">⟹</span> <span class="conc"><span class="math">rank(AB) = rank(B)</span> ו-<span class="math">rank(BA) = rank(B)</span></span> לכל B.
+  <div style="font-size:0.78rem;color:#6b7280;margin-top:2px;">A הפיכה = מכפלת אלמנטריות = פעולות שורה ⟹ לא משנות rank.</div>
+  <span class="src">מועד א 2025 Q5.2</span>
+</div>
+
+<div class="card thm imp critical">
+  <span class="tag thm">משפט</span> <span class="tag critical">חובה הוכחה</span>
+  <span class="ttl red"><span class="math">A, B ∈ M_n(F)</span>, <span class="math">AB = I_n</span></span> <span class="arrow">⟹</span> <span class="conc"><span class="math">BA = I_n</span> ו-<span class="math">B = A⁻¹</span></span>
+  <div style="font-size:0.78rem;color:#6b7280;margin-top:2px;"><strong>רק לריבועיות!</strong> <span class="math">A</span> "על" כי <span class="math">A(Bv̄)=v̄</span> ⟹ ריבועי + על ⟹ הפיכה.</div>
+  <span class="src">HW9 Q6 · הרצ' 17</span>
+</div>
+
+<div class="card warn imp warn">
+  <span class="tag warn">אזהרה</span>
+  <span class="ttl red"><span class="math">AB = 0</span></span> <span class="arrow">⊯</span> <span class="conc"><strong>לא נובע</strong> ש-<span class="math">A=0</span> או <span class="math">B=0</span></span>
+  <div style="font-size:0.78rem;color:#7f1d1d;margin-top:2px;">דוגמה: <span class="math">A=B=[[0,1],[0,0]]</span>. כפל מטריצות יש מחלקי אפס.</div>
+  <span class="src">HW9 Q3(a)</span>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="bar teal">◆ שקילות שורות + מטריצות אלמנטריות</div>
+
+<div class="card thm imp">
+  <span class="tag thm">משפט</span>
+  <span class="ttl green"><span class="math">A, B</span> שקולות שורה</span> <span class="arrow">⟹</span> <span class="conc"><span class="math">A</span> הפיכה ⟺ <span class="math">B</span> הפיכה</span>
+  <div style="font-size:0.78rem;color:#6b7280;margin-top:2px;"><span class="math">B = E_k…E_1·A</span> עם <span class="math">E_i</span> אלמנטריות הפיכות. <span class="math">rank A = rank B</span>.</div>
+  <span class="src">הרצ' 17</span>
+</div>
+
+<div class="card thm imp">
+  <span class="tag thm">משפט</span>
+  <span class="ttl green"><span class="math">A → B</span> ע"י פעולת שורה</span> <span class="arrow">⟹</span> <span class="conc"><span class="math">B = E·A</span> עבור <span class="math">E</span> אלמנטרית הפיכה</span>
+  <div style="font-size:0.78rem;color:#6b7280;margin-top:2px;">3 סוגי E: כפל ב-c≠0, החלפה, הוספת כפולה. כולן הפיכות.</div>
+  <span class="src">הרצ' 17</span>
+</div>
+
+<div class="card thm imp critical">
+  <span class="tag thm">משפט</span> <span class="tag critical">חובה הוכחה</span>
+  <span class="ttl red"><span class="math">A</span> הפיכה</span> <span class="arrow">⟺</span> <span class="conc"><span class="math">A</span> = מכפלת אלמנטריות</span>
+  <div style="font-size:0.78rem;color:#6b7280;margin-top:2px;">⟹ צורה קנונית של A היא I_n ⟺ E_k…E_1·A = I ⟺ A = E_1⁻¹…E_k⁻¹.</div>
+  <span class="src">הרצ' 17</span>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="bar red">◆ גרירות שאומרות "לא הפיכה"</div>
+
+<div class="row2">
+  <div class="card warn imp warn">
+    <span class="tag warn">משפט</span>
+    <span class="ttl red">שורת אפסים ב-<span class="math">A</span></span> <span class="arrow">⟹</span> <span class="conc"><span class="math">A</span> לא הפיכה</span>
+    <div style="font-size:0.78rem;margin-top:2px;"><span class="math">rank < n</span>. גם <span class="math">det = 0</span>.</div>
+    <span class="src">הרצ' 17</span>
+  </div>
+  <div class="card warn imp warn">
+    <span class="tag warn">משפט</span>
+    <span class="ttl red">עמודת אפסים ב-<span class="math">A</span></span> <span class="arrow">⟹</span> <span class="conc"><span class="math">A</span> לא הפיכה</span>
+    <div style="font-size:0.78rem;margin-top:2px;">עמודות ת"ל. <span class="math">det = 0</span> (פיתוח עמודה).</div>
+    <span class="src">הרצ' 17</span>
+  </div>
+  <div class="card warn imp warn">
+    <span class="tag warn">משפט</span>
+    <span class="ttl red">שתי שורות זהות</span> <span class="arrow">⟹</span> <span class="conc"><span class="math">A</span> לא הפיכה</span>
+    <div style="font-size:0.78rem;margin-top:2px;">שורות ת"ל. <span class="math">det = 0</span> (אלטרנטיביות).</div>
+    <span class="src">הרצ' 23</span>
+  </div>
+  <div class="card warn imp warn">
+    <span class="tag warn">משפט</span>
+    <span class="ttl red">שורת 0 בצורה הקנונית</span> <span class="arrow">⟹</span> <span class="conc"><span class="math">A</span> לא הפיכה</span>
+    <div style="font-size:0.78rem;margin-top:2px;">קנונית של הפיכה היא <span class="math">I_n</span> בלבד.</div>
+    <span class="src">הרצ' 17</span>
+  </div>
+</div>
+
+<div class="card thm imp" style="margin-top: 8px;">
+  <span class="tag thm">משפט</span>
+  <span class="ttl green"><span class="mathb">A</span> הפיכה</span> <span class="arrow">⟺</span> <span class="conc"><span class="mathb">A^t</span> הפיכה</span> &nbsp;<em style="color:#6b7280; font-size:0.8rem;">(שני הכיוונים)</em>
+  <div style="font-size:0.8rem; color:#374151; margin-top:4px;">
+    <strong>גרסה שלילית:</strong> <span class="mathb">A</span> לא הפיכה <span class="arrow">⟺</span> <span class="mathb">A^t</span> לא הפיכה. &nbsp;
+    <strong>הוכחה:</strong> אם <span class="mathb">A·A⁻¹ = I</span>, אז שחלוף: <span class="mathb">(A⁻¹)^t·A^t = I^t = I</span>, כלומר <span class="mathb">(A^t)⁻¹ = (A⁻¹)^t</span>.
+  </div>
+  <div style="font-size:0.78rem; color:#6b7280; margin-top:2px;">שימושי: כל תכונה של שורות נכונה גם לעמודות (דרך שחלוף).</div>
+  <span class="src">הרצ' 18</span>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="bar purple">◆ משפטים ומסקנות מ-HW9 + HW10</div>
+
+<div class="card thm imp">
+  <span class="tag thm">תוצאה</span>
+  <span class="ttl green">סכום שורות = c</span>, <span class="math">A</span> הפיכה <span class="arrow">⟹</span> <span class="conc"><span class="math">c ≠ 0</span>; <span class="math">A⁻¹</span> בעלת סכום שורות <span class="math">c⁻¹</span></span>
+  <div style="font-size:0.78rem;color:#6b7280;margin-top:2px;">וקטור הקסם <span class="math">x̄=(1,…,1)^t</span>: <span class="math">Ax̄ = cx̄ ⟹ A⁻¹x̄ = c⁻¹x̄</span>.</div>
+  <span class="src">HW9 Q4(b)</span>
+</div>
+
+<div class="card thm imp">
+  <span class="tag thm">תוצאה</span>
+  <span class="ttl green"><span class="math">A∈M_{m×n}, B∈M_{n×m}</span>, <span class="math">AB=I_m, BA=I_n</span></span> <span class="arrow">⟹</span> <span class="conc"><span class="math">m = n</span></span>
+  <div style="font-size:0.78rem;color:#6b7280;margin-top:2px;">לא ייתכן הופכי דו-צדדי במטריצה לא-ריבועית.</div>
+  <span class="src">HW9 Q5</span>
+</div>
+
+<div class="card thm imp">
+  <span class="tag thm">תוצאה</span>
+  <span class="ttl green"><span class="math">P∈M_m</span> הפיכה</span> <span class="arrow">⟹</span> <span class="conc"><span class="math">Ax̄=0̄ ⟺ (PA)x̄=0̄</span></span> (הומוגנית!)
+  <div style="font-size:0.78rem;color:#6b7280;margin-top:2px;">⚠️ לא נכון ל-<span class="math">Ax̄=b̄</span> עם <span class="math">b̄≠0̄</span>.</div>
+  <span class="src">HW10 Q1(a)</span>
+</div>
+
+<div class="card thm imp">
+  <span class="tag thm">תוצאה</span>
+  <span class="ttl green"><span class="math">A+B = A³</span>, <span class="math">B</span> הפיכה</span> <span class="arrow">⟹</span> <span class="conc"><span class="math">A</span> הפיכה</span>
+  <div style="font-size:0.78rem;color:#6b7280;margin-top:2px;">פירוק: <span class="math">B = A(A²−I)</span>. B הפיכה ⟹ A הפיכה מימין ⟹ הפיכה.</div>
+  <span class="src">HW10 Q2</span>
+</div>
+
+<div class="card thm imp critical">
+  <span class="tag thm">תוצאה</span> <span class="tag critical">חובה הוכחה</span>
+  <span class="ttl red"><span class="math">∀B ∈ M_n(F): BA = 0_n ⟹ B = 0_n</span></span> <span class="arrow">⟹</span> <span class="conc"><span class="math">A</span> הפיכה</span>
+  <div style="font-size:0.78rem;color:#6b7280;margin-top:2px;">בשלילה: A לא הפיכה ⟹ שורות ת"ל ⟹ <span class="math">∃x̄≠0̄: x̄^t·A = 0̄</span>. בני B שכל שורה <span class="math">x̄^t</span>: <span class="math">BA = 0</span> אבל <span class="math">B ≠ 0</span>.</div>
+  <span class="src">HW10 Q5(b)</span>
+</div>
+
+<div class="card thm imp">
+  <span class="tag thm">תוצאה</span>
+  <span class="ttl green"><span class="math">rank(A) = 1</span></span> <span class="arrow">⟹</span> <span class="conc"><span class="math">A = x̄ · ȳ^t</span></span> עבור <span class="math">x̄, ȳ</span> מתאימים
+  <div style="font-size:0.78rem;color:#6b7280;margin-top:2px;">שורה אחת R̄_k פורש את RowA. <span class="math">x̄ = (α_1,…,α_m)^t, ȳ = R̄_k^t</span>.</div>
+  <span class="src">HW10 Q3(b)</span>
+</div>
+
+<div class="card thm imp">
+  <span class="tag thm">תוצאה</span>
+  <span class="ttl green"><span class="math">A, B</span> אנטי-סימטריות</span> <span class="arrow">⟹</span> <span class="conc"><span class="math">AB</span> סימטרית ⟺ <span class="math">AB = BA</span></span>
+  <div style="font-size:0.78rem;color:#6b7280;margin-top:2px;"><span class="math">(AB)^t = B^t A^t = (−B)(−A) = BA</span>.</div>
+  <span class="src">HW10 Q3(a)</span>
+</div>
+
+<div class="card warn imp warn">
+  <span class="tag warn">אזהרה</span>
+  <span class="ttl red"><span class="math">K ∈ M_{m×n}, m > n</span>, K הפיכה משמאל</span> <span class="arrow">⟹</span> <span class="conc">K לא הפיכה מימין</span>
+  <div style="font-size:0.78rem;margin-top:2px;">בלא-ריבועי: שני הצדדים שונים. רק ריבועי = שניהם שקולים.</div>
+  <span class="src">HW9 Q3(c)</span>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="bar red">★ ההוכחות הקריטיות — חובה לדעת למבחן</div>
+
+<div class="row2">
+  <div class="golden">
+    <div class="ttl">1. <span class="math">A</span> הפיכה ⟺ עמודות בסיס ל-<span class="math">F^n</span></div>
+    <div class="body">הוכחה דרך LC ו-Nul. הרצ' 17.</div>
+  </div>
+  <div class="golden">
+    <div class="ttl">2. <span class="math">A</span> הפיכה ⟺ <span class="math">Ax̄=b̄</span> פתיר יחיד</div>
+    <div class="body">דו-כיווני: NulA = {0̄} ⟺ rank=n. הרצ' 17.</div>
+  </div>
+  <div class="golden">
+    <div class="ttl">3. <span class="math">(AB)⁻¹ = B⁻¹A⁻¹</span></div>
+    <div class="body">בדיקה ישירה: <span class="math">(AB)(B⁻¹A⁻¹) = I</span>. הרצ' 17.</div>
+  </div>
+  <div class="golden">
+    <div class="ttl">4. <span class="math">A</span> הפיכה ⟺ <span class="math">det A ≠ 0</span></div>
+    <div class="body">מטריצות אלמנטריות + מולטיפליקטיביות. הרצ' 23.</div>
+  </div>
+  <div class="golden">
+    <div class="ttl">5. <span class="math">det(A⁻¹) = 1/det(A)</span></div>
+    <div class="body">ממולטיפליקטיביות + <span class="math">det(I)=1</span>. הרצ' 23.</div>
+  </div>
+  <div class="golden">
+    <div class="ttl">6. <span class="math">AB</span> הפיכה ⟹ <span class="math">A, B</span> הפיכות</div>
+    <div class="body">דרך rank: <span class="math">rank(AB) ≤ rank A, rank B</span>. הרצ' 19.</div>
+  </div>
+  <div class="golden">
+    <div class="ttl">7. <span class="math">AB = I_n</span> (ריבועי) ⟹ <span class="math">BA = I_n</span></div>
+    <div class="body">A "על" + ריבועי ⟹ הפיכה. HW9 Q6.</div>
+  </div>
+  <div class="golden">
+    <div class="ttl">8. <span class="math">∀B: BA=0 ⟹ B=0</span> ⟹ <span class="math">A</span> הפיכה</div>
+    <div class="body">בשלילה + בנייה של B מ-LC אפסי. HW10 Q5(b).</div>
+  </div>
+</div>
+
+<div class="card note" style="margin-top:14px;">
+  <span class="tag note">אסטרטגיה</span>
+  <span class="ttl yellow">איך לבחור גישה במבחן?</span>
+  <ul style="margin: 4px 22px 0; font-size: 0.82rem;">
+    <li><strong>להוכיח A הפיכה:</strong> בחרי תנאי שקול שהכי קל להוכיח (לרוב: <span class="math">det A ≠ 0</span>, או <span class="math">Nul A = {0̄}</span>, או <span class="math">rank A = n</span>). ציטטי "לפי טבלת השקילויות".</li>
+    <li><strong>לחשב <span class="math">A⁻¹</span>:</strong> דירוג [A | I] או נוסחת 2×2 או נוסחה דרך det (לא בקורס).</li>
+    <li><strong>להראות A לא הפיכה:</strong> <span class="math">det A = 0</span>, או שורת/עמודת אפסים בקנונית, או עמודות ת"ל.</li>
+  </ul>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- LECTURE 21 SUMMARY                                              -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="bar purple" style="margin-top: 28px;">📚 סיכום הרצאה 21 — דטרמיננטה ופעולות שורה (לפי הסדר)</div>
+
+<div class="card note" style="margin-bottom: 10px;">
+  <span class="tag note">קונטקסט</span>
+  <span class="ttl yellow">איפה אנחנו בקורס?</span> · בהרצאה 20 הוגדרה <span class="mathb">det</span> אקסיומטית (מולטי-לינארית + אלטרנטיבית + <span class="mathb">det(I_n)=1</span>). הרצאה 21 בודקת <strong>איך det מתנהג תחת פעולות שורה</strong>, ומקבלת כתוצאה דרך לחשב det של מטריצה כללית. הרצאה 22 תוכיח יחידות + קיום ו-23 מולטיפליקטיביות.
+</div>
+
+<!-- 1. תזכורת אקסיומות -->
+<div class="card def">
+  <span class="tag def">תזכורת</span>
+  <span class="ttl blue">1. שלוש האקסיומות של det</span>
+  <ol style="margin: 4px 22px 0; font-size: 0.83rem;">
+    <li><strong>מולטי-לינארית בכל שורה:</strong> אם משנים שורה <span class="mathb">i</span> ל-<span class="mathb">α·u + β·v</span> ושאר השורות זהות, אז <span class="mathb">det = α·det(...u...) + β·det(...v...)</span>.</li>
+    <li><strong>אלטרנטיבית:</strong> שתי שורות זהות ⟹ <span class="mathb">det = 0</span>.</li>
+    <li><strong>נורמליזציה:</strong> <span class="mathb">det(I_n) = 1</span>.</li>
+  </ol>
+  <span class="src">הרצ' 20</span>
+</div>
+
+<!-- 2. THE MAIN THEOREM (*) -->
+<div class="card thm">
+  <span class="tag thm">משפט (*)</span> <span class="tag critical">מרכזי</span>
+  <span class="ttl red">2. ⭐ פעולות שורה אלמנטריות ו-det</span> · אם <span class="mathb">B</span> מתקבלת מ-<span class="mathb">A</span> ע"י פעולת שורה:
+  <div style="margin: 6px 0 4px; font-size: 0.85rem; line-height: 1.9;">
+    &nbsp;&nbsp;&nbsp;• <strong>כפל שורה ב-<span class="mathb">c</span>:</strong> &nbsp;<span class="mathb">R_i → c·R_i</span> &nbsp;⟹&nbsp; <span class="mathb">det(B) = c · det(A)</span><br>
+    &nbsp;&nbsp;&nbsp;• <strong>החלפת שורות:</strong> &nbsp;<span class="mathb">R_i ↔ R_j</span> &nbsp;⟹&nbsp; <span class="mathb">det(B) = −det(A)</span><br>
+    &nbsp;&nbsp;&nbsp;• <strong>הוספת כפולה:</strong> &nbsp;<span class="mathb">R_i → R_i + α·R_j</span> &nbsp;⟹&nbsp; <span class="mathb">det(B) = det(A)</span>
+  </div>
+  <div style="font-size: 0.78rem; color: #475569; margin-top: 4px;">
+    <strong>מבוסס על:</strong> מולטי-לינאריות (לכפל ולהוספת כפולה) + אלטרנטיביות (להחלפה ולהוספת כפולה).
+  </div>
+  <div style="font-size: 0.78rem; color: #6b7280;">
+    <strong>מה אנחנו יודעים מעכשיו:</strong> ניתן לעקוב אחר det דרך כל דירוג שורה — det "צובר" קבועי תיקון.
+  </div>
+</div>
+
+<!-- 3. Lemma: row of zeros -->
+<div class="card thm">
+  <span class="tag thm">למה</span>
+  <span class="ttl green">3. שורת אפסים ⟹ <span class="mathb">det = 0</span></span> · אם ל-<span class="mathb">A</span> יש שורה <span class="mathb">R_i = 0̄^t</span>, אז <span class="mathb">det(A) = 0</span>.
+  <div style="font-size: 0.78rem; color: #475569; margin-top: 4px;">
+    <strong>מבוסס על:</strong> מולטי-לינאריות. <span class="mathb">R_i = 0̄ = 0·R_i</span> ⟹ <span class="mathb">det = 0·det(A) = 0</span>.
+  </div>
+  <div style="font-size: 0.78rem; color: #6b7280;">
+    <strong>מה אנחנו יודעים:</strong> אם בדירוג מקבלים שורת אפסים — סיימנו, <span class="mathb">det = 0</span> מיידית.
+  </div>
+</div>
+
+<!-- 4. Lemma: scalar multiplication of one row -->
+<div class="card thm">
+  <span class="tag thm">למה</span>
+  <span class="ttl green">4. <span class="mathb">det(c·A_i)</span> דרך שורה אחת</span> · אם רק שורה <span class="mathb">i</span> של <span class="mathb">A</span> הוכפלה ב-<span class="mathb">c</span>, אז <span class="mathb">det(B) = c · det(A)</span>.
+  <div style="font-size: 0.78rem; color: #475569; margin-top: 4px;">
+    <strong>מבוסס על:</strong> מולטי-לינאריות (מקרה פרטי של אקסיומה 1).
+  </div>
+  <div style="font-size: 0.78rem; color: #6b7280;">
+    <strong>מה אנחנו יודעים:</strong> זה מקרה פרטי של משפט (*) — שורש המקרה הראשון.
+  </div>
+</div>
+
+<!-- 5. Lemma: row swap -->
+<div class="card thm">
+  <span class="tag thm">למה</span>
+  <span class="ttl green">5. החלפת שורות הופכת סימן</span> · <span class="mathb">R_i ↔ R_j</span> ⟹ <span class="mathb">det(B) = −det(A)</span>.
+  <div style="font-size: 0.78rem; color: #475569; margin-top: 4px;">
+    <strong>מבוסס על:</strong> אלטרנטיביות + מולטי-לינאריות. הטריק: שיקלי <span class="mathb">det</span> של מטריצה עם שורה <span class="mathb">R_i + R_j</span> בשני המקומות — מתאפס, ופותחים לפי לינאריות.
+  </div>
+  <div style="font-size: 0.78rem; color: #6b7280;">
+    <strong>מה אנחנו יודעים:</strong> כל החלפת שורות "עולה" <span class="mathb">×(−1)</span>. עוקבים אחר מספר החלפות בחישוב.
+  </div>
+</div>
+
+<!-- 6. Lemma: adding multiple of one row -->
+<div class="card thm">
+  <span class="tag thm">למה</span>
+  <span class="ttl green">6. הוספת כפולה לא משנה det</span> · <span class="mathb">R_i → R_i + α·R_j</span> (<span class="mathb">i ≠ j</span>) ⟹ <span class="mathb">det(B) = det(A)</span>.
+  <div style="font-size: 0.78rem; color: #475569; margin-top: 4px;">
+    <strong>מבוסס על:</strong> מולטי-לינאריות + אלטרנטיביות. פותחים לפי שורה <span class="mathb">i</span>: <span class="mathb">det = det(...R_i...) + α·det(...R_j..., R_j...) = det(A) + α·0 = det(A)</span>.
+  </div>
+  <div style="font-size: 0.78rem; color: #6b7280;">
+    <strong>מה אנחנו יודעים:</strong> הפעולה השכיחה ביותר בדירוג <strong>לא משנה</strong> det בכלל. כלומר אפשר לדרג לחופשי בלי לעקוב.
+  </div>
+</div>
+
+<!-- 7. Conclusion: row-equivalent matrices share det = 0 -->
+<div class="card cor">
+  <span class="tag cor">מסקנה</span>
+  <span class="ttl orange">7. מטריצות שקולות שורה ו-det = 0</span> · אם <span class="mathb">A, B</span> שקולות שורה, אז <span class="mathb">det(A) = 0 ⟺ det(B) = 0</span>.
+  <div style="font-size: 0.78rem; color: #475569; margin-top: 4px;">
+    <strong>מבוסס על:</strong> משפט (*) — כל פעולת שורה משנה det בקבוע <strong>שונה מ-0</strong>. אם det היה 0, נשאר 0; אם לא היה — לא נופל ל-0.
+  </div>
+  <div style="font-size: 0.78rem; color: #6b7280;">
+    <strong>מה אנחנו יודעים:</strong> "<span class="mathb">det = 0</span>" היא תכונה <strong>שמורה תחת שקילות שורה</strong>. שימושי מאוד!
+  </div>
+</div>
+
+<!-- 8. Triangular matrix det -->
+<div class="card thm">
+  <span class="tag thm">משפט</span>
+  <span class="ttl green">8. det של מטריצה משולשית</span> · אם <span class="mathb">A</span> משולשית (עליונה או תחתונה), אז <span class="mathb">det(A) = ∏_{i=1}^n [A]_{i,i}</span> &nbsp;(מכפלת איברי האלכסון).
+  <div style="font-size: 0.78rem; color: #475569; margin-top: 4px;">
+    <strong>מבוסס על:</strong> משפט (*) + אקסיומה <span class="mathb">det(I_n)=1</span>. דרגי משולשית ל-<span class="mathb">I_n</span> ע"י נורמליזציה (כפל כל שורה בהופכי) + ניקוי.
+  </div>
+  <div style="font-size: 0.78rem; color: #6b7280;">
+    <strong>מה אנחנו יודעים:</strong> מטריצה משולשית — det = מכפלת האלכסון. אם איבר אלכסון אחד = 0 → <span class="mathb">det = 0</span>.
+  </div>
+</div>
+
+<!-- 9. KEY CONNECTION: invertibility ⟺ det ≠ 0 -->
+<div class="card thm">
+  <span class="tag thm">משפט מרכזי</span> <span class="tag critical">חובה הוכחה</span>
+  <span class="ttl red">9. ⭐ <span class="mathb">A</span> לא הפיכה ⟺ <span class="mathb">det(A) = 0</span></span>
+  <div style="font-size: 0.83rem; margin-top: 4px;">
+    שקול: <span class="mathb">A</span> הפיכה ⟺ <span class="mathb">det(A) ≠ 0</span>.
+  </div>
+  <div style="font-size: 0.78rem; color: #475569; margin-top: 4px;">
+    <strong>מבוסס על:</strong> מסקנה 7 + משפט 8 + הגדרת הצורה הקנונית.
+    <strong>הוכחה (בקצרה):</strong> דרגי <span class="mathb">A</span> לצורה הקנונית <span class="mathb">C</span>. אם <span class="mathb">A</span> הפיכה: <span class="mathb">C = I_n</span> ⟹ <span class="mathb">det(C) = 1 ≠ 0</span> ⟹ <span class="mathb">det(A) ≠ 0</span> (מסקנה 7). אם <span class="mathb">A</span> לא הפיכה: ל-<span class="mathb">C</span> יש שורת אפסים ⟹ <span class="mathb">det(C) = 0</span> ⟹ <span class="mathb">det(A) = 0</span>.
+  </div>
+  <div style="font-size: 0.78rem; color: #6b7280;">
+    <strong>מה אנחנו יודעים:</strong> זה אחד מ-13 התנאים השקולים להפיכות. <strong>הכי שימושי במבחנים</strong> — בדיקת הפיכות דרך det.
+  </div>
+</div>
+
+<!-- 10. Practical algorithm -->
+<div class="card tech">
+  <span class="tag tech">טכניקה</span>
+  <span class="ttl pink">10. חישוב det דרך דירוג למשולשית</span>
+  <ol style="margin: 4px 22px 0; font-size: 0.83rem;">
+    <li>דרגי את <span class="mathb">A</span> למשולשית עליונה.</li>
+    <li>עקבי: כל החלפת שורות → ×<span class="mathb">(−1)</span>. כל כפל שורה ב-<span class="mathb">c</span> → <span class="mathb">det → c·det</span>. הוספת כפולה → לא משנה.</li>
+    <li>חשבי det של המשולשית = מכפלת האלכסון (משפט 8).</li>
+    <li>"חזרי" את התיקונים: <span class="mathb">det(A) = (−1)^k · ∏(c_i)^{−1} · det(משולשית)</span>, כאשר k = מספר החלפות.</li>
+  </ol>
+  <div style="font-size: 0.78rem; color: #6b7280; margin-top: 4px;">
+    <strong>שימושי כש:</strong> n גדול (4×4 ומעלה) — מהיר יותר מפיתוח לפי שורה/עמודה.
+  </div>
+</div>
+
+<!-- Summary of dependencies -->
+<div class="card note" style="margin-top: 12px;">
+  <span class="tag note">מפת תלויות</span>
+  <span class="ttl yellow">סיכום הקשרים — מי מסתמך על מי</span>
+  <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; line-height: 1.8; margin-top: 6px; color: #57534e;">
+    אקסיומות (הרצ' 20)<br>
+    &nbsp;&nbsp;&nbsp;↓<br>
+    משפט (*) &nbsp;[2]&nbsp; — נובע מאקסיומות 1+2<br>
+    &nbsp;&nbsp;&nbsp;↓<br>
+    למות [3-6] &nbsp;— מקרים פרטיים של (*) ושל האקסיומות<br>
+    &nbsp;&nbsp;&nbsp;↓<br>
+    מסקנה [7] &nbsp;— שמירת "<span class="mathb">det=0</span>" תחת שקילות שורה<br>
+    &nbsp;&nbsp;&nbsp;↓<br>
+    משפט [8] &nbsp;— det של משולשית = מכפלת אלכסון<br>
+    &nbsp;&nbsp;&nbsp;↓<br>
+    משפט [9] ⭐ &nbsp;— <strong>A הפיכה ⟺ det≠0</strong> &nbsp;(מבוסס על 7+8)<br>
+    &nbsp;&nbsp;&nbsp;↓<br>
+    טכניקה [10] &nbsp;— חישוב det דרך דירוג
+  </div>
+</div>
+
+</div>
+
+</body>
+</html>

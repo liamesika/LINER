@@ -1,0 +1,336 @@
+/* Shared exam stylesheet — modern Hebrew + math fonts */
+
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&family=Rubik:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 16px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+body {
+  font-family: 'Heebo', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #f8fafc;
+  color: #0f172a;
+  line-height: 1.7;
+  padding: 24px;
+  direction: rtl;
+  letter-spacing: -0.005em;
+}
+
+.exam-container {
+  max-width: 820px;
+  margin: 0 auto;
+  background: white;
+  padding: 56px 64px;
+  box-shadow: 0 10px 40px rgba(15, 23, 42, 0.08);
+  border-radius: 12px;
+}
+
+/* ── Headers ── */
+.exam-header {
+  text-align: center;
+  padding-bottom: 24px;
+  margin-bottom: 28px;
+  border-bottom: 2px solid #e2e8f0;
+}
+.exam-header h1 {
+  font-family: 'Rubik', sans-serif;
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 6px;
+  letter-spacing: -0.02em;
+}
+.exam-header h2 {
+  font-family: 'Heebo', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: #475569;
+  letter-spacing: -0.01em;
+}
+.exam-header .meta {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin-top: 10px;
+  font-weight: 400;
+}
+
+/* ── Instructions ── */
+.instructions {
+  background: #fef3c7;
+  border-right: 4px solid #f59e0b;
+  padding: 16px 22px;
+  margin-bottom: 28px;
+  border-radius: 8px;
+}
+.instructions h3 {
+  font-family: 'Rubik', sans-serif;
+  font-size: 1rem;
+  color: #78350f;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+.instructions ul {
+  margin-right: 22px;
+  font-size: 0.92rem;
+  color: #44403c;
+}
+.instructions li { margin: 5px 0; }
+
+/* ── Controls ── */
+.controls {
+  text-align: center;
+  margin-bottom: 28px;
+  padding: 14px;
+  background: #f1f5f9;
+  border-radius: 10px;
+}
+.controls button {
+  font-family: 'Heebo', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 9px 18px;
+  margin: 0 4px;
+  cursor: pointer;
+  border: 1px solid #cbd5e1;
+  background: white;
+  border-radius: 8px;
+  transition: all 0.15s ease;
+  color: #334155;
+}
+.controls button:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
+  transform: translateY(-1px);
+}
+.controls button.primary {
+  background: #6366f1;
+  color: white;
+  border-color: #6366f1;
+  font-weight: 600;
+}
+.controls button.primary:hover {
+  background: #4f46e5;
+  border-color: #4f46e5;
+}
+
+/* ── Questions ── */
+.question {
+  margin-bottom: 44px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid #e2e8f0;
+}
+.question:last-child { border-bottom: none; }
+
+.question-header {
+  font-family: 'Rubik', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 4px;
+  letter-spacing: -0.01em;
+}
+.question-topic {
+  font-size: 0.85rem;
+  color: #64748b;
+  font-weight: 400;
+  margin-bottom: 16px;
+}
+
+/* ── Parts ── */
+.part {
+  margin: 20px 0;
+  padding-right: 18px;
+  border-right: 2px solid #e2e8f0;
+}
+.part-label {
+  font-family: 'Rubik', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #1e293b;
+  display: inline;
+}
+.part-points {
+  color: #64748b;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+.part-text {
+  margin: 8px 0 12px;
+  font-size: 0.96rem;
+  white-space: pre-line;
+  line-height: 1.85;
+  color: #334155;
+}
+
+/* ── Buttons inside parts ── */
+.hint-btn, .solution-btn {
+  font-family: 'Heebo', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  padding: 5px 12px;
+  margin-left: 6px;
+  cursor: pointer;
+  border: 1px solid #cbd5e1;
+  background: #f8fafc;
+  border-radius: 6px;
+  color: #475569;
+  transition: all 0.15s;
+}
+.hint-btn:hover {
+  background: #fef3c7;
+  border-color: #fbbf24;
+  color: #78350f;
+}
+.solution-btn:hover {
+  background: #ede9fe;
+  border-color: #a78bfa;
+  color: #5b21b6;
+}
+
+/* ── Hint / Solution boxes ── */
+.hint, .solution {
+  display: none;
+  margin-top: 12px;
+  padding: 14px 18px;
+  border-radius: 8px;
+  font-size: 0.93rem;
+  line-height: 1.75;
+  white-space: pre-line;
+}
+.hint {
+  background: #fef3c7;
+  border-right: 3px solid #f59e0b;
+  color: #78350f;
+}
+.solution {
+  background: #ecfdf5;
+  border-right: 3px solid #10b981;
+  color: #064e3b;
+}
+.hint.show, .solution.show { display: block; }
+.solution-label {
+  font-family: 'Rubik', sans-serif;
+  font-weight: 600;
+  color: #047857;
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+}
+
+/* ── Math typography — modern serif math ── */
+.math {
+  font-family: 'STIX Two Math', 'Latin Modern Math', 'Cambria Math', 'Times New Roman', serif;
+  font-style: italic;
+  direction: ltr;
+  unicode-bidi: embed;
+  font-feature-settings: 'kern' 1;
+  letter-spacing: 0.01em;
+}
+
+/* ── Answer writing area (lined notebook) ── */
+.answer-area {
+  margin: 14px 0 6px;
+  background-image: linear-gradient(to bottom, transparent 0, transparent 27px, #cbd5e1 27px, #cbd5e1 28px);
+  background-size: 100% 28px;
+  background-position: 0 4px;
+  border: 1px dashed #94a3b8;
+  border-radius: 8px;
+  padding: 0;
+  position: relative;
+}
+.answer-area::before {
+  content: '✍️ הפתרון שלך';
+  position: absolute;
+  top: -10px;
+  right: 12px;
+  background: white;
+  padding: 0 8px;
+  font-size: 0.72rem;
+  color: #64748b;
+  font-weight: 500;
+  font-family: 'Heebo', sans-serif;
+  letter-spacing: 0.01em;
+}
+.answer-area textarea {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: 'Heebo', sans-serif;
+  font-size: 0.95rem;
+  line-height: 28px;
+  padding: 4px 14px 4px 14px;
+  resize: vertical;
+  color: #1e293b;
+  direction: rtl;
+  display: block;
+}
+.answer-area textarea::placeholder {
+  color: #94a3b8;
+  font-style: italic;
+}
+
+/* ── Footer ── */
+.footer {
+  text-align: center;
+  margin-top: 44px;
+  padding-top: 22px;
+  border-top: 2px solid #e2e8f0;
+  font-family: 'Rubik', sans-serif;
+  font-weight: 500;
+  color: #475569;
+  font-size: 0.95rem;
+}
+
+/* ── Sources table (uses inline custom colors) ── */
+.sources {
+  border-radius: 10px !important;
+}
+.sources h3 {
+  font-family: 'Rubik', sans-serif !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.01em;
+}
+.sources table {
+  font-family: 'Heebo', sans-serif;
+}
+.sources th {
+  font-family: 'Rubik', sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.sources td.source-cite {
+  font-family: 'JetBrains Mono', 'Courier New', monospace !important;
+  font-weight: 500;
+}
+
+/* ── Print ── */
+@media print {
+  body { background: white; padding: 0; }
+  .exam-container {
+    max-width: 100%;
+    margin: 0;
+    padding: 28px 44px;
+    box-shadow: none;
+    border-radius: 0;
+  }
+  .controls, .hint-btn, .solution-btn { display: none; }
+  .hint, .solution { display: none !important; }   /* hide solutions on print */
+  .question { page-break-inside: avoid; }
+
+  /* Answer area: solid lines for handwriting, no textarea chrome */
+  .answer-area {
+    border: 1px solid #94a3b8;
+    background-image: linear-gradient(to bottom, transparent 0, transparent 27px, #94a3b8 27px, #94a3b8 28px);
+    page-break-inside: avoid;
+  }
+  .answer-area::before {
+    background: white;
+    color: #475569;
+  }
+  .answer-area textarea {
+    color: #000;
+    /* Preserve typed content visibility on print */
+  }
+}

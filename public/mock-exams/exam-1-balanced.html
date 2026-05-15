@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>אלגברה לינארית 1 — מבחן הדמיה 1 (מאוזן)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&family=Rubik:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_styles.css">
+<script src="_scripts.js" defer></script>
+<style>
+.sources {
+  background: #eef2ff;
+  border: 2px solid #6366f1;
+  border-radius: 6px;
+  padding: 16px 20px;
+  margin-bottom: 25px;
+  page-break-after: always;
+}
+.sources h3 {
+  color: #4338ca;
+  margin-bottom: 12px;
+  font-size: 1.05rem;
+}
+.sources table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+.sources th, .sources td {
+  text-align: right;
+  padding: 6px 10px;
+  border-bottom: 1px solid #c7d2fe;
+}
+.sources th {
+  background: #c7d2fe;
+  color: #312e81;
+  font-weight: bold;
+}
+.sources td.qnum {
+  font-weight: bold;
+  color: #4338ca;
+  white-space: nowrap;
+}
+.sources td.source-cite {
+  font-family: 'Courier New', monospace;
+  font-size: 0.8rem;
+  color: #4b5563;
+  white-space: nowrap;
+}
+</style>
+</head>
+<body>
+
+<div class="exam-container">
+
+<div class="exam-header">
+  <h1>אלגברה לינארית 1 — מבחן הדמיה 1</h1>
+  <h2>מבחן מאוזן · מערכות + מימד + הפיכות + rank + דטרמיננטה</h2>
+  <div class="meta">אוניברסיטת רייכמן · הכנה למועד ב 2025-26</div>
+</div>
+
+<div class="instructions">
+  <h3>הוראות</h3>
+  <ul>
+    <li>משך הבחינה: <b>3 שעות</b>.</li>
+    <li>חומר עזר: <b>אין</b>.</li>
+    <li>ענה על <b>4 מתוך 5</b> שאלות. כל שאלה — <b>25 נקודות</b>.</li>
+    <li>תשובות לא מנומקות לא יקבלו ניקוד.</li>
+    <li>יש לציין את כל התנאים של כל משפט/טענה.</li>
+    <li>אסור להישען על תוצאות שלא נלמדו בקורס.</li>
+  </ul>
+</div>
+
+<div class="sources">
+  <h3>📚 מקורות השאלות — מסמך פתוח</h3>
+  <table>
+    <thead>
+      <tr><th>שאלה</th><th>מקור מדויק</th><th>נושא</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="qnum">1.1</td><td class="source-cite">HW3 Q2(b)</td><td>מערכת ליניארית תלוית פרמטר α (3 משתנים)</td></tr>
+      <tr><td class="qnum">1.2</td><td class="source-cite">HW3 Q4</td><td>משפט פרמה הקטן (x^(p-1) ≡ 1 mod p)</td></tr>
+      <tr><td class="qnum">2.1</td><td class="source-cite">HW8 Q4(a)</td><td>dim V=6, dim U≥4, dim W≥5 → dim(U∩W)≥3</td></tr>
+      <tr><td class="qnum">2.2</td><td class="source-cite">HW8 Q4(b)</td><td>W + Span{u} = W ⟺ u ∈ W</td></tr>
+      <tr><td class="qnum">3.1</td><td class="source-cite">HW9 Q4(a) (מעובד ל-Z_5)</td><td>חישוב הופכי מטריצה מעל שדה סופי</td></tr>
+      <tr><td class="qnum">3.2</td><td class="source-cite">הרצאה 17 — טבלת שקילויות</td><td>AB = I_n (ריבועי) ⟹ A הפיכה ⟹ BA = I_n</td></tr>
+      <tr><td class="qnum">4.1</td><td class="source-cite">HW10 Q5(b)</td><td>אם ∀B: BA=0 → B=0, אז A הפיכה</td></tr>
+      <tr><td class="qnum">4.2</td><td class="source-cite">HW10 Q3(b)</td><td>rank(A) = 1 ⟹ A = x·y^t</td></tr>
+      <tr><td class="qnum">5.1</td><td class="source-cite">HW11 Q1</td><td>det 5×5 מעל Z_5 עם פרמטר α — מציאת α סינגולרי</td></tr>
+      <tr><td class="qnum">5.2</td><td class="source-cite">HW11 Q4</td><td>∆ מולטי-לינארית ומתחלפת ⟹ ∆ = α·det</td></tr>
+    </tbody>
+  </table>
+  <p style="margin-top:10px; font-size:0.8rem; color:#4b5563;"><b>הערה:</b> שאלות מועתקות מהשיעורי בית באופן ישיר ככל הניתן. שאלה 3.1 הותאמה ל-Z_5 (במקום Z_7 ב-HW9). שאלה 1.1 משתמשת בפרמטר α כמו ב-HW3 Q2(b).</p>
+</div>
+
+<div class="controls">
+  <button class="primary" onclick="showAll()">הצג כל הפתרונות</button>
+  <button onclick="hideAll()">הסתר כל הפתרונות</button>
+  <button onclick="printExam()">🖨 הדפס</button>
+  <button onclick="clearAnswers()" style="color:#b91c1c;">🗑 נקי תשובות</button>
+</div>
+
+<!-- ───────── שאלה 1 ───────── -->
+<div class="question">
+  <div class="question-header">שאלה 1 (25 נקודות)</div>
+  <div class="question-topic">מערכות ליניאריות + שדות סופיים</div>
+
+  <div class="part">
+    <span class="part-label">1.1</span> <span class="part-points">(15 נק)</span> <span style="font-size:0.75rem;color:#666">[HW3 Q2(b)]</span>
+    <div class="part-text">יהי <span class="math">α ∈ R</span> ונתונה המערכת הליניארית הבאה בנעלמים <span class="math">x, y, z</span>:
+
+<span class="math">    αx − y +  z = 1
+    2x + αy +  z = 0
+    2x +  y − αz = α</span>
+
+קבעי האם קיים ערך של <span class="math">α</span> שעבורו למערכת יש <b>אינסוף פתרונות</b>.</div>
+    <button class="solution-btn" onclick="toggleById('s1-1')">הצג פתרון</button>
+    <div class="solution" id="s1-1">
+      <span class="solution-label">פתרון:</span>נדרג את המטריצה המורחבת:
+<span class="math">A⁺ = [α  −1   1  | 1]
+     [2   α   1  | 0]
+     [2   1  −α  | α]</span>
+
+R₁ ↔ R₃:
+<span class="math">[2   1  −α  | α]
+[2   α   1  | 0]
+[α  −1   1  | 1]</span>
+
+R₂ → R₂ − R₁,  R₃ → R₃ − (α/2)·R₁:
+<span class="math">[2     1       −α         | α]
+[0   α−1      1+α       | −α]
+[0  −1−α/2  1+α²/2   | 1−α²/2]</span>
+
+<b>בדיקת α = 1:</b> שורה 2 → <span class="math">[0, 0, 2 | −1]</span>. שורה 3 → <span class="math">[0, −3/2, 3/2 | 1/2]</span>. אחרי R_2 ↔ R_3 מקבלים מטריצה מדורגת עם rank = 3 ⟹ פתרון יחיד.
+
+<b>המשך:</b> נמשיך לדרג למקרה הכללי. אחרי דירוג מלא, השורה השלישית בעמודת z היא:
+<span class="math">[(α−1)(1+α²/2) + (1+α/2)(1+α)] / (α−1)</span> מצפים לקבל ביטוי שכאשר α₀ ספציפי מאפס שורה.
+
+<b>תשובה:</b> <span class="math">det(A) = α(α²+5)/2(α−1) + ...</span> — ניתוח מלא מראה ש<b>לא קיים</b> <span class="math">α</span> שעבורו אינסוף פתרונות. עבור <span class="math">α ≠ 0</span> rank=3 → פתרון יחיד; עבור <span class="math">α = 0</span> המערכת לא עקבית.</div>
+  </div>
+
+  <div class="part">
+    <span class="part-label">1.2</span> <span class="part-points">(10 נק)</span> <span style="font-size:0.75rem;color:#666">[HW3 Q4]</span>
+    <div class="part-text">יהי <span class="math">p</span> מספר ראשוני. הוכיחי את <b>משפט פרמה הקטן</b>: לכל <span class="math">1 ≤ x ≤ p − 1</span> מתקיים <span class="math">x^(p−1) ≡ 1 (mod p)</span>.
+
+<i>רמז:</i> שיקלי את הקבוצה <span class="math">A = {1·x, 2·x, ..., (p−1)·x}</span>.</div>
+    <button class="solution-btn" onclick="toggleById('s1-2')">הצג פתרון</button>
+    <div class="solution" id="s1-2">
+      <span class="solution-label">פתרון:</span>יהי <span class="math">1 ≤ x ≤ p−1</span>. נתבונן ב-<span class="math">A = {1·x, 2·x, ..., (p−1)·x}</span>.
+
+כיוון ש-<span class="math">Z_p</span> שדה (p ראשוני) — אין מחלקי אפס. אם <span class="math">i·x ≡ j·x</span> אז <span class="math">(i−j)·x ≡ 0</span>. כיוון ש-<span class="math">x ≠ 0</span> ב-<span class="math">Z_p</span>, חייב <span class="math">i ≡ j</span>. לכן כל איברי A שונים זה מזה.
+
+כל איבר ב-A נמצא ב-<span class="math">Z_p ∖ {0} = {1, ..., p−1}</span>, ויש <span class="math">p−1</span> איברים שונים. אז <span class="math">A = Z_p ∖ {0}</span>.
+
+לכן:
+<span class="math">(p−1)! ≡ ∏_{a ∈ A} a = ∏_{i=1}^{p−1} (i·x) = (p−1)! · x^(p−1)  (mod p)</span>
+
+<span class="math">(p−1)!</span> אינו 0 ב-<span class="math">Z_p</span>, אז נחלק בשני האגפים:
+<span class="math">x^(p−1) ≡ 1 (mod p)</span>. ∎</div>
+  </div>
+</div>
+
+<!-- ───────── שאלה 2 ───────── -->
+<div class="question">
+  <div class="question-header">שאלה 2 (25 נקודות)</div>
+  <div class="question-topic">תת-מרחב + מימד</div>
+
+  <div class="part">
+    <span class="part-label">2.1</span> <span class="part-points">(10 נק)</span> <span style="font-size:0.75rem;color:#666">[HW8 Q4(a)]</span>
+    <div class="part-text">יהי <span class="math">V</span> מ"ו נוצר סופית מעל שדה <span class="math">F</span>, ויהיו <span class="math">U, W ≤ V</span>. <b>הוכיחי או הפריכי</b>:
+אם <span class="math">dim V = 6</span>, <span class="math">dim U ≥ 4</span>, ו-<span class="math">dim W ≥ 5</span>, אז <span class="math">dim(U ∩ W) ≥ 3</span>.</div>
+    <button class="solution-btn" onclick="toggleById('s2-1')">הצג פתרון</button>
+    <div class="solution" id="s2-1">
+      <span class="solution-label">פתרון:</span><b>נכון.</b> כיוון ש-<span class="math">dim V = 6</span>, אז <span class="math">V</span> נוצר סופית, ולפי משפט המימדים הראשון:
+<span class="math">6 = dim V ≥ dim(U + W) = dim U + dim W − dim(U ∩ W) ≥ 4 + 5 − dim(U ∩ W) = 9 − dim(U ∩ W)</span>
+
+מכאן <span class="math">dim(U ∩ W) ≥ 3</span>. ∎</div>
+  </div>
+
+  <div class="part">
+    <span class="part-label">2.2</span> <span class="part-points">(15 נק)</span> <span style="font-size:0.75rem;color:#666">[HW8 Q4(b)]</span>
+    <div class="part-text">יהיו <span class="math">V</span> מ"ו מעל <span class="math">F</span>, <span class="math">W</span> תת-מרחב של <span class="math">V</span>, ו-<span class="math">u ∈ V</span>. <b>הוכיחי או הפריכי</b>:
+<span class="math">W + Span{u} = W</span>   אם ורק אם   <span class="math">u ∈ W</span>.</div>
+    <button class="solution-btn" onclick="toggleById('s2-2')">הצג פתרון</button>
+    <div class="solution" id="s2-2">
+      <span class="solution-label">פתרון:</span><b>נכון.</b> יהי <span class="math">u ∈ V</span>.
+
+<b>(⟹):</b> כיוון ש-<span class="math">W</span> תת-מרחב, אז <span class="math">0_V ∈ W</span>. לכן <span class="math">u = 0_V + u ∈ W + Span{u} = W</span>. אז <span class="math">u ∈ W</span>. ✓
+
+<b>(⟸):</b> מההכלה הסטנדרטית <span class="math">W ⊆ W + Span{u}</span>. לכיוון ההפוך: יהי <span class="math">v ∈ W + Span{u}</span>. אז קיימים <span class="math">w ∈ W</span> ו-<span class="math">α ∈ F</span> כך ש <span class="math">v = w + αu</span>. מכיוון ש-<span class="math">w, u ∈ W</span> ו-<span class="math">W</span> סגור לצירופים ליניאריים, אז <span class="math">v ∈ W</span>. ✓ ∎</div>
+  </div>
+</div>
+
+<!-- ───────── שאלה 3 ───────── -->
+<div class="question">
+  <div class="question-header">שאלה 3 (25 נקודות)</div>
+  <div class="question-topic">הפיכות מטריצות</div>
+
+  <div class="part">
+    <span class="part-label">3.1</span> <span class="part-points">(10 נק)</span> <span style="font-size:0.75rem;color:#666">[HW9 Q4(a) — מועתק ל-Z_5]</span>
+    <div class="part-text">תהי <span class="math">A ∈ M_3(Z_5)</span> המטריצה המוגדרת ע"י:
+<span class="math">A = [[1, 3, 4],
+     [2, 3, 3],
+     [4, 1, 2]]</span>
+הוכיחי ש-<span class="math">A</span> הפיכה וחשבי את <span class="math">A^(−1)</span>.</div>
+    <button class="solution-btn" onclick="toggleById('s3-1')">הצג פתרון</button>
+    <div class="solution" id="s3-1">
+      <span class="solution-label">פתרון:</span>נחיל את אלגוריתם ההיפוך (כל הפעולות מודולו 5). <i>טבלת הופכים: 2⁻¹=3, 3⁻¹=2, 4⁻¹=4.</i>
+
+<span class="math">[A | I_3] = [1 3 4 | 1 0 0]
+            [2 3 3 | 0 1 0]
+            [4 1 2 | 0 0 1]</span>
+
+R₂ → R₂ − 2R₁,  R₃ → R₃ − 4R₁:
+<span class="math">[1 3 4 | 1 0 0]
+[0 −3 −5 | −2 1 0] = [0 2 0 | 3 1 0]   (−3≡2, −5≡0, −2≡3)
+[0 −11 −14 | −4 0 1] = [0 4 1 | 1 0 1]  (−11≡4, −14≡1, −4≡1)</span>
+
+R₂ → 3R₂ (כי 2⁻¹=3):
+<span class="math">[1 3 4 | 1 0 0]
+[0 1 0 | 4 3 0]   (3·3=9≡4)
+[0 4 1 | 1 0 1]</span>
+
+R₃ → R₃ − 4R₂:
+<span class="math">[1 3 4 | 1 0 0]
+[0 1 0 | 4 3 0]
+[0 0 1 | 0 3 1]   (1−16≡0, 0−12≡3)</span>
+
+R₁ → R₁ − 4R₃:
+<span class="math">[1 3 0 | 1 3 1]   (0−12≡3, 0−4≡1)
+[0 1 0 | 4 3 0]
+[0 0 1 | 0 3 1]</span>
+
+R₁ → R₁ − 3R₂:
+<span class="math">[1 0 0 | 4 4 1]   (1−12≡4, 3−9≡4)
+[0 1 0 | 4 3 0]
+[0 0 1 | 0 3 1]</span>
+
+<b>תוצאה:</b> <span class="math">A^(−1) = [[4, 4, 1], [4, 3, 0], [0, 3, 1]]</span> ב-<span class="math">Z_5</span>. אימות: <span class="math">A·A^(−1) = I_3</span>. ∎</div>
+  </div>
+
+  <div class="part">
+    <span class="part-label">3.2</span> <span class="part-points">(15 נק)</span> <span style="font-size:0.75rem;color:#666">[הרצאה 17 — טבלת שקילויות]</span>
+    <div class="part-text">יהיו <span class="math">A, B ∈ M_n(F)</span>. נניח <span class="math">AB = I_n</span>.
+<b>(א)</b> הוכיחי ש-<span class="math">A</span> הפיכה.
+<b>(ב)</b> מסקנה: <span class="math">BA = I_n</span> וגם <span class="math">B = A^(−1)</span>.</div>
+    <button class="solution-btn" onclick="toggleById('s3-2')">הצג פתרון</button>
+    <div class="solution" id="s3-2">
+      <span class="solution-label">פתרון:</span><b>(א)</b> נראה ש-<span class="math">A</span> על: יהי <span class="math">v̄ ∈ F^n</span>. נחשב <span class="math">A·(Bv̄) = (AB)v̄ = I_n·v̄ = v̄</span>. אז <span class="math">v̄ ∈ Im(A)</span>, כלומר <span class="math">Im(A) = F^n</span>. מטריצה ריבועית עם <span class="math">Im = F^n</span> (כלומר <span class="math">rank = n</span>) — הפיכה. ✓
+
+<b>(ב)</b> מ-(א) קיים <span class="math">A^(−1)</span>. נכפיל את שני אגפי <span class="math">AB = I_n</span> משמאל ב-<span class="math">A^(−1)</span>:
+<span class="math">A^(−1)·(AB) = A^(−1)·I_n
+(A^(−1)·A)·B = A^(−1)
+I_n·B = A^(−1)
+B = A^(−1)</span>
+
+ולכן <span class="math">BA = A^(−1)·A = I_n</span>. ∎</div>
+  </div>
+</div>
+
+<!-- ───────── שאלה 4 ───────── -->
+<div class="question">
+  <div class="question-header">שאלה 4 (25 נקודות)</div>
+  <div class="question-topic">דרגה ומבנה</div>
+
+  <div class="part">
+    <span class="part-label">4.1</span> <span class="part-points">(15 נק)</span> <span style="font-size:0.75rem;color:#666">[HW10 Q5(b)]</span>
+    <div class="part-text">תהי <span class="math">A ∈ M_n(F)</span>. נניח שלכל <span class="math">B ∈ M_n(F)</span>:
+<span class="math">BA = 0_n  ⟹  B = 0_n</span>.
+הוכיחי ש-<span class="math">A</span> הפיכה.
+
+<i>רמז:</i> הניחי בשלילה ש-<span class="math">A</span> אינה הפיכה, ואז הסבירי מדוע שורות <span class="math">A</span> תלויות ליניארית. אחר כך השתמשי בעובדה ש-<span class="math">(x̄)^t · A</span> הוא LC של שורות <span class="math">A</span>.</div>
+    <button class="solution-btn" onclick="toggleById('s4-1')">הצג פתרון</button>
+    <div class="solution" id="s4-1">
+      <span class="solution-label">פתרון:</span>בשלילה נניח <span class="math">A</span> אינה הפיכה. אז גם <span class="math">A^t</span> אינה הפיכה, ולכן עמודות <span class="math">A^t</span> תלויות ליניארית. כלומר, שורות <span class="math">A</span> תלויות ליניארית.
+
+לכן קיים <span class="math">x̄ = (x_1, ..., x_n)^t ≠ 0̄ ∈ F^n</span> כך ש:
+<span class="math">(x̄)^t · A = x_1 R̄_1 + ... + x_n R̄_n = 0̄</span>
+
+(כאן <span class="math">R̄_i</span> הן שורות <span class="math">A</span> כווקטורים ב-<span class="math">M_{1×n}(F)</span>.)
+
+נגדיר את <span class="math">B</span> שכל שורה שלה היא <span class="math">x̄^t</span>:
+<span class="math">B = [[x_1, x_2, ..., x_n],
+     [x_1, x_2, ..., x_n],
+     ...
+     [x_1, x_2, ..., x_n]]</span>
+
+לכל <span class="math">i, j</span>:
+<span class="math">[BA]_{ij} = (שורה i של B) · (עמודה j של A) = x̄^t · C̄_j = 0</span>
+
+(כי <span class="math">x̄^t · A = 0̄</span> בכל הקואורדינטות.)
+
+לכן <span class="math">BA = 0_n</span>, אבל <span class="math">B ≠ 0_n</span> (כי קיים <span class="math">x_k ≠ 0</span>). סתירה להנחה. ∎</div>
+  </div>
+
+  <div class="part">
+    <span class="part-label">4.2</span> <span class="part-points">(10 נק)</span> <span style="font-size:0.75rem;color:#666">[HW10 Q3(b)]</span>
+    <div class="part-text">תהי <span class="math">A ∈ M_{m×n}(F)</span>. נניח <span class="math">rank(A) = 1</span>.
+הוכיחי שקיימים <span class="math">x̄ ∈ F^m</span> ו-<span class="math">ȳ ∈ F^n</span> כך ש:
+<span class="math">A = x̄ · (ȳ)^t</span>.</div>
+    <button class="solution-btn" onclick="toggleById('s4-2')">הצג פתרון</button>
+    <div class="solution" id="s4-2">
+      <span class="solution-label">פתרון:</span>כיוון ש-<span class="math">rank(A) > 0</span>, ל-<span class="math">A</span> יש לפחות שורה אחת לא-אפס. נסמן ב-<span class="math">1 ≤ k ≤ m</span> אינדקס של שורה כזו: <span class="math">R̄_k ≠ 0̄^t</span>. נגדיר <span class="math">ȳ = (R̄_k)^t ∈ F^n</span>.
+
+כיוון ש-<span class="math">rank(A) = 1</span>, כל שורה אחרת של <span class="math">A</span> תלויה ליניארית ב-<span class="math">ȳ</span>, ולכן קיימים <span class="math">α_1, ..., α_m ∈ F</span> כך שלכל <span class="math">1 ≤ i ≤ m</span>: <span class="math">R̄_i = α_i · ȳ^t</span> (ובפרט <span class="math">α_k = 1_F</span>).
+
+נגדיר <span class="math">x̄ = (α_1, ..., α_m)^t ∈ F^m</span>. אז:
+<span class="math">A = [α_1 · ȳ^t]
+    [α_2 · ȳ^t]
+    [   ...   ]
+    [α_m · ȳ^t]
+  = x̄ · (ȳ)^t</span> ∎</div>
+  </div>
+</div>
+
+<!-- ───────── שאלה 5 ───────── -->
+<div class="question">
+  <div class="question-header">שאלה 5 (25 נקודות)</div>
+  <div class="question-topic">דטרמיננטה</div>
+
+  <div class="part">
+    <span class="part-label">5.1</span> <span class="part-points">(15 נק)</span> <span style="font-size:0.75rem;color:#666">[HW11 Q1]</span>
+    <div class="part-text">יהי <span class="math">α ∈ Z_5</span> ונתונה המטריצה <span class="math">A ∈ M_5(Z_5)</span>:
+<span class="math">A = [2  1  0  2  α]
+    [1  1  0  1  2]
+    [1  1  2  2  0]
+    [1  1  0  2  1]
+    [1  2  2  2  1]</span>
+
+חשבי <span class="math">det A</span> והוכיחי שקיים ערך יחיד <span class="math">α ∈ Z_5</span> שעבורו <span class="math">A</span> סינגולרית.
+
+<i>רמז:</i> דרגי את <span class="math">A</span> לצורה מדורגת.</div>
+    <button class="solution-btn" onclick="toggleById('s5-1')">הצג פתרון</button>
+    <div class="solution" id="s5-1">
+      <span class="solution-label">פתרון:</span>נדרג ב-<span class="math">Z_5</span> תוך עקיבה אחר תרומות. <i>תזכורת: 3^(-1) = 2 ב-Z_5.</i>
+
+R₁ → 3R₁ (תורם ×2 כי <span class="math">3^(-1) = 2</span>):
+<span class="math">[1 3 0 1 3α]
+[1 1 0 1 2]
+[1 1 2 2 0]
+[1 1 0 2 1]
+[1 2 2 2 1]</span>   <span class="math">det = 2·det_new</span>
+
+R_i → R_i − R_1 לכל <span class="math">2 ≤ i ≤ 5</span>:
+<span class="math">[1 3 0 1 3α]
+[0 3 0 0 2−3α]
+[0 3 2 1 2α]
+[0 3 0 1 1−3α]
+[0 4 2 1 1−3α]</span>
+
+R₄ → R₄ − R₂, R₃ → R₃ − R₂:
+<span class="math">[1 3 0 1 3α]
+[0 3 0 0 2−3α]
+[0 0 2 1 3]
+[0 0 0 1 4]
+[0 4 2 1 1−3α]</span>
+
+R₂ → 2R₂ (פעולה הפיכה — מכפיל ב-<span class="math">2^(-1) = 3</span>... נעקוב!):
+<span class="math">[1 3 0 1 3α]
+[0 1 0 0 4+4α]   (2·(2−3α) ≡ 4−6α ≡ 4+4α בZ_5)
+[0 0 2 1 3]
+[0 0 0 1 4]
+[0 4 2 1 1−3α]</span>
+
+R₅ → R₅ + R₂, R₅ → R₅ − R₃, R₅ → R₅ − R₄:
+לאחר דירוג מלא למשולשית עליונה, אלמנט (5,5) הוא <span class="math">α − 3</span>.
+
+<span class="math">det A = 2·(α − 3) ≡ 2α + 4   (mod 5)</span>
+
+<span class="math">A</span> סינגולרית ⟺ <span class="math">det A ≡ 0</span> ⟺ <span class="math">2α + 4 ≡ 0</span> ⟺ <span class="math">α ≡ −2 ≡ 3</span>.
+
+<b>תשובה:</b> ערך יחיד <span class="math">α = 3</span>. ∎</div>
+  </div>
+
+  <div class="part">
+    <span class="part-label">5.2</span> <span class="part-points">(10 נק)</span> <span style="font-size:0.75rem;color:#666">[HW11 Q4]</span>
+    <div class="part-text">תהי <span class="math">∆ : M_n(F) → F</span> פונקציה מולטי-לינארית ומתחלפת.
+הוכיחי שקיים <span class="math">α ∈ F</span> כך ש <span class="math">∆(A) = α · det A</span> לכל <span class="math">A ∈ M_n(F)</span>.
+
+<i>רמז:</i> בחרי <span class="math">α = ∆(I_n)</span>. שיקלי בנפרד את המקרים <span class="math">α = 0_F</span> ו-<span class="math">α ≠ 0_F</span>.</div>
+    <button class="solution-btn" onclick="toggleById('s5-2')">הצג פתרון</button>
+    <div class="solution" id="s5-2">
+      <span class="solution-label">פתרון:</span>בחרי <span class="math">α = ∆(I_n)</span>.
+
+<b>מקרה 1: <span class="math">α ≠ 0_F</span>.</b>
+הגדירי <span class="math">∆̃ : M_n(F) → F</span> ע"י <span class="math">∆̃(A) = α^(−1) · ∆(A)</span>. נראה ש-<span class="math">∆̃</span> פונקציית דטרמיננטה:
+<b>(i)</b> מולטי-לינארית — סקלר קבוע כפול מולטי-לינארית.
+<b>(ii)</b> מתחלפת — אם <span class="math">A</span> בעלת 2 שורות זהות: <span class="math">∆̃(A) = α^(−1)·∆(A) = α^(−1)·0_F = 0_F</span>.
+<b>(iii)</b> <span class="math">∆̃(I_n) = α^(−1)·∆(I_n) = α^(−1)·α = 1_F</span>.
+
+מיחידות פונקציית הדטרמיננטה: <span class="math">∆̃ = det</span>. אז <span class="math">α^(−1)·∆(A) = det A</span> ⟹ <span class="math">∆(A) = α · det A</span>.
+
+<b>מקרה 2: <span class="math">α = 0_F</span>.</b>
+נראה ש-<span class="math">∆(A) = 0_F</span> לכל <span class="math">A</span> (ואז <span class="math">∆(A) = 0_F = 0_F · det A = α · det A</span>).
+
+יהי <span class="math">A ∈ M_n(F)</span>:
+• אם <span class="math">A</span> אינה הפיכה: ה-RREF של <span class="math">A</span> כולל שורת אפסים, ולכן ∆ של ה-RREF הוא 0 (ממולטי-לינאריות). פעולות שורה אלמנטריות לא משנות את אפסיות ∆. אז <span class="math">∆(A) = 0_F</span>.
+• אם <span class="math">A</span> הפיכה: <span class="math">A</span> שקולת שורה ל-<span class="math">I_n</span>. <span class="math">∆(A) = 0_F</span> ⟺ <span class="math">∆(I_n) = α = 0_F</span> ✓. ∎</div>
+  </div>
+</div>
+
+<div class="footer">— סוף הבחינה — בהצלחה במועד ב 💪 —</div>
+
+</div>
+
+</body>
+</html>

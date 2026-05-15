@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>אלגברה לינארית 1 — מבחן הדמיה 2 (תיאורטי)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&family=Rubik:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_styles.css">
+<script src="_scripts.js" defer></script>
+<style>
+.sources {
+  background: #faf5ff;
+  border: 2px solid #a855f7;
+  border-radius: 6px;
+  padding: 16px 20px;
+  margin-bottom: 25px;
+  page-break-after: always;
+}
+.sources h3 {
+  color: #7e22ce;
+  margin-bottom: 12px;
+  font-size: 1.05rem;
+}
+.sources table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+.sources th, .sources td {
+  text-align: right;
+  padding: 6px 10px;
+  border-bottom: 1px solid #e9d5ff;
+}
+.sources th {
+  background: #e9d5ff;
+  color: #581c87;
+  font-weight: bold;
+}
+.sources td.qnum {
+  font-weight: bold;
+  color: #7e22ce;
+  white-space: nowrap;
+}
+.sources td.source-cite {
+  font-family: 'Courier New', monospace;
+  font-size: 0.8rem;
+  color: #4b5563;
+  white-space: nowrap;
+}
+</style>
+</head>
+<body>
+
+<div class="exam-container">
+
+<div class="exam-header">
+  <h1>אלגברה לינארית 1 — מבחן הדמיה 2</h1>
+  <h2>מבחן תיאורטי · משפט הדרגה + שקילויות + det(AB) + משפט השלוש</h2>
+  <div class="meta">אוניברסיטת רייכמן · הכנה למועד ב 2025-26 · דגש על הוכחות</div>
+</div>
+
+<div class="instructions">
+  <h3>הוראות</h3>
+  <ul>
+    <li>משך הבחינה: <b>3 שעות</b>.</li>
+    <li>חומר עזר: <b>אין</b>.</li>
+    <li>ענה על <b>4 מתוך 5</b> שאלות. כל שאלה — <b>25 נקודות</b>.</li>
+    <li>תשובות לא מנומקות לא יקבלו ניקוד.</li>
+    <li>יש לציין את שמות המשפטים שאת מצטטת.</li>
+    <li>אסור להישען על תוצאות שלא נלמדו בקורס.</li>
+  </ul>
+</div>
+
+<div class="sources">
+  <h3>📚 מקורות השאלות — מסמך פתוח</h3>
+  <table>
+    <thead>
+      <tr><th>שאלה</th><th>מקור מדויק</th><th>נושא</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="qnum">1.1</td><td class="source-cite">הרצאה 18-19 (הגדרות סטנדרטיות)</td><td>הגדרת rank A ו-NulA</td></tr>
+      <tr><td class="qnum">1.2</td><td class="source-cite">משפט מהרצאה 19 (Rank-Nullity)</td><td>הוכחת rank A + dim NulA = n</td></tr>
+      <tr><td class="qnum">1.3</td><td class="source-cite">מסקנה מהרצאה 19</td><td>m &lt; n ⟹ Ax = 0 פתרון לא טריוויאלי</td></tr>
+      <tr><td class="qnum">2.1</td><td class="source-cite">הרצאה 17 — טבלת שקילויות</td><td>A הפיכה ⟺ Ax = b פתיר יחיד</td></tr>
+      <tr><td class="qnum">2.2</td><td class="source-cite">הרצאה 17 — טבלת שקילויות</td><td>A הפיכה ⟺ עמודות בסיס ל-F^n</td></tr>
+      <tr><td class="qnum">3.1</td><td class="source-cite">HW12 Q1(a)</td><td>חישוב det 4×4 ע"י פיתוח לפי עמודה 2</td></tr>
+      <tr><td class="qnum">3.2</td><td class="source-cite">הרצאה 22 — משפט מולטיפליקטיביות</td><td>det(AB) = det(A)·det(B) — הוכחה</td></tr>
+      <tr><td class="qnum">4.1</td><td class="source-cite">הרצאה 15 — משפט השלוש</td><td>dim V = n + n וקטורים → בסיס ⟺ בת"ל ⟺ פורש</td></tr>
+      <tr><td class="qnum">4.2</td><td class="source-cite">הרצאה 16 — משפט המימדים הראשון</td><td>dim(U+W) = dim U + dim W − dim(U∩W) — הוכחה</td></tr>
+      <tr><td class="qnum">5.1</td><td class="source-cite">HW12 Q3 (a)+(b)</td><td>בלוקים U·K + det(I_n + A) מ-det(K) ו-det(I_n − A)</td></tr>
+      <tr><td class="qnum">5.2</td><td class="source-cite">HW12 Q2(b)</td><td>det(A_n) = n + 1 — תלת-אלכסונית באינדוקציה</td></tr>
+    </tbody>
+  </table>
+  <p style="margin-top:10px; font-size:0.8rem; color:#4b5563;"><b>הערה:</b> שאלות 1, 2, 4 מבוססות על הוכחות מהרצאות (משפטים מרכזיים). שאלות 3.1, 5.1, 5.2 לקוחות ישירות מ-HW12 — אותם נתונים, אותו מבנה.</p>
+</div>
+
+<div class="controls">
+  <button class="primary" onclick="showAll()">הצג כל הפתרונות</button>
+  <button onclick="hideAll()">הסתר כל הפתרונות</button>
+  <button onclick="printExam()">🖨 הדפס</button>
+  <button onclick="clearAnswers()" style="color:#b91c1c;">🗑 נקי תשובות</button>
+</div>
+
+<!-- ───────── שאלה 1 ───────── -->
+<div class="question">
+  <div class="question-header">שאלה 1 (25 נקודות)</div>
+  <div class="question-topic">משפט הדרגה (Rank-Nullity)</div>
+
+  <div class="part">
+    <span class="part-label">1.1</span> <span class="part-points">(5 נק)</span>
+    <div class="part-text">תהי <span class="math">A ∈ M_{m×n}(F)</span>. הגדירי:
+<b>(א)</b> <span class="math">rank A</span>
+<b>(ב)</b> <span class="math">NulA</span></div>
+    <button class="solution-btn" onclick="toggleById('s1-1')">הצג פתרון</button>
+    <div class="solution" id="s1-1">
+      <span class="solution-label">פתרון:</span><b>(א)</b> <span class="math">rank A</span> מוגדר כמספר המקדמים המובילים בצורה המדורגת הקנונית של <span class="math">A</span>.
+
+<b>(ב)</b> <span class="math">NulA = {x̄ ∈ F^n : A·x̄ = 0̄}</span> — מרחב האפס של <span class="math">A</span>, תת-מרחב של <span class="math">F^n</span>.</div>
+  </div>
+
+  <div class="part">
+    <span class="part-label">1.2</span> <span class="part-points">(15 נק)</span>
+    <div class="part-text">תהי <span class="math">A ∈ M_{m×n}(F)</span>. הוכיחי <b>משפט הדרגה (Rank-Nullity)</b>:
+<span class="math">rank A + dim NulA = n</span>.</div>
+    <button class="solution-btn" onclick="toggleById('s1-2')">הצג פתרון</button>
+    <div class="solution" id="s1-2">
+      <span class="solution-label">פתרון:</span>נסמן <span class="math">k = rank A</span>. נדרג את <span class="math">A</span> לצורתה הקנונית <span class="math">C</span>. יהיו עמודות מובילות באינדקסים <span class="math">j_1 < ... < j_k</span>, ועמודות לא-מובילות (משתנים חופשיים) באינדקסים <span class="math">i_1 < ... < i_{n-k}</span>.
+
+<b>בניית בסיס ל-NulA = NulC</b> (פעולות שורה לא משנות NulA):
+לכל <span class="math">ℓ ∈ {1, ..., n−k}</span> נגדיר <span class="math">v̄_ℓ ∈ F^n</span> כך ש:
+• <span class="math">(v̄_ℓ)_{i_ℓ} = 1</span>
+• <span class="math">(v̄_ℓ)_{i_p} = 0</span> לכל <span class="math">p ≠ ℓ</span>
+• המשתנים הקשורים נקבעים מהמשוואות.
+
+<b>בת"ל:</b> נניח <span class="math">Σ α_ℓ v̄_ℓ = 0̄</span>. בקואורדינטה <span class="math">i_p</span>: רק <span class="math">v̄_p</span> תורמת 1, האחרים 0. אז <span class="math">α_p = 0</span> לכל p.
+
+<b>פורש:</b> יהי <span class="math">x̄ ∈ NulA</span>. נציב את ערכי המשתנים החופשיים של <span class="math">x̄</span> במקדמי <span class="math">v̄_ℓ</span> — מקבלים <span class="math">x̄ = Σ x_{i_ℓ} · v̄_ℓ</span>.
+
+<b>מסקנה:</b> <span class="math">dim NulA = n − k</span>, ולכן <span class="math">rank A + dim NulA = k + (n−k) = n</span>. ∎</div>
+  </div>
+
+  <div class="part">
+    <span class="part-label">1.3</span> <span class="part-points">(5 נק)</span>
+    <div class="part-text">תהי <span class="math">A ∈ M_{m×n}(F)</span> עם <span class="math">m < n</span>. הוכיחי שלמערכת <span class="math">A·x̄ = 0̄</span> קיים פתרון לא טריוויאלי.</div>
+    <button class="solution-btn" onclick="toggleById('s1-3')">הצג פתרון</button>
+    <div class="solution" id="s1-3">
+      <span class="solution-label">פתרון:</span><span class="math">rank A ≤ m < n</span>. ממשפט הדרגה: <span class="math">dim NulA = n − rank A ≥ n − m > 0</span>. אז <span class="math">NulA ⊋ {0̄}</span>, כלומר קיים <span class="math">x̄ ≠ 0̄</span> ב-<span class="math">NulA</span>. ∎</div>
+  </div>
+</div>
+
+<!-- ───────── שאלה 2 ───────── -->
+<div class="question">
+  <div class="question-header">שאלה 2 (25 נקודות)</div>
+  <div class="question-topic">טבלת שקילויות ההפיכות</div>
+
+  <div class="part">
+    <span class="part-label">2.1</span> <span class="part-points">(10 נק)</span>
+    <div class="part-text">יהי <span class="math">F</span> שדה ו-<span class="math">A ∈ M_n(F)</span>. הוכיחי:
+<span class="math">A</span> הפיכה   אם ורק אם   לכל <span class="math">b̄ ∈ F^n</span> למערכת <span class="math">A·x̄ = b̄</span> קיים פתרון יחיד.</div>
+    <button class="solution-btn" onclick="toggleById('s2-1')">הצג פתרון</button>
+    <div class="solution" id="s2-1">
+      <span class="solution-label">פתרון:</span><b>(⟹):</b> נניח <span class="math">A</span> הפיכה. יהי <span class="math">b̄ ∈ F^n</span>. נציב <span class="math">x̄ = A^(−1)·b̄</span> — מקיים <span class="math">A·x̄ = b̄</span>. <b>יחידות:</b> אם <span class="math">x̄_1, x̄_2</span> פתרונות, אז <span class="math">A(x̄_1 − x̄_2) = 0̄</span> ⟹ <span class="math">x̄_1 − x̄_2 ∈ NulA = {0̄}</span> (כי <span class="math">A</span> הפיכה) ⟹ <span class="math">x̄_1 = x̄_2</span>. ✓
+
+<b>(⟸):</b> בפרט, <span class="math">A·x̄ = 0̄</span> פתיר יחיד <span class="math">x̄ = 0̄</span>. אז <span class="math">NulA = {0̄}</span>. ממשפט הדרגה: <span class="math">rank A = n</span>. <span class="math">A</span> ריבועית עם rank=n ⟺ הפיכה. ∎</div>
+  </div>
+
+  <div class="part">
+    <span class="part-label">2.2</span> <span class="part-points">(15 נק)</span>
+    <div class="part-text">יהי <span class="math">A ∈ M_n(F)</span>. הוכיחי:
+<span class="math">A</span> הפיכה   אם ורק אם   עמודות <span class="math">A</span> מהוות בסיס של <span class="math">F^n</span>.</div>
+    <button class="solution-btn" onclick="toggleById('s2-2')">הצג פתרון</button>
+    <div class="solution" id="s2-2">
+      <span class="solution-label">פתרון:</span>נסמן את עמודות <span class="math">A</span> ב-<span class="math">C̄_1, ..., C̄_n</span>. תזכורת: <span class="math">A·x̄ = x_1 C̄_1 + ... + x_n C̄_n</span>.
+
+<b>(⟹):</b> נניח <span class="math">A</span> הפיכה.
+<b>בת"ל:</b> אם <span class="math">Σ α_i C̄_i = 0̄</span>, אז <span class="math">A·ᾱ = 0̄</span> (כאשר <span class="math">ᾱ = (α_1,...,α_n)^t</span>) ⟹ <span class="math">ᾱ = 0̄</span> ⟹ כל <span class="math">α_i = 0</span>.
+<b>פורשים:</b> יהי <span class="math">v̄ ∈ F^n</span>. נציב <span class="math">ᾱ = A^(−1)·v̄</span> ⟹ <span class="math">A·ᾱ = v̄</span>, כלומר <span class="math">v̄ = Σ α_i C̄_i</span>. ✓
+
+<b>(⟸):</b> נניח <span class="math">{C̄_i}_{i=1}^n</span> בסיס. אז <span class="math">A·x̄ = 0̄</span> ⟺ <span class="math">Σ x_i C̄_i = 0̄</span> ⟺ (מבת"ל) <span class="math">x̄ = 0̄</span>. אז <span class="math">NulA = {0̄}</span>, וממשפט הדרגה: <span class="math">rank A = n</span> ⟹ <span class="math">A</span> הפיכה. ∎</div>
+  </div>
+</div>
+
+<!-- ───────── שאלה 3 ───────── -->
+<div class="question">
+  <div class="question-header">שאלה 3 (25 נקודות)</div>
+  <div class="question-topic">דטרמיננטה — חישוב + הוכחה</div>
+
+  <div class="part">
+    <span class="part-label">3.1</span> <span class="part-points">(8 נק)</span> <span style="font-size:0.75rem;color:#666">[HW12 Q1(a)]</span>
+    <div class="part-text">חשבי את הדטרמיננטה של:
+<span class="math">A = [2   1   4   3]
+    [−1  0   2   2]
+    [4   0   1   9]
+    [6   0   4   2]</span>
+
+<i>רמז:</i> פתחי את הדטרמיננטה לפי העמודה השנייה.</div>
+    <button class="solution-btn" onclick="toggleById('s3-1')">הצג פתרון</button>
+    <div class="solution" id="s3-1">
+      <span class="solution-label">פתרון:</span>בעמודה השנייה רק <span class="math">[A]_{12} = 1</span> שונה מ-0 (האחרים אפסים). פיתוח:
+<span class="math">det A = (−1)^{1+2} · 1 · M_{12}^{(A)} = −M_{12}^{(A)}</span>
+
+<span class="math">M_{12}^{(A)} = det[−1  2  2]
+                  [ 4  1  9]
+                  [ 6  4  2]</span>
+
+לפי הנוסחה הישירה ל-3×3:
+<span class="math">= (−1)(1)(2) + (2)(9)(6) + (2)(4)(4) − (6)(1)(2) − (4)(9)(−1) − (2)(4)(2)
+= −2 + 108 + 32 − 12 + 36 − 16
+= 146</span>
+
+לכן <span class="math">det A = −146</span>. ∎</div>
+  </div>
+
+  <div class="part">
+    <span class="part-label">3.2</span> <span class="part-points">(17 נק)</span>
+    <div class="part-text">יהיו <span class="math">A, B ∈ M_n(F)</span>. הוכיחי משפט המולטיפליקטיביות של הדטרמיננטה:
+<span class="math">det(AB) = det(A) · det(B)</span>.</div>
+    <button class="solution-btn" onclick="toggleById('s3-2')">הצג פתרון</button>
+    <div class="solution" id="s3-2">
+      <span class="solution-label">פתרון:</span><b>מקרה 1: <span class="math">B</span> אינה הפיכה.</b>
+<span class="math">rank B < n</span>, אז <span class="math">rank(AB) ≤ rank B < n</span>, ולכן <span class="math">AB</span> גם אינה הפיכה. אז <span class="math">det(AB) = 0 = det A · 0 = det A · det B</span>. ✓
+
+<b>מקרה 2: <span class="math">B</span> הפיכה.</b>
+<span class="math">B</span> מתפרקת למכפלת מטריצות אלמנטריות: <span class="math">B = E_1 · E_2 · ... · E_k</span>.
+
+<b>למה (נדרשת לציטוט):</b> לכל <span class="math">E</span> אלמנטרית ולכל <span class="math">A ∈ M_n(F)</span>:
+<span class="math">det(EA) = det(E) · det(A)</span>
+
+<i>הוכחת הלמה</i>: 3 סוגי פעולות:
+• <span class="math">R_i → cR_i</span>: <span class="math">det(EA) = c · det A</span>, <span class="math">det E = c</span>. ✓
+• <span class="math">R_i ↔ R_j</span>: <span class="math">det(EA) = −det A</span>, <span class="math">det E = −1</span>. ✓
+• <span class="math">R_i → R_i + αR_j</span>: <span class="math">det(EA) = det A</span>, <span class="math">det E = 1</span>. ✓
+
+<b>נשתמש בלמה k פעמים:</b>
+<span class="math">det(AB) = det(A · E_1 · ... · E_k)</span>
+
+נכפיל מימין בכל אלמנטרית בנפרד (סדר חשוב!):
+<span class="math">det(A · E_1 · ... · E_k) = det(A · E_1 · ... · E_{k−1}) · det(E_k)
+                          = det(A · E_1 · ... · E_{k−2}) · det(E_{k−1}) · det(E_k)
+                          = ... = det A · det(E_1) · ... · det(E_k)</span>
+
+גם <span class="math">det B = det(E_1 · ... · E_k) = det(E_1) · ... · det(E_k)</span>.
+
+לכן <span class="math">det(AB) = det A · det B</span>. ∎</div>
+  </div>
+</div>
+
+<!-- ───────── שאלה 4 ───────── -->
+<div class="question">
+  <div class="question-header">שאלה 4 (25 נקודות)</div>
+  <div class="question-topic">בסיס + מימד</div>
+
+  <div class="part">
+    <span class="part-label">4.1</span> <span class="part-points">(10 נק)</span>
+    <div class="part-text">הוכיחי את <b>משפט השלוש</b>: יהי <span class="math">V</span> מ"ו עם <span class="math">dim V = n</span> ויהיו <span class="math">v_1, ..., v_n ∈ V</span>. הוכיחי שהבאים שקולים:
+<b>(א)</b> <span class="math">{v_1, ..., v_n}</span> בסיס של <span class="math">V</span>.
+<b>(ב)</b> <span class="math">{v_1, ..., v_n}</span> בת"ל.
+<b>(ג)</b> <span class="math">{v_1, ..., v_n}</span> פורשים את <span class="math">V</span>.</div>
+    <button class="solution-btn" onclick="toggleById('s4-1')">הצג פתרון</button>
+    <div class="solution" id="s4-1">
+      <span class="solution-label">פתרון:</span><b>(א) ⟹ (ב):</b> מהגדרת בסיס.
+
+<b>(ב) ⟹ (ג) בשלילה:</b> נניח <span class="math">{v_i}</span> בת"ל אך לא פורש. אז קיים <span class="math">v ∈ V ∖ Span{v_1,...,v_n}</span>. נראה ש-<span class="math">{v_1, ..., v_n, v}</span> בת"ל: יהיו <span class="math">α_1, ..., α_n, β ∈ F</span> כך ש <span class="math">α_1 v_1 + ... + α_n v_n + β v = 0_V</span>.
+• אם <span class="math">β ≠ 0</span>: <span class="math">v = −β^(−1)(α_1 v_1 + ... + α_n v_n) ∈ Span{v_1,...,v_n}</span> — סתירה.
+• אז <span class="math">β = 0</span>. אז <span class="math">α_1 v_1 + ... + α_n v_n = 0_V</span>, ומבת"ל הראשונית כל <span class="math">α_i = 0</span>.
+
+מצאנו n+1 וקטורים בת"ל ב-V — סתירה למסקנה ש-<span class="math">dim V = n</span> ⟹ כל n+1 וקטורים ת"ל. ∎
+
+<b>(ג) ⟹ (א) בשלילה:</b> נניח פורשים אבל ת"ל. אז קיים <span class="math">j</span> כך ש <span class="math">v_j ∈ Span{v_1,...,v_{j−1}, v_{j+1},...,v_n}</span>. נסיר את <span class="math">v_j</span> — הקבוצה עדיין פורשת. מצאנו n−1 וקטורים פורשים — סתירה למסקנה ש-<span class="math">dim V = n</span> ⟹ n−1 וקטורים אינם פורשים. ∎</div>
+  </div>
+
+  <div class="part">
+    <span class="part-label">4.2</span> <span class="part-points">(15 נק)</span>
+    <div class="part-text">הוכיחי את <b>משפט המימדים הראשון</b>: יהי <span class="math">V</span> מ"ו נוצר סופית מעל <span class="math">F</span> ויהיו <span class="math">U, W</span> תתי-מרחב של <span class="math">V</span>. הוכיחי:
+<span class="math">dim(U + W) = dim U + dim W − dim(U ∩ W)</span>.</div>
+    <button class="solution-btn" onclick="toggleById('s4-2')">הצג פתרון</button>
+    <div class="solution" id="s4-2">
+      <span class="solution-label">פתרון:</span>נסמן <span class="math">d = dim(U ∩ W)</span>, ויהי <span class="math">B_0 = {u_1, ..., u_d}</span> בסיס ל-<span class="math">U ∩ W</span>.
+
+ממשפט ההשלמה ניתן להשלים את <span class="math">B_0</span> לבסיס של <span class="math">U</span>:
+<span class="math">B_U = {u_1, ..., u_d, x_1, ..., x_p}</span>,  <span class="math">dim U = d + p</span>.
+
+ובאופן דומה לבסיס של <span class="math">W</span>:
+<span class="math">B_W = {u_1, ..., u_d, y_1, ..., y_q}</span>,  <span class="math">dim W = d + q</span>.
+
+<b>טענה:</b> <span class="math">B = {u_1,...,u_d, x_1,...,x_p, y_1,...,y_q}</span> בסיס ל-<span class="math">U + W</span>.
+
+<b>פורש:</b> לכל <span class="math">v ∈ U + W</span>: <span class="math">v = u + w</span> כאשר <span class="math">u</span> LC של <span class="math">B_U</span> ו-<span class="math">w</span> LC של <span class="math">B_W</span>. אז <span class="math">v</span> LC של <span class="math">B</span>. ✓
+
+<b>בת"ל:</b> נניח <span class="math">Σ α_i u_i + Σ β_j x_j + Σ γ_k y_k = 0_V</span>.
+
+נעביר אגף: <span class="math">Σ γ_k y_k = −(Σ α_i u_i + Σ β_j x_j)</span>. צד ימין ב-<span class="math">U</span>. צד שמאל ב-<span class="math">W</span> (LC של y_k). לכן <span class="math">Σ γ_k y_k ∈ U ∩ W</span>, וניתן לכתוב כ-LC של <span class="math">{u_i}</span> בלבד: <span class="math">Σ γ_k y_k = Σ δ_i u_i</span>.
+
+אבל <span class="math">B_W = {u_i, y_k}</span> בת"ל, אז <span class="math">γ_k = 0</span> לכל k.
+
+נשאר <span class="math">Σ α_i u_i + Σ β_j x_j = 0_V</span>. <span class="math">B_U = {u_i, x_j}</span> בת"ל, אז <span class="math">α_i = β_j = 0</span> לכל i, j. ✓
+
+<b>גודל:</b> <span class="math">|B| = d + p + q = (d + p) + (d + q) − d = dim U + dim W − dim(U ∩ W)</span>. ∎</div>
+  </div>
+</div>
+
+<!-- ───────── שאלה 5 ───────── -->
+<div class="question">
+  <div class="question-header">שאלה 5 (25 נקודות)</div>
+  <div class="question-topic">בלוקים + תלת-אלכסונית</div>
+
+  <div class="part">
+    <span class="part-label">5.1</span> <span class="part-points">(15 נק)</span> <span style="font-size:0.75rem;color:#666">[HW12 Q3]</span>
+    <div class="part-text">יהי <span class="math">A ∈ M_n(R)</span>. נתבונן במטריצות הבלוקים <span class="math">U, K ∈ M_{2n}(R)</span> המוגדרות:
+<span class="math">U = [I_n  −A]
+    [0_n   I_n]
+,    K = [I_n  A]
+        [A   I_n]</span>
+
+<b>(א)</b> הוכיחי כי <span class="math">U · K = [I_n − A²  0_n]</span>
+                                           <span class="math">           [A      I_n ]</span>
+
+<b>(ב)</b> נניח <span class="math">det(K) = 180</span> ו-<span class="math">det(I_n − A) = −6</span>. חשבי <span class="math">det(I_n + A)</span>.
+
+<i>רמז:</i> השתמשי בתכונה המולטיפליקטיבית של <span class="math">det</span>.</div>
+    <button class="solution-btn" onclick="toggleById('s5-1')">הצג פתרון</button>
+    <div class="solution" id="s5-1">
+      <span class="solution-label">פתרון:</span><b>(א)</b> כפל בלוקים:
+<span class="math">UK = [I_n·I_n + (−A)·A      I_n·A + (−A)·I_n]
+     [0_n·I_n + I_n·A      0_n·A + I_n·I_n]
+   = [I_n − A²    0_n]
+     [A           I_n]</span> ✓
+
+<b>(ב)</b> <span class="math">U</span> בלוקים משולשית עליונה עם <span class="math">I</span> על האלכסון:
+<span class="math">det U = det(I_n) · det(I_n) = 1</span>
+
+<span class="math">UK</span> בלוקים משולשית תחתונה:
+<span class="math">det(UK) = det(I_n − A²) · det(I_n) = det(I_n − A²)</span>
+
+ממולטיפליקטיביות:
+<span class="math">det(UK) = det U · det K = 1 · 180 = 180</span>
+
+אז <span class="math">det(I_n − A²) = 180</span>. אבל <span class="math">I_n − A² = (I_n − A)(I_n + A)</span>:
+<span class="math">det(I_n − A²) = det(I_n − A) · det(I_n + A) = (−6) · det(I_n + A)</span>
+
+<span class="math">180 = −6 · det(I_n + A)</span> ⟹ <span class="math">det(I_n + A) = −30</span>. ∎</div>
+  </div>
+
+  <div class="part">
+    <span class="part-label">5.2</span> <span class="part-points">(10 נק)</span> <span style="font-size:0.75rem;color:#666">[HW12 Q2(b)]</span>
+    <div class="part-text">תהי <span class="math">A_n ∈ M_n(R)</span> תלת-אלכסונית עם 2 על האלכסון ו-(−1) מעל ומתחת לאלכסון:
+<span class="math">A_n = [ 2  −1   0   ...   0   0]
+      [−1   2  −1   ...   0   0]
+      [ 0  −1   2   ...   0   0]
+      [...  ...  ...  ...  ... ...]
+      [ 0   0   0   ...   2  −1]
+      [ 0   0   0   ...  −1   2]</span>
+
+הוכיחי באינדוקציה חזקה: <span class="math">det(A_n) = n + 1</span> לכל <span class="math">2 ≤ n ∈ N</span>.</div>
+    <button class="solution-btn" onclick="toggleById('s5-2')">הצג פתרון</button>
+    <div class="solution" id="s5-2">
+      <span class="solution-label">פתרון:</span><b>בסיסים:</b>
+n = 2: <span class="math">det A_2 = det[2 −1; −1 2] = 4 − 1 = 3 = 2 + 1</span>. ✓
+n = 3: <span class="math">det A_3 = 2(4−1) − (−1)(−2−0) = 6 − 2 = 4 = 3 + 1</span>. ✓
+
+<b>צעד אינדוקציה:</b> יהי <span class="math">n ≥ 4</span> וניחה ש <span class="math">det(A_k) = k+1</span> לכל <span class="math">2 ≤ k ≤ n−1</span>. בפרט <span class="math">det A_{n−1} = n</span> ו-<span class="math">det A_{n−2} = n−1</span>.
+
+נחשב <span class="math">det A_n</span> ע"י פיתוח לפי שורה ראשונה:
+<span class="math">det A_n = 2 · M_{11}^{(A_n)} − (−1) · M_{12}^{(A_n)} = 2·M_{11} + M_{12}</span>
+
+<b>חישוב <span class="math">M_{11}</span>:</b> מחיקת שורה 1 ועמודה 1 → בדיוק <span class="math">A_{n−1}</span>. אז <span class="math">M_{11} = det A_{n−1} = n</span>.
+
+<b>חישוב <span class="math">M_{12}</span>:</b> מחיקת שורה 1 ועמודה 2. השורה הראשונה החדשה: <span class="math">(−1, −1, 0, ..., 0)</span>. נפתח לפי עמודה 1:
+<span class="math">M_{12} = (−1) · det A_{n−2} = −(n−1)</span>
+
+<b>סיכום:</b>
+<span class="math">det A_n = 2n + (−(n−1)) = 2n − n + 1 = n + 1</span> ✓ ∎</div>
+  </div>
+</div>
+
+<div class="footer">— סוף הבחינה — בהצלחה במועד ב 💪 —</div>
+
+</div>
+
+</body>
+</html>

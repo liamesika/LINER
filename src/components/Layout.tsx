@@ -51,6 +51,7 @@ const navGroups: NavGroup[] = [
     items: [
       { href: '/', labelHe: 'לוח בקרה', icon: <LayoutDashboard className="w-5 h-5" /> },
       { href: '/battle-plan', labelHe: '⚔️ תוכנית קרב', icon: <Swords className="w-5 h-5" />, highlight: true },
+      { href: '/weekly-schedule', labelHe: '📅 לוז שבועי (סמסטר ב\')', icon: <Calendar className="w-5 h-5" />, highlight: true },
       { href: '/top-theorems', labelHe: '🏆 Top 10 משפטים + הוכחות', icon: <Trophy className="w-5 h-5" />, highlight: true },
       { href: '/top-homework', labelHe: '📝 Top 10 תרגילים', icon: <GraduationCap className="w-5 h-5" />, highlight: true },
       { href: '/moed-b-prediction', labelHe: '🎯 חיזוי המבחן', icon: <Crosshair className="w-5 h-5" />, highlight: true },

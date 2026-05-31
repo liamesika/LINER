@@ -6,12 +6,18 @@ import {
   Calendar,
   CheckCircle2,
   Square,
-  Trophy,
   RotateCcw,
+  Target,
+  ClipboardCheck,
+  BarChart3,
 } from 'lucide-react';
 import PageHeader from '@/components/PageHeader';
 import {
   battlePlanG,
+  moedGDailyFocus,
+  moedGExamSignals,
+  moedGFocusDrills,
+  moedGSkillTracks,
   getAllTaskIds,
   type Block,
   type DayBlock,
@@ -26,6 +32,7 @@ import {
 
 const EXAM_DATE = '2026-06-15';
 const STORAGE_KEY = 'liner-battle-plan-moed-g-v1';
+const LEVEL_STORAGE_KEY = 'liner-battle-plan-moed-g-levels-v1';
 
 // ─── Phase color map ───
 const phaseColor: Record<PhaseColor, string> = {
@@ -63,6 +70,12 @@ const topicColor: Record<TopicTag, string> = {
   rest:   'text-slate-500',
 };
 
+const signalColor = {
+  danger: 'border-red-300 bg-red-50 text-red-950',
+  warning: 'border-amber-300 bg-amber-50 text-amber-950',
+  good: 'border-emerald-300 bg-emerald-50 text-emerald-950',
+};
+
 // ─── localStorage hook ───
 function useChecks() {
   const [done, setDone] = useState<Record<string, boolean>>({});
@@ -95,6 +108,32 @@ function useChecks() {
   }, []);
 
   return { done, toggle, hydrated, clearAll };
+}
+
+function useLevels() {
+  const [levels, setLevels] = useState<Record<string, number>>({});
+  const [hydrated, setHydrated] = useState(false);
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(LEVEL_STORAGE_KEY);
+      if (raw) setLevels(JSON.parse(raw));
+    } catch {}
+    setHydrated(true);
+  }, []);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    try {
+      localStorage.setItem(LEVEL_STORAGE_KEY, JSON.stringify(levels));
+    } catch {}
+  }, [levels, hydrated]);
+
+  const setLevel = useCallback((id: string, level: number) => {
+    setLevels((prev) => ({ ...prev, [id]: level }));
+  }, []);
+
+  return { levels, setLevel, hydrated };
 }
 
 // ─── Components ───
@@ -191,10 +230,154 @@ function TipCard({ b }: { b: TipBlock }) {
   );
 }
 
+function ExamAnalysis() {
+  return (
+    <section className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 md:p-5">
+      <div className="flex items-center gap-2 mb-3">
+        <Target className="w-5 h-5 text-red-600" />
+        <h2 className="font-extrabold text-slate-900">ניתוח מועד א + מועד ב השנה</h2>
+      </div>
+      <div className="grid md:grid-cols-3 gap-3">
+        {moedGExamSignals.map((signal) => (
+          <div key={signal.title} className={`rounded-lg border p-3 ${signalColor[signal.tone]}`}>
+            <div className="font-bold text-sm mb-1">{signal.title}</div>
+            <p className="text-xs leading-relaxed">{signal.body}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function FocusDrills() {
+  return (
+    <section className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 md:p-5">
+      <div className="flex items-center gap-2 mb-3">
+        <ClipboardCheck className="w-5 h-5 text-violet-700" />
+        <h2 className="font-extrabold text-slate-900">רשימת תרגילים להשקעה נוספת</h2>
+      </div>
+      <div className="grid lg:grid-cols-2 gap-3">
+        {moedGFocusDrills.map((drill) => (
+          <article key={drill.rank} className="rounded-lg border border-slate-200 bg-slate-50 p-3">
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <div className="text-sm font-extrabold text-slate-900">
+                  #{drill.rank} {drill.title}
+                </div>
+                <div className="text-[0.72rem] text-slate-500 mt-0.5">{drill.source}</div>
+              </div>
+              <span className="shrink-0 rounded-full bg-violet-100 text-violet-800 px-2 py-0.5 text-[0.7rem] font-bold">
+                {drill.extraTime}
+              </span>
+            </div>
+            <p className="text-xs text-slate-700 leading-relaxed mt-2">{drill.why}</p>
+            <p className="text-xs text-violet-900 leading-relaxed mt-2 bg-white border border-violet-100 rounded-md p-2">
+              <strong>מדד הצלחה:</strong> {drill.target}
+            </p>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function DailyFocusCard({ todayISO }: { todayISO: string }) {
+  const current = moedGDailyFocus.find((day) => day.id.endsWith(todayISO));
+
+  return (
+    <section className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 md:p-5">
+      <div className="flex items-center gap-2 mb-3">
+        <Calendar className="w-5 h-5 text-sky-700" />
+        <h2 className="font-extrabold text-slate-900">משימות יומיות: 90 דקות נטו השבוע</h2>
+      </div>
+      <div className="grid lg:grid-cols-2 gap-3">
+        {moedGDailyFocus.map((day) => {
+          const isCurrent = current?.id === day.id;
+          return (
+            <article key={day.id} className={`rounded-lg border p-3 ${isCurrent ? 'border-sky-400 bg-sky-50' : 'border-slate-200 bg-white'}`}>
+              <div className="flex items-start justify-between gap-3 mb-2">
+                <div>
+                  <div className="text-xs font-mono text-slate-500">{day.date}</div>
+                  <div className="text-sm font-extrabold text-slate-900">{day.title}</div>
+                </div>
+                <span className="rounded-full bg-slate-100 text-slate-700 px-2 py-0.5 text-[0.7rem] font-bold">{day.minutes}</span>
+              </div>
+              <ul className="space-y-1">
+                {day.tasks.map((task) => (
+                  <li key={task} className="text-xs leading-relaxed text-slate-700 flex gap-2">
+                    <span className="text-sky-700 font-bold">•</span>
+                    <span>{task}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-2 rounded-md bg-slate-50 border border-slate-200 p-2 text-xs font-semibold text-slate-700">
+                {day.scoreTarget}
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
+function LevelTracker({ levels, setLevel, hydrated }: { levels: Record<string, number>; setLevel: (id: string, level: number) => void; hydrated: boolean }) {
+  const average = moedGSkillTracks.length
+    ? moedGSkillTracks.reduce((sum, track) => sum + (levels[track.id] ?? 0), 0) / moedGSkillTracks.length
+    : 0;
+  const readiness = Math.round((average / 3) * 100);
+
+  return (
+    <section className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 md:p-5">
+      <div className="flex items-center justify-between gap-3 flex-wrap mb-3">
+        <div className="flex items-center gap-2">
+          <BarChart3 className="w-5 h-5 text-emerald-700" />
+          <h2 className="font-extrabold text-slate-900">מעקב רמה מדויק</h2>
+        </div>
+        <div className="text-sm font-extrabold text-emerald-700">{readiness}% מוכנות לפי סימון עצמי</div>
+      </div>
+      <div className="space-y-3">
+        {moedGSkillTracks.map((track) => {
+          const level = levels[track.id] ?? 0;
+          return (
+            <article key={track.id} className="rounded-lg border border-slate-200 bg-slate-50 p-3">
+              <div className="grid md:grid-cols-[1fr_auto] gap-3">
+                <div>
+                  <div className="text-sm font-extrabold text-slate-900">{track.title}</div>
+                  <p className="text-xs text-slate-600 mt-1">{track.evidence}</p>
+                  <p className="text-xs text-slate-700 mt-1"><strong>עולה רמה כש:</strong> {track.nextThreshold}</p>
+                </div>
+                <div className="flex items-center gap-1 self-start" aria-label={`רמה עבור ${track.title}`}>
+                  {[0, 1, 2, 3].map((value) => (
+                    <button
+                      key={value}
+                      type="button"
+                      disabled={!hydrated}
+                      onClick={() => setLevel(track.id, value)}
+                      className={`w-9 h-8 rounded-md border text-xs font-bold transition-colors ${
+                        level === value
+                          ? 'bg-emerald-600 border-emerald-600 text-white'
+                          : 'bg-white border-slate-200 text-slate-600 hover:border-emerald-400'
+                      } disabled:opacity-40`}
+                    >
+                      {value}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
 // ─── Main Page ───
 
 export default function BattlePlanPage() {
   const { done, toggle, hydrated, clearAll } = useChecks();
+  const levelState = useLevels();
 
   const todayISO = new Date().toISOString().slice(0, 10);
   const examDate = new Date(EXAM_DATE);
@@ -257,6 +440,11 @@ export default function BattlePlanPage() {
           <div className="text-[0.7rem] text-slate-500 mt-auto pt-2">הסימונים נשמרים בדפדפן (localStorage)</div>
         </div>
       </div>
+
+      <ExamAnalysis />
+      <FocusDrills />
+      <DailyFocusCard todayISO={todayISO} />
+      <LevelTracker levels={levelState.levels} setLevel={levelState.setLevel} hydrated={levelState.hydrated} />
 
       {/* Plan blocks */}
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 md:p-6">

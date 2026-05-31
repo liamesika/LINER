@@ -100,6 +100,7 @@ const navGroups: NavGroup[] = [
     items: [
       { href: '/practice', labelHe: 'תרגול', icon: <GraduationCap className="w-5 h-5" /> },
       { href: '/homework', labelHe: 'שיעורי בית', icon: <FileQuestion className="w-5 h-5" /> },
+      { href: '/homework-focus', labelHe: 'מיקוד שאלות ממטלות', icon: <BookOpen className="w-5 h-5" />, highlight: true },
       { href: '/quizzes', labelHe: 'הגדרות בחנים', icon: <ClipboardCheck className="w-5 h-5" /> },
       { href: '/review', labelHe: 'חזרה למבחן', icon: <Crosshair className="w-5 h-5" /> },
       { href: '/calendar', labelHe: 'לוח למבחן', icon: <Calendar className="w-5 h-5" /> },

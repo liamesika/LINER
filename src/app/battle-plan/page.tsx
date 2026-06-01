@@ -18,6 +18,7 @@ import {
   moedGExamSignals,
   moedGFocusDrills,
   moedGSkillTracks,
+  moedGHwQuestions,
   getAllTaskIds,
   type Block,
   type DayBlock,
@@ -28,6 +29,7 @@ import {
   type PhaseColor,
   type DayType,
   type TopicTag,
+  type HwPriority,
 } from '@/data/battle-plan-moed-g';
 
 const EXAM_DATE = '2026-06-15';
@@ -227,6 +229,75 @@ function DayCard({ b, checks, toggle, hydrated, isToday }: { b: DayBlock; checks
 function TipCard({ b }: { b: TipBlock }) {
   return (
     <div className="bg-emerald-50 border-r-2 border-emerald-500 rounded-md px-3.5 py-2 my-1.5 text-[0.82rem] text-emerald-900" dangerouslySetInnerHTML={{ __html: b.body }} />
+  );
+}
+
+const priorityLabel: Record<HwPriority, string> = {
+  critical: '🔴 חובה',
+  high:     '🟠 חשוב',
+  medium:   '🟡 מומלץ',
+};
+
+const priorityRowColor: Record<HwPriority, string> = {
+  critical: 'bg-red-50 border-r-2 border-r-red-400',
+  high:     'bg-orange-50 border-r-2 border-r-orange-400',
+  medium:   'bg-amber-50/50 border-r-2 border-r-yellow-400',
+};
+
+function HwFocusTable() {
+  return (
+    <section className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 md:p-5">
+      <div className="flex items-center gap-2 mb-3">
+        <span className="text-lg">📋</span>
+        <h2 className="font-extrabold text-slate-900">שאלות מטלות שחייבים לשלוט בהן — הכי סביר שיהיו במבחן</h2>
+      </div>
+      <p className="text-xs text-slate-500 mb-3">לפי סדר מטלות · מבוסס על ניתוח מועד א + מועד ב 2026</p>
+
+      {/* Desktop table */}
+      <div className="hidden md:block overflow-x-auto">
+        <table className="w-full text-sm border-collapse">
+          <thead>
+            <tr className="bg-slate-100 text-slate-700 text-right">
+              <th className="px-3 py-2 font-bold text-xs w-17.5">מטלה</th>
+              <th className="px-3 py-2 font-bold text-xs w-30">שאלה</th>
+              <th className="px-3 py-2 font-bold text-xs">נושא</th>
+              <th className="px-3 py-2 font-bold text-xs">למה חשוב</th>
+              <th className="px-3 py-2 font-bold text-xs w-22.5">עדיפות</th>
+            </tr>
+          </thead>
+          <tbody>
+            {moedGHwQuestions.map((q, i) => (
+              <tr key={i} className={`${priorityRowColor[q.priority]} border-b border-slate-100`}>
+                <td className="px-3 py-2 font-mono font-bold text-slate-800 text-xs whitespace-nowrap">{q.hw}</td>
+                <td className="px-3 py-2 text-xs text-slate-700 font-semibold">{q.question}</td>
+                <td className="px-3 py-2 text-xs text-slate-900 font-semibold leading-snug">{q.topic}</td>
+                <td className="px-3 py-2 text-xs text-slate-600 leading-relaxed">{q.why}</td>
+                <td className="px-3 py-2">
+                  <span className="text-xs font-bold whitespace-nowrap">{priorityLabel[q.priority]}</span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Mobile cards */}
+      <div className="md:hidden space-y-2">
+        {moedGHwQuestions.map((q, i) => (
+          <div key={i} className={`rounded-lg p-3 ${priorityRowColor[q.priority]}`}>
+            <div className="flex items-start justify-between gap-2 mb-1">
+              <div className="flex items-center gap-2">
+                <span className="font-mono font-extrabold text-slate-800 text-xs bg-white rounded px-1.5 py-0.5 border border-slate-200">{q.hw}</span>
+                <span className="text-xs font-semibold text-slate-700">{q.question}</span>
+              </div>
+              <span className="text-xs font-bold shrink-0">{priorityLabel[q.priority]}</span>
+            </div>
+            <div className="text-xs font-bold text-slate-900 mb-0.5">{q.topic}</div>
+            <div className="text-xs text-slate-600 leading-relaxed">{q.why}</div>
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }
 
@@ -441,6 +512,7 @@ export default function BattlePlanPage() {
         </div>
       </div>
 
+      <HwFocusTable />
       <ExamAnalysis />
       <FocusDrills />
       <DailyFocusCard todayISO={todayISO} />

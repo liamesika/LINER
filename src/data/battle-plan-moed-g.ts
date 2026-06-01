@@ -276,6 +276,96 @@ export const moedGDailyFocus: DailyFocus[] = [
   },
 ];
 
+export type HwPriority = 'critical' | 'high' | 'medium';
+
+export interface HwQuestion {
+  hw: string;
+  question: string;
+  topic: string;
+  why: string;
+  priority: HwPriority;
+}
+
+export const moedGHwQuestions: HwQuestion[] = [
+  {
+    hw: 'HW3',
+    question: 'שאלה 2',
+    topic: 'מערכת תלוית פרמטר — 0/1/∞',
+    why: '0/12 במועד א. חזר במועד ב. הסוג הכי יקר למבחן: דירוג, נקודת פיצול, כל ענף.',
+    priority: 'critical',
+  },
+  {
+    hw: 'HW8',
+    question: 'שאלה 4 (a, b, e)',
+    topic: 'dim(U∩W) — חסמים והוכחות',
+    why: '2/13 במועד א. מועד ב התמקד בהוכחות מימד. חייבים לכתוב מהזיכרון.',
+    priority: 'critical',
+  },
+  {
+    hw: 'HW9',
+    question: 'שאלה 6',
+    topic: 'AB=I ⇒ BA=I (הוכחה דרך dim Wₖ)',
+    why: 'הוכחה מרכזית שחוזרת. מועד ב הכניס טרנספוז + הוכחות — מועד ג ימשיך בכיוון הזה.',
+    priority: 'critical',
+  },
+  {
+    hw: 'HW9',
+    question: 'שאלה 4 (a)',
+    topic: 'הפיכות מעל Z₇ / Z₅',
+    why: '3/12 במועד א על אריתמטיקה פשוטה. טעות שנמנעת עם טבלת הופכים.',
+    priority: 'high',
+  },
+  {
+    hw: 'HW5',
+    question: 'שאלות 1-2',
+    topic: 'שוויון Span + בת"ל',
+    why: 'בסיס לכל שאלת הוכחה במבחן. מועד ב Q2.1 ביקש בדיוק Span + משפט השלוש.',
+    priority: 'high',
+  },
+  {
+    hw: 'HW8',
+    question: 'שאלות 2-3',
+    topic: 'NulA / ColA / RowA + Rank-Nullity',
+    why: 'מועד ב שאל Null(AᵗA). קנונית אחת = שלושה בסיסים + בדיקת rank+nullity.',
+    priority: 'high',
+  },
+  {
+    hw: 'HW11',
+    question: 'שאלה 1',
+    topic: 'דטרמיננטות — חישוב ותכונות',
+    why: 'מועד ב שאל det גדול. מועד ג: צפויה וריאציה חישובית או הוכחת det(AB).',
+    priority: 'high',
+  },
+  {
+    hw: 'HW12',
+    question: 'שאלות 2-3',
+    topic: 'det — בלוקים + פעולות שורה',
+    why: 'כל שאלת det במבחן דורשת מעקב אחרי סימנים וגורמים. אלה תרגולי הכנה.',
+    priority: 'high',
+  },
+  {
+    hw: 'HW3',
+    question: 'שאלה 1',
+    topic: 'סיווג מספר פתרונות (rank/rank⁺/n)',
+    why: 'ידע בסיסי שמופיע בכל שאלת מערכת. חייב להיות אוטומטי.',
+    priority: 'medium',
+  },
+  {
+    hw: 'HW4',
+    question: 'כל השאלות',
+    topic: 'בדיקת תת-מרחב — 3 תנאים',
+    why: 'שאלות פתיחה קלות במבחן. נקודות קלות להרוויח.',
+    priority: 'medium',
+  },
+  {
+    hw: 'HW6',
+    question: 'שאלות בסיס/מימד',
+    topic: 'בסיס, מימד, משפט ההשלמה',
+    why: 'רקע לכל שאלת הוכחה. ביחד עם משפט השלוש = שאלה 1 קלאסית במבחן.',
+    priority: 'medium',
+  },
+];
+
 export const moedGSkillTracks: SkillTrack[] = [
   {
     id: 'parametric-systems',

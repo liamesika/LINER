@@ -1,0 +1,2484 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>לינארית 1 — מפת למידה</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false})"></script>
+<style>
+  :root {
+    --bg: #f4f2ed;
+    --card: #ffffff;
+    --card2: #f8f7f3;
+    --border: #ddd9d0;
+    --accent1: #6254c8; /* fields */
+    --accent2: #1a91aa; /* systems */
+    --accent3: #3d8f42; /* vector spaces */
+    --accent4: #c07828; /* span/independence */
+    --accent5: #b83060; /* basis */
+    --accent6: #7a2898; /* dimension */
+    --accent7: #c03030; /* matrices/invertibility */
+    --accent8: #9a8010; /* determinants */
+    --text: #242220;
+    --muted: #6b6560;
+    --arrow: #b0a898;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+    min-height: 100vh;
+    padding: 24px 16px 60px;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  header h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+  header p { color: var(--muted); font-size: 0.95rem; }
+
+  /* Legend */
+  .legend {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    justify-content: center; margin-bottom: 36px;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 6px;
+    background: var(--card); border-radius: 20px;
+    padding: 5px 12px; font-size: 0.8rem; color: var(--muted);
+    border: 1px solid var(--border);
+  }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+  /* Flow container */
+  .flow {
+    max-width: 920px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  /* Week block */
+  .week-block {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Arrow connector */
+  .connector {
+    width: 2px;
+    height: 36px;
+    background: linear-gradient(to bottom, var(--arrow), transparent);
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
+  .connector::after {
+    content: '▼';
+    position: absolute;
+    bottom: -2px;
+    color: var(--arrow);
+    font-size: 12px;
+  }
+
+  /* The card itself */
+  .card {
+    width: 100%;
+    background: var(--card);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+  }
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 20px;
+  }
+  .week-badge {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #fff;
+    background: rgba(0,0,0,0.22);
+    border-radius: 8px;
+    padding: 3px 9px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .card-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    flex: 1;
+  }
+  .card-lec {
+    font-size: 0.72rem;
+    color: rgba(0,0,0,0.4);
+    white-space: nowrap;
+  }
+  .expand-icon {
+    font-size: 0.85rem;
+    opacity: 0.6;
+    transition: transform 0.3s;
+    flex-shrink: 0;
+  }
+  .card.open .expand-icon { transform: rotate(180deg); }
+
+  .card-body {
+    display: none;
+    padding: 0 20px 20px;
+    border-top: 1px solid var(--border);
+  }
+  .card.open .card-body { display: block; }
+
+  /* Inner sections */
+  .section { margin-top: 14px; }
+  .section-title {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    opacity: 0.55;
+    margin-bottom: 8px;
+  }
+
+  /* Tag pills */
+  .tags { display: flex; flex-wrap: wrap; gap: 7px; }
+  .tag {
+    padding: 4px 11px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border: 1.5px solid;
+    white-space: nowrap;
+  }
+  .tag.def { background: rgba(0,0,0,0.03); }
+  .tag.thm { background: rgba(0,0,0,0.02); font-style: italic; }
+  .tag.key { font-weight: 800; }
+
+  /* Insight box */
+  .insight {
+    margin-top: 12px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: rgba(0,0,0,0.03);
+    border-right: 3px solid;
+    font-size: 0.83rem;
+    line-height: 1.6;
+  }
+  .insight strong { font-weight: 700; }
+
+  /* Builds-on strip */
+  .builds-on {
+    margin-top: 12px;
+    display: flex; align-items: center; gap: 8px;
+    flex-wrap: wrap;
+    font-size: 0.78rem; color: var(--muted);
+  }
+  .builds-on-label { opacity: 0.6; }
+  .bo-pill {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2px 10px;
+    color: var(--text);
+    opacity: 0.8;
+  }
+
+  /* Outcome strip */
+  .outcome {
+    margin-top: 10px;
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.6;
+    padding: 8px 12px;
+    background: rgba(0,0,0,0.03);
+    border-radius: 8px;
+  }
+  .outcome b { color: var(--text); }
+
+  /* Colors per topic */
+  .c1 { color: var(--accent1); border-color: var(--accent1); }
+  .c2 { color: var(--accent2); border-color: var(--accent2); }
+  .c3 { color: var(--accent3); border-color: var(--accent3); }
+  .c4 { color: var(--accent4); border-color: var(--accent4); }
+  .c5 { color: var(--accent5); border-color: var(--accent5); }
+  .c6 { color: var(--accent6); border-color: var(--accent6); }
+  .c7 { color: var(--accent7); border-color: var(--accent7); }
+  .c8 { color: var(--accent8); border-color: var(--accent8); }
+
+  .hdr1 { background: linear-gradient(135deg, rgba(98,84,200,0.12), rgba(98,84,200,0.03)); border-bottom: 2px solid var(--accent1); }
+  .hdr2 { background: linear-gradient(135deg, rgba(26,145,170,0.12), rgba(26,145,170,0.03)); border-bottom: 2px solid var(--accent2); }
+  .hdr3 { background: linear-gradient(135deg, rgba(61,143,66,0.12), rgba(61,143,66,0.03)); border-bottom: 2px solid var(--accent3); }
+  .hdr4 { background: linear-gradient(135deg, rgba(192,120,40,0.12), rgba(192,120,40,0.03)); border-bottom: 2px solid var(--accent4); }
+  .hdr5 { background: linear-gradient(135deg, rgba(184,48,96,0.12), rgba(184,48,96,0.03)); border-bottom: 2px solid var(--accent5); }
+  .hdr6 { background: linear-gradient(135deg, rgba(122,40,152,0.12), rgba(122,40,152,0.03)); border-bottom: 2px solid var(--accent6); }
+  .hdr7 { background: linear-gradient(135deg, rgba(192,48,48,0.12), rgba(192,48,48,0.03)); border-bottom: 2px solid var(--accent7); }
+  .hdr8 { background: linear-gradient(135deg, rgba(154,128,16,0.12), rgba(154,128,16,0.03)); border-bottom: 2px solid var(--accent8); }
+
+  /* Milestone banner */
+  .milestone {
+    width: 100%;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    border-radius: 8px;
+    margin: 8px 0;
+    opacity: 0.85;
+  }
+
+  /* Summary box at bottom */
+  .dep-tree {
+    max-width: 920px;
+    margin: 40px auto 0;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 22px 24px;
+  }
+  .dep-tree h2 {
+    font-size: 1rem;
+    margin-bottom: 16px;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .tree-line {
+    font-family: monospace;
+    font-size: 0.82rem;
+    line-height: 2;
+    color: var(--muted);
+    direction: ltr;
+    text-align: left;
+  }
+  .tree-line span { color: var(--text); font-weight: 600; }
+  .tree-line em { color: var(--accent5); }
+  .tree-line b { color: var(--accent8); }
+  .dep-tree { box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>לינארית 1 — מפת למידה</h1>
+  <p>מה לומדים בכל שבוע · מה חשוב · על מה כל נושא מבוסס</p>
+</header>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:var(--accent1)"></div>שדות</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--accent2)"></div>מערכות ליניאריות</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--accent3)"></div>מרחב וקטורי</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--accent4)"></div>Span + תלות ליניארית</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--accent5)"></div>בסיס</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--accent6)"></div>מימד</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--accent7)"></div>מטריצות + הפיכות</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--accent8)"></div>דטרמיננטות</div>
+</div>
+
+<div class="flow">
+
+  <!-- ══ BLOCK 1 ══ -->
+  <div class="week-block">
+    <div class="card" onclick="toggle(this)">
+      <div class="card-header hdr1">
+        <div class="week-badge">שבוע 1–2</div>
+        <div class="card-title c1">🔢 שדות (Fields)</div>
+        <div class="card-lec">הרצאות 1–4</div>
+        <div class="expand-icon">▼</div>
+      </div>
+      <div class="card-body">
+
+        <div class="section">
+          <div class="section-title">הגדרות מפתח</div>
+          <div class="tags">
+            <span class="tag def c1">שדה F</span>
+            <span class="tag def c1">פעולות + ו·</span>
+            <span class="tag def c1">איבר אדיש (0)</span>
+            <span class="tag def c1">איבר יחידה (1)</span>
+            <span class="tag def c1">נגדי (-a)</span>
+            <span class="tag def c1">הופכי (a⁻¹)</span>
+            <span class="tag def c1">Zₙ</span>
+            <span class="tag def c1">מספרים מרוכבים ℂ</span>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">משפטים שיוצאים</div>
+          <div class="tags">
+            <span class="tag thm c1">n ראשוני ⟺ Zₙ שדה</span>
+            <span class="tag thm c1">x·0 = 0 תמיד</span>
+            <span class="tag thm c1">xy=0 ⟹ x=0 או y=0 (אין מחלקי אפס)</span>
+            <span class="tag thm c1">(-1)·x = -x</span>
+            <span class="tag thm c1">משפט בזו: ax+by=1</span>
+          </div>
+        </div>
+
+        <div class="insight" style="border-color:var(--accent1)">
+          <strong>🎯 המסקנה הגדולה:</strong> שדה = מבנה שבו אפשר לחבר, לחסר, לכפול ולחלק (חוץ מ-0). הבסיס המתמטי לכל מה שיבוא אחרי.
+        </div>
+
+        <div class="outcome">
+          <b>יוצאת עם:</b> ידיעה מה מותר לעשות עם מספרים. Q, R, ℂ, Zₚ הם שדות. כשמשהו בתכנית לינארית כתוב "מעל שדה F" — זה מה שהכוונה.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="connector"></div>
+
+  <!-- ══ BLOCK 2 ══ -->
+  <div class="week-block">
+    <div class="card" onclick="toggle(this)">
+      <div class="card-header hdr2">
+        <div class="week-badge">שבוע 2–4</div>
+        <div class="card-title c2">📐 מערכות ליניאריות</div>
+        <div class="card-lec">הרצאות 4–6</div>
+        <div class="expand-icon">▼</div>
+      </div>
+      <div class="card-body">
+
+        <div class="builds-on">
+          <span class="builds-on-label">מבוסס על:</span>
+          <span class="bo-pill">שדות</span>
+        </div>
+
+        <div class="section">
+          <div class="section-title">הגדרות מפתח</div>
+          <div class="tags">
+            <span class="tag def c2">מטריצת מקדמים A</span>
+            <span class="tag def c2">מטריצה מורחבת A⁺</span>
+            <span class="tag def c2">פעולות שורה אלמנטריות</span>
+            <span class="tag def c2">מקדם מוביל (pivot)</span>
+            <span class="tag def c2">מטריצה מדורגת EF</span>
+            <span class="tag def c2">מטריצה מדורגת קנונית REF</span>
+            <span class="tag def c2">rank(A)</span>
+            <span class="tag def c2">משתנה קשור / חופשי</span>
+            <span class="tag def c2">מערכת הומוגנית</span>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">משפטים שיוצאים</div>
+          <div class="tags">
+            <span class="tag thm c2">REF יחידה לכל מטריצה</span>
+            <span class="tag thm c2">עקבית ⟺ rank(A)=rank(A⁺)</span>
+            <span class="tag thm c2">rank(A) ≤ min(m,n)</span>
+            <span class="tag thm key c2">מספר פתרונות: 0 / 1 / ∞ לפי rank</span>
+            <span class="tag thm c2">פתרון כללי = פרטי + הומוגני</span>
+          </div>
+        </div>
+
+        <div class="insight" style="border-color:var(--accent2)">
+          <strong>🎯 האלגוריתם:</strong> חלוקה לשלבים: 1) כתוב כמטריצה, 2) דרג (Gauss), 3) בדוק rank, 4) קרא פתרונות.
+          <br><strong>הבנה עמוקה:</strong> rank = "כמה מידע אמיתי יש" — זה ישוב שוב ושוב לאורך כל הקורס.
+        </div>
+
+        <div class="outcome">
+          <b>יוצאת עם:</b> יכולת לפתור מערכת ליניארית ולהגיד כמה פתרונות יש ולמה. המושג rank מוגדר כאן — הוא נושא מרכזי עד הסוף.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="connector"></div>
+
+  <!-- ══ BLOCK 3 ══ -->
+  <div class="week-block">
+    <div class="card" onclick="toggle(this)">
+      <div class="card-header hdr3">
+        <div class="week-badge">שבוע 5–6</div>
+        <div class="card-title c3">🧊 מרחב וקטורי + תת-מרחב</div>
+        <div class="card-lec">הרצאות 7–8</div>
+        <div class="expand-icon">▼</div>
+      </div>
+      <div class="card-body">
+
+        <div class="builds-on">
+          <span class="builds-on-label">מבוסס על:</span>
+          <span class="bo-pill">שדות</span>
+          <span class="bo-pill">פעולות חיבור וכפל בסקלר</span>
+        </div>
+
+        <div class="section">
+          <div class="section-title">הגדרות מפתח</div>
+          <div class="tags">
+            <span class="tag def c3">מרחב וקטורי V מעל F</span>
+            <span class="tag def c3">10 האקסיומות</span>
+            <span class="tag def c3">וקטור אפס 0_V</span>
+            <span class="tag def c3">תת-מרחב W⊆V</span>
+            <span class="tag def c3">Fⁿ</span>
+            <span class="tag def c3">M_{m×n}(F)</span>
+            <span class="tag def c3">F[x], Fₙ[x]</span>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">משפטים שיוצאים</div>
+          <div class="tags">
+            <span class="tag thm c3">0_F · v = 0_V</span>
+            <span class="tag thm c3">(-1)·v = -v</span>
+            <span class="tag thm c3">קריטריון מקוצר לתת-מרחב (3 תנאים)</span>
+            <span class="tag thm c3">W₁∩W₂ תמיד תת-מרחב ✓</span>
+            <span class="tag thm key c3">W₁∪W₂ לא תת-מרחב בד"כ ✗</span>
+          </div>
+        </div>
+
+        <div class="insight" style="border-color:var(--accent3)">
+          <strong>🎯 הקפיצה המושגית:</strong> עוברים מ"מספרים" ל"אובייקטים כלליים". וקטור יכול להיות פולינום, מטריצה, פונקציה — כל עוד מקיימים 10 כללים.
+          <br>קריטריון תת-מרחב: מספיק לבדוק <strong>סגור לצ"ל</strong>.
+        </div>
+
+        <div class="outcome">
+          <b>יוצאת עם:</b> מסגרת אבסטרקטית. כשבודקים תת-מרחב — 3 תנאים. דוגמאות: NulA יהיה תת-מרחב (שבוע 9), ColA, RowA — כולם ייבנו על זה.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="connector"></div>
+
+  <!-- ══ BLOCK 4 ══ -->
+  <div class="week-block">
+    <div class="card" onclick="toggle(this)">
+      <div class="card-header hdr4">
+        <div class="week-badge">שבוע 7–8</div>
+        <div class="card-title c4">🔗 Span + תלות ליניארית</div>
+        <div class="card-lec">הרצאות 9–10</div>
+        <div class="expand-icon">▼</div>
+      </div>
+      <div class="card-body">
+
+        <div class="builds-on">
+          <span class="builds-on-label">מבוסס על:</span>
+          <span class="bo-pill">מרחב וקטורי</span>
+          <span class="bo-pill">תת-מרחב</span>
+        </div>
+
+        <div class="section">
+          <div class="section-title">הגדרות מפתח</div>
+          <div class="tags">
+            <span class="tag def c4">צירוף ליניארי</span>
+            <span class="tag def c4">span{v₁,...,vₖ}</span>
+            <span class="tag def c4">קבוצה פורשת</span>
+            <span class="tag def c4">נוצר סופית</span>
+            <span class="tag def c4">בת"ל (ליניארית בלתי תלויה)</span>
+            <span class="tag def c4">ת"ל (ליניארית תלויה)</span>
+            <span class="tag def c4">בת"ל מקסימלית</span>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">משפטים שיוצאים</div>
+          <div class="tags">
+            <span class="tag thm c4">span(S) הוא תת-מרחב</span>
+            <span class="tag thm c4">A⊆B ⟹ span(A)⊆span(B)</span>
+            <span class="tag thm key c4">ת"ל ⟺ קיים vⱼ ∈ span{v₁,...,vⱼ₋₁}</span>
+            <span class="tag thm c4">0∈S ⟹ S ת"ל</span>
+            <span class="tag thm key c4">בת"ל ⟹ ייצוג יחיד בspan</span>
+          </div>
+        </div>
+
+        <div class="insight" style="border-color:var(--accent4)">
+          <strong>🎯 האינטואיציה:</strong>
+          <br>• <strong>Span</strong> = כל מה שאפשר "להגיע אליו" מוקטורים נתונים
+          <br>• <strong>בת"ל</strong> = אף וקטור לא "מיותר" — הוא לא שייך ל-span של האחרים
+          <br>• אם בת"ל + פורשים → ייצוג יחיד = <strong>בסיס!</strong>
+        </div>
+
+        <div class="outcome">
+          <b>יוצאת עם:</b> הכלים לבדוק אם קבוצת וקטורים "טובה". שני המושגות האלה ביחד יהיו הגדרת הבסיס בשבוע הבא.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="connector"></div>
+
+  <!-- ══ BLOCK 5 ══ -->
+  <div class="week-block">
+    <div class="card" onclick="toggle(this)">
+      <div class="card-header hdr5">
+        <div class="week-badge">שבוע 9–10</div>
+        <div class="card-title c5">⭐ בסיס (Basis)</div>
+        <div class="card-lec">הרצאות 11–12</div>
+        <div class="expand-icon">▼</div>
+      </div>
+      <div class="card-body">
+
+        <div class="builds-on">
+          <span class="builds-on-label">מבוסס על:</span>
+          <span class="bo-pill">Span</span>
+          <span class="bo-pill">בת"ל</span>
+          <span class="bo-pill">תת-מרחב</span>
+        </div>
+
+        <div class="section">
+          <div class="section-title">הגדרות מפתח</div>
+          <div class="tags">
+            <span class="tag def c5">בסיס = בת"ל + פורשים</span>
+            <span class="tag def c5">בסיס סטנדרטי של Fⁿ</span>
+            <span class="tag def c5">בסיס של M_{m×n}</span>
+            <span class="tag def c5">בסיס של Fₙ[x]</span>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">משפטים שיוצאים — ⭐ חשוב מאוד</div>
+          <div class="tags">
+            <span class="tag thm key c5">⭐ למת שטיינץ: k וקטורי בסיס, m פורשים → k ≤ m</span>
+            <span class="tag thm key c5">⭐ כל שני בסיסים — אותו גודל!</span>
+            <span class="tag thm c5">V נוצר סופית ≠{0} → יש בסיס</span>
+            <span class="tag thm c5">כל v∈V ייצוג יחיד בבסיס</span>
+          </div>
+        </div>
+
+        <div class="insight" style="border-color:var(--accent5)">
+          <strong>🎯 הפריצה:</strong> למת שטיינץ מוכיחה שגודל הבסיס הוא תכונה של <em>המרחב</em> — לא של הבסיס הספציפי שבחרנו. זה מה שמאפשר להגדיר מימד.
+        </div>
+
+        <div class="outcome">
+          <b>יוצאת עם:</b> הגדרת בסיס. הבנה ש"גודל הבסיס" הוא קבוע — זה יהיה ה<strong>מימד</strong>. קואורדינטות = ייצוג יחיד בבסיס.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="connector"></div>
+
+  <!-- ══ BLOCK 6 ══ -->
+  <div class="week-block">
+    <div class="card" onclick="toggle(this)">
+      <div class="card-header hdr6">
+        <div class="week-badge">שבוע 11–12</div>
+        <div class="card-title c6">📏 מימד (Dimension)</div>
+        <div class="card-lec">הרצאות 13–14</div>
+        <div class="expand-icon">▼</div>
+      </div>
+      <div class="card-body">
+
+        <div class="builds-on">
+          <span class="builds-on-label">מבוסס על:</span>
+          <span class="bo-pill">בסיס</span>
+          <span class="bo-pill">למת שטיינץ</span>
+        </div>
+
+        <div class="section">
+          <div class="section-title">הגדרות מפתח</div>
+          <div class="tags">
+            <span class="tag def c6">dim V = גודל הבסיס</span>
+            <span class="tag def c6">dim {0} = 0</span>
+            <span class="tag def c6">U + W (סכום)</span>
+            <span class="tag def c6">U ⊕ W (סכום ישר)</span>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">משפטים שיוצאים — ⭐⭐⭐ הכי חשוב!</div>
+          <div class="tags">
+            <span class="tag thm key c6">⭐⭐⭐ משפט השלש: dim=n, יש n וקטורים → בסיס ⟺ בת"ל ⟺ פורשים</span>
+            <span class="tag thm key c6">⭐ dim W ≤ dim V</span>
+            <span class="tag thm key c6">⭐ dim W = dim V ⟹ W = V</span>
+            <span class="tag thm c6">השלמה לבסיס: בת"ל → אפשר להשלים לבסיס</span>
+            <span class="tag thm key c6">⭐ dim(U+W) = dim U + dim W − dim(U∩W)</span>
+          </div>
+        </div>
+
+        <div class="insight" style="border-color:var(--accent6)">
+          <strong>🎯 משפט השלש — זה ה-MVP:</strong> אם ידועה dim V = n ויש לנו בדיוק n וקטורים, מספיק לבדוק רק <em>תנאי אחד</em> מתוך שלושה. זה חוסך עצום בהוכחות ובחישובים.
+          <br><br><strong>נוסחת המימדים:</strong> כמו כלל הכללה-הפרדה בהסתברות — מחסירים חיתוך.
+        </div>
+
+        <div class="outcome">
+          <b>יוצאת עם:</b> מושג המימד. יכולת להוכיח בסיסיות בשורה אחת. נוסחת dim(U+W). הכלים העיקריים לשאלות תיאורטיות במבחן.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="connector"></div>
+
+  <!-- ══ BLOCK 7 ══ -->
+  <div class="week-block">
+    <div class="card" onclick="toggle(this)">
+      <div class="card-header hdr7">
+        <div class="week-badge">שבוע 12–14</div>
+        <div class="card-title c7">🔴 מרחבי מטריצה + הפיכות + Rank-Nullity</div>
+        <div class="card-lec">הרצאות 15–18</div>
+        <div class="expand-icon">▼</div>
+      </div>
+      <div class="card-body">
+
+        <div class="builds-on">
+          <span class="builds-on-label">מבוסס על:</span>
+          <span class="bo-pill">מימד</span>
+          <span class="bo-pill">בסיס</span>
+          <span class="bo-pill">תת-מרחב</span>
+          <span class="bo-pill">מערכות ליניאריות</span>
+        </div>
+
+        <div class="section">
+          <div class="section-title">הגדרות מפתח</div>
+          <div class="tags">
+            <span class="tag def c7">NulA = מרחב האפס</span>
+            <span class="tag def c7">ColA = מרחב העמודות</span>
+            <span class="tag def c7">RowA = מרחב השורות</span>
+            <span class="tag def c7">col-rank / row-rank</span>
+            <span class="tag def c7">מטריצה הפיכה A⁻¹</span>
+            <span class="tag def c7">מטריצה אלמנטרית E</span>
+            <span class="tag def c7">Aᵗ (משוכלפת)</span>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">משפטים שיוצאים — ⭐⭐⭐ הלב של הקורס</div>
+          <div class="tags">
+            <span class="tag thm key c7">⭐⭐⭐ Rank-Nullity: rank(A) + dim(NulA) = n</span>
+            <span class="tag thm key c7">⭐⭐ col-rank = row-rank = rank(A)</span>
+            <span class="tag thm key c7">⭐⭐ טבלת ההפיכות: 14 תנאים שקולים</span>
+            <span class="tag thm c7">NulA, ColA, RowA — כולם תת-מרחבים</span>
+            <span class="tag thm c7">Ax=b יש פתרון ⟺ b ∈ ColA</span>
+            <span class="tag thm c7">A הפיכה ⟺ rank=n ⟺ det≠0 ⟺ עמודות בסיס ⟺ ...</span>
+            <span class="tag thm c7">(AB)⁻¹ = B⁻¹A⁻¹</span>
+            <span class="tag thm c7">(Aᵗ)⁻¹ = (A⁻¹)ᵗ</span>
+          </div>
+        </div>
+
+        <div class="insight" style="border-color:var(--accent7)">
+          <strong>🎯 Rank-Nullity בעברית:</strong> מספר המשתנים = משתנים קשורים (rank) + משתנים חופשיים (dim NulA). כל משתנה "הולך" לאחד המקומות.
+          <br><br><strong>טבלת ההפיכות:</strong> אם A ריבועית — כל תנאי אחד מ-14 מבטיח את כולם. ללמוד בעל-פה!
+        </div>
+
+        <div class="outcome">
+          <b>יוצאת עם:</b> Rank-Nullity (נוסחה שמחברת מימד + מערכות). הפיכות מלאה. NulA, ColA, RowA — איך למצוא בסיס לכל אחד.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="connector"></div>
+
+  <!-- ══ BLOCK 8 ══ -->
+  <div class="week-block">
+    <div class="card" onclick="toggle(this)">
+      <div class="card-header hdr8">
+        <div class="week-badge">שבוע 15–16</div>
+        <div class="card-title c8">🔑 דטרמיננטות (det)</div>
+        <div class="card-lec">הרצאות 20–23</div>
+        <div class="expand-icon">▼</div>
+      </div>
+      <div class="card-body">
+
+        <div class="builds-on">
+          <span class="builds-on-label">מבוסס על:</span>
+          <span class="bo-pill">מטריצות</span>
+          <span class="bo-pill">הפיכות</span>
+          <span class="bo-pill">מטריצות אלמנטריות</span>
+        </div>
+
+        <div class="section">
+          <div class="section-title">הגדרות מפתח</div>
+          <div class="tags">
+            <span class="tag def c8">פונקציה מולטי-ליניארית</span>
+            <span class="tag def c8">פונקציה מתחלפת (alternating)</span>
+            <span class="tag def c8">det (דטרמיננטה)</span>
+            <span class="tag def c8">מינור Mᵢⱼ</span>
+            <span class="tag def c8">פיתוח לפי שורה/עמודה</span>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">משפטים שיוצאים — ⭐⭐</div>
+          <div class="tags">
+            <span class="tag thm key c8">⭐⭐ det(AB) = det(A)·det(B)</span>
+            <span class="tag thm key c8">⭐ det(Aᵗ) = det(A)</span>
+            <span class="tag thm c8">A לא הפיכה ⟺ det(A) = 0</span>
+            <span class="tag thm c8">פעולת שורה → השפעה על det</span>
+            <span class="tag thm c8">det משולשית = מכפלת האלכסון</span>
+            <span class="tag thm c8">det(EA) = det(E)·det(A)</span>
+            <span class="tag thm c8">יחידות: פונקציית det יחידה!</span>
+            <span class="tag thm c8">מטריצת בלוקים: det = detA·detB</span>
+          </div>
+        </div>
+
+        <div class="insight" style="border-color:var(--accent8)">
+          <strong>🎯 מה det מודד:</strong> מספר אחד שאומר לנו אם מטריצה הפיכה (det≠0) או לא (det=0). גם: כמה "נפח" הוקטורים כובשים.
+          <br><br><strong>הוכחת det(AB)=det(A)·det(B):</strong> עובר דרך מטריצות אלמנטריות. ה-core של כל ההוכחה.
+        </div>
+
+        <div class="outcome">
+          <b>יוצאת עם:</b> כלי לבדיקת הפיכות. נוסחאות חישוב. המשפט det(AB)=det(A)det(B). הבנה שdet מכבד כפל.
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Dependency tree - ANIMATED SVG -->
+<div class="dep-tree-wrapper">
+  <div class="dep-tree-header">
+    <h2>🌳 עץ התלויות</h2>
+    <p>לחצי על נקודה כדי לראות פרטים</p>
+  </div>
+  <div id="tree-container"></div>
+</div>
+
+<!-- Big theorems summary -->
+<div class="dep-tree" style="margin-top:16px">
+  <h2>🏆 6 המשפטים הגדולים — עדכון לפי היסטוריית מבחנים</h2>
+  <p style="font-size:0.8rem;color:var(--muted);margin-bottom:16px">⚠️ משפט השלש כבר נבחן במועד ב — הסתברותו יורדת בהתאם</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px">
+
+    <div style="padding:12px;background:rgba(192,48,48,0.06);border:1px solid rgba(192,48,48,0.25);border-radius:10px;font-size:0.83rem">
+      <div style="color:#c03030;font-weight:800;margin-bottom:6px">#1 — Rank-Nullity <span style="background:#c03030;color:#fff;border-radius:6px;padding:1px 7px;font-size:0.72rem">95%</span></div>
+      <div style="color:var(--text);line-height:1.6">rank(A) + dim(NulA) = n<br><span style="color:var(--muted);font-size:0.78rem">מחבר: מערכות + מימד + מרחב אפס. לא נבחן עדיין.</span></div>
+    </div>
+
+    <div style="padding:12px;background:rgba(192,48,48,0.06);border:1px solid rgba(192,48,48,0.25);border-radius:10px;font-size:0.83rem">
+      <div style="color:#c03030;font-weight:800;margin-bottom:6px">#2 — טבלת הפיכות <span style="background:#c03030;color:#fff;border-radius:6px;padding:1px 7px;font-size:0.72rem">90%</span></div>
+      <div style="color:var(--text);line-height:1.6">A הפיכה ⟺ rank=n ⟺ det≠0 ⟺ ... (14 תנאים שקולים)<br><span style="color:var(--muted);font-size:0.78rem">כולם זהים — אחד מספיק!</span></div>
+    </div>
+
+    <div style="padding:12px;background:rgba(154,128,16,0.07);border:1px solid rgba(154,128,16,0.3);border-radius:10px;font-size:0.83rem">
+      <div style="color:#9a7c10;font-weight:800;margin-bottom:6px">#3 — det(AB) <span style="background:#9a7c10;color:#fff;border-radius:6px;padding:1px 7px;font-size:0.72rem">85%</span></div>
+      <div style="color:var(--text);line-height:1.6">det(AB) = det(A)·det(B)<br><span style="color:var(--muted);font-size:0.78rem">דרך: det(EA)=det(E)·det(A) → מטריצות אלמנטריות.</span></div>
+    </div>
+
+    <div style="padding:12px;background:rgba(192,48,48,0.06);border:1px solid rgba(192,48,48,0.25);border-radius:10px;font-size:0.83rem">
+      <div style="color:#c03030;font-weight:800;margin-bottom:6px">#4 — col-rank = row-rank <span style="background:#c03030;color:#fff;border-radius:6px;padding:1px 7px;font-size:0.72rem">75%</span></div>
+      <div style="color:var(--text);line-height:1.6">dim(ColA) = dim(RowA) = rank(A)<br><span style="color:var(--muted);font-size:0.78rem">דרגת שורות = דרגת עמודות. לא נבחן עדיין.</span></div>
+    </div>
+
+    <div style="padding:12px;background:rgba(184,48,96,0.06);border:1px solid rgba(184,48,96,0.25);border-radius:10px;font-size:0.83rem">
+      <div style="color:#b83060;font-weight:800;margin-bottom:6px">#5 — למת שטיינץ <span style="background:#b83060;color:#fff;border-radius:6px;padding:1px 7px;font-size:0.72rem">65%</span></div>
+      <div style="color:var(--text);line-height:1.6">k וקטורי בסיס, m פורשים → k ≤ m<br><span style="color:var(--muted);font-size:0.78rem">מכאן: כל הבסיסים — אותו גודל.</span></div>
+    </div>
+
+    <div style="padding:12px;background:rgba(122,40,152,0.05);border:2px dashed rgba(122,40,152,0.3);border-radius:10px;font-size:0.83rem;position:relative">
+      <div style="position:absolute;top:-10px;right:12px;background:#f4f2ed;padding:0 6px;font-size:0.7rem;color:#c07828;font-weight:700">⚠️ כבר נבחן במועד ב</div>
+      <div style="color:#7a2898;font-weight:800;margin-bottom:6px">#6 — משפט השלש <span style="background:#999;color:#fff;border-radius:6px;padding:1px 7px;font-size:0.72rem">35%</span></div>
+      <div style="color:var(--text);line-height:1.6">dim V = n, n וקטורים: בסיס ⟺ בת"ל ⟺ פורשים<br><span style="color:#c07828;font-size:0.78rem">⚠️ נבחן במועד ב — סיכוי נמוך לחזור. עדיין חשוב להכיר!</span></div>
+    </div>
+
+  </div>
+</div>
+
+<style>
+/* ══ ANIMATED TREE ══ */
+.dep-tree-wrapper {
+  max-width: 980px;
+  margin: 48px auto 0;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 28px 24px 32px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+.dep-tree-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(98,84,200,0.04) 0%, transparent 70%);
+  pointer-events: none;
+}
+.dep-tree-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+.dep-tree-header h2 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.dep-tree-header p {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+#tree-container {
+  position: relative;
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* Node tooltip popup */
+.node-popup {
+  position: fixed;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 16px;
+  max-width: 260px;
+  z-index: 1000;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(8px) scale(0.96);
+  transition: opacity 0.18s, transform 0.18s;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+}
+.node-popup.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+.node-popup-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.node-popup-body {
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.node-popup-theorems {
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.node-popup-thm {
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 0.72rem;
+  background: rgba(0,0,0,0.04);
+  color: var(--text);
+  border: 1px solid rgba(0,0,0,0.1);
+}
+</style>
+
+<!-- Node popup -->
+<div class="node-popup" id="nodePopup">
+  <div class="node-popup-title" id="popupTitle"></div>
+  <div class="node-popup-body" id="popupBody"></div>
+  <div class="node-popup-theorems" id="popupThms"></div>
+</div>
+
+<script>
+function toggle(card) {
+  card.classList.toggle('open');
+}
+document.querySelectorAll('.card')[0].classList.add('open');
+
+/* ════════════════════════════════
+   ANIMATED DEPENDENCY TREE
+   ════════════════════════════════ */
+
+const NODES = [
+  {
+    id: 'fields', label: 'שדות F', sub: 'שבוע 1–2',
+    color: '#6254c8', x: 460, y: 60,
+    desc: 'המבנה הבסיסי: חיבור, כפל, נגדי, הופכי',
+    theorems: ['n ראשוני ⟺ Zₙ שדה', 'xy=0 ⟹ x=0 או y=0', '(-1)·x = -x']
+  },
+  {
+    id: 'systems', label: 'מערכות ליניאריות', sub: 'שבוע 2–4',
+    color: '#1a91aa', x: 200, y: 180,
+    desc: 'REF, rank, פתרונות: 0/1/∞',
+    theorems: ['עקבית ⟺ rank(A)=rank(A⁺)', 'פתרון = פרטי + הומוגני']
+  },
+  {
+    id: 'vs', label: 'מרחב וקטורי', sub: 'שבוע 5–6',
+    color: '#3d8f42', x: 720, y: 180,
+    desc: '10 אקסיומות, Fⁿ, M_{m×n}, F[x]',
+    theorems: ['0_F·v = 0_V', '(-1)·v = -v', 'אדיש יחיד']
+  },
+  {
+    id: 'subspace', label: 'תת-מרחב', sub: 'שבוע 5–6',
+    color: '#3d8f42', x: 840, y: 300,
+    desc: 'קריטריון מקוצר: 3 תנאים',
+    theorems: ['∩ תמיד תת-מרחב', '∪ לא בד"כ', 'סגור לצ"ל']
+  },
+  {
+    id: 'span', label: 'Span + בת"ל', sub: 'שבוע 7–8',
+    color: '#c07828', x: 580, y: 300,
+    desc: 'span = כל הצ"ל. בת"ל = ייצוג יחיד',
+    theorems: ['span(S) תת-מרחב', 'ת"ל ⟺ ∃vⱼ∈span(קודמים)', 'בת"ל ⟹ ייצוג יחיד']
+  },
+  {
+    id: 'basis', label: 'בסיס', sub: 'שבוע 9–10',
+    color: '#b83060', x: 580, y: 420,
+    desc: 'בת"ל + פורשים = ייצוג יחיד לכל v',
+    theorems: ['⭐ למת שטיינץ: k≤m', 'כל הבסיסים — אותו גודל!', 'V נוצר סופית → יש בסיס']
+  },
+  {
+    id: 'dim', label: 'מימד', sub: 'שבוע 11–12',
+    color: '#7a2898', x: 460, y: 540,
+    desc: 'dim V = גודל הבסיס (מוגדר היטב!)',
+    theorems: ['⭐⭐⭐ משפט השלש', 'dim W ≤ dim V', 'dim W = dim V ⟹ W=V', 'dim(U+W) = dimU+dimW−dim(U∩W)']
+  },
+  {
+    id: 'nulcol', label: 'NulA · ColA · RowA', sub: 'שבוע 12',
+    color: '#c03030', x: 200, y: 420,
+    desc: 'שלושת מרחבי המטריצה — כולם תת-מרחבים',
+    theorems: ['Ax=b יש פתרון ⟺ b∈ColA', 'col-rank = row-rank = rank']
+  },
+  {
+    id: 'ranknull', label: 'Rank-Nullity', sub: 'שבוע 13',
+    color: '#c03030', x: 340, y: 650,
+    desc: 'rank(A) + dim(NulA) = n',
+    theorems: ['⭐⭐⭐ המשפט #1', 'מחבר: rank + מרחב אפס + מימד']
+  },
+  {
+    id: 'inv', label: 'הפיכות', sub: 'שבוע 13–14',
+    color: '#c03030', x: 600, y: 650,
+    desc: 'A הפיכה ⟺ 14 תנאים שקולים',
+    theorems: ['⭐⭐ טבלת הפיכות #2', '(AB)⁻¹=B⁻¹A⁻¹', 'A הפיכה ⟺ det≠0']
+  },
+  {
+    id: 'det', label: 'דטרמיננטות', sub: 'שבוע 15–16',
+    color: '#9a7c10', x: 460, y: 780,
+    desc: 'det: מולטי-ליניארי, מתחלף, det(I)=1',
+    theorems: ['⭐⭐ det(AB)=det(A)·det(B)', 'det(Aᵗ)=det(A)', 'det=0 ⟺ לא הפיכה', 'det משולשית = מכפלת אלכסון']
+  },
+];
+
+const EDGES = [
+  { from: 'fields',    to: 'systems',   label: '' },
+  { from: 'fields',    to: 'vs',        label: '' },
+  { from: 'vs',        to: 'subspace',  label: '' },
+  { from: 'vs',        to: 'span',      label: '' },
+  { from: 'subspace',  to: 'span',      label: '' },
+  { from: 'span',      to: 'basis',     label: '' },
+  { from: 'basis',     to: 'dim',       label: '' },
+  { from: 'systems',   to: 'nulcol',    label: '' },
+  { from: 'subspace',  to: 'nulcol',    label: '' },
+  { from: 'dim',       to: 'ranknull',  label: '' },
+  { from: 'nulcol',    to: 'ranknull',  label: '' },
+  { from: 'dim',       to: 'inv',       label: '' },
+  { from: 'ranknull',  to: 'inv',       label: '' },
+  { from: 'inv',       to: 'det',       label: '' },
+  { from: 'ranknull',  to: 'det',       label: '' },
+];
+
+function buildTree() {
+  const container = document.getElementById('tree-container');
+  const W = 960, H = 880;
+
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  svg.setAttribute('width', '100%');
+  svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+  svg.style.display = 'block';
+
+  // Defs: gradients, glow, arrowhead
+  const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+
+  // Arrowhead marker
+  NODES.forEach(n => {
+    const marker = document.createElementNS('http://www.w3.org/2000/svg', 'marker');
+    marker.setAttribute('id', `arrow-${n.id}`);
+    marker.setAttribute('markerWidth', '8');
+    marker.setAttribute('markerHeight', '8');
+    marker.setAttribute('refX', '6');
+    marker.setAttribute('refY', '3');
+    marker.setAttribute('orient', 'auto');
+    const poly = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+    poly.setAttribute('points', '0 0, 8 3, 0 6');
+    poly.setAttribute('fill', n.color);
+    poly.setAttribute('opacity', '0.7');
+    marker.appendChild(poly);
+    defs.appendChild(marker);
+  });
+
+  // Default arrow
+  const defMarker = document.createElementNS('http://www.w3.org/2000/svg', 'marker');
+  defMarker.setAttribute('id', 'arrow-default');
+  defMarker.setAttribute('markerWidth', '8');
+  defMarker.setAttribute('markerHeight', '8');
+  defMarker.setAttribute('refX', '6');
+  defMarker.setAttribute('refY', '3');
+  defMarker.setAttribute('orient', 'auto');
+  const defPoly = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+  defPoly.setAttribute('points', '0 0, 8 3, 0 6');
+  defPoly.setAttribute('fill', '#b0a898');
+  defMarker.appendChild(defPoly);
+  defs.appendChild(defMarker);
+
+  // Glow filter
+  const filter = document.createElementNS('http://www.w3.org/2000/svg', 'filter');
+  filter.setAttribute('id', 'glow');
+  filter.setAttribute('x', '-50%'); filter.setAttribute('y', '-50%');
+  filter.setAttribute('width', '200%'); filter.setAttribute('height', '200%');
+  const feGaussian = document.createElementNS('http://www.w3.org/2000/svg', 'feGaussianBlur');
+  feGaussian.setAttribute('stdDeviation', '4');
+  feGaussian.setAttribute('result', 'blur');
+  const feMerge = document.createElementNS('http://www.w3.org/2000/svg', 'feMerge');
+  const feMn1 = document.createElementNS('http://www.w3.org/2000/svg', 'feMergeNode');
+  feMn1.setAttribute('in', 'blur');
+  const feMn2 = document.createElementNS('http://www.w3.org/2000/svg', 'feMergeNode');
+  feMn2.setAttribute('in', 'SourceGraphic');
+  feMerge.appendChild(feMn1);
+  feMerge.appendChild(feMn2);
+  filter.appendChild(feGaussian);
+  filter.appendChild(feMerge);
+  defs.appendChild(filter);
+
+  svg.appendChild(defs);
+
+  // Background grid dots (subtle)
+  const bgG = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+  bgG.setAttribute('opacity', '0.35');
+  for (let gx = 40; gx < W; gx += 60) {
+    for (let gy = 40; gy < H; gy += 60) {
+      const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      dot.setAttribute('cx', gx); dot.setAttribute('cy', gy);
+      dot.setAttribute('r', '1'); dot.setAttribute('fill', '#c0bab0');
+      bgG.appendChild(dot);
+    }
+  }
+  svg.appendChild(bgG);
+
+  // Map nodes by id
+  const nodeMap = {};
+  NODES.forEach(n => { nodeMap[n.id] = n; });
+
+  // Draw edges first (behind nodes)
+  const edgeG = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+  EDGES.forEach((e, i) => {
+    const s = nodeMap[e.from];
+    const t = nodeMap[e.to];
+    if (!s || !t) return;
+
+    // Curved path
+    const dx = t.x - s.x, dy = t.y - s.y;
+    const mx = (s.x + t.x) / 2;
+    const my = (s.y + t.y) / 2;
+
+    // Control point — slight curve
+    const cx = mx + dy * 0.08;
+    const cy = my - dx * 0.08;
+
+    // Shorten endpoints
+    const angle = Math.atan2(t.y - s.y, t.x - s.x);
+    const r = 32;
+    const x1 = s.x + Math.cos(angle) * r;
+    const y1 = s.y + Math.sin(angle) * r;
+    const x2 = t.x - Math.cos(angle) * r;
+    const y2 = t.y - Math.sin(angle) * r;
+
+    const d = `M ${x1} ${y1} Q ${cx} ${cy} ${x2} ${y2}`;
+
+    // Glow line (thick, colored, low opacity)
+    const glowLine = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    glowLine.setAttribute('d', d);
+    glowLine.setAttribute('fill', 'none');
+    glowLine.setAttribute('stroke', t.color);
+    glowLine.setAttribute('stroke-width', '4');
+    glowLine.setAttribute('opacity', '0.08');
+    edgeG.appendChild(glowLine);
+
+    // Main line
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', d);
+    path.setAttribute('fill', 'none');
+    path.setAttribute('stroke', '#b0a898');
+    path.setAttribute('stroke-width', '1.5');
+    path.setAttribute('stroke-dasharray', '5 4');
+    path.setAttribute('marker-end', `url(#arrow-default)`);
+    path.setAttribute('class', `edge edge-${e.from}-${e.to}`);
+    path.style.opacity = '0';
+    path.style.transition = `opacity 0.4s ease ${i * 0.06}s`;
+
+    // Animate dash
+    const len = 300;
+    path.setAttribute('stroke-dashoffset', len);
+    path.style.strokeDashoffset = len;
+
+    edgeG.appendChild(path);
+
+    // Animate in
+    setTimeout(() => {
+      path.style.opacity = '1';
+      path.style.transition = `stroke-dashoffset 0.7s ease ${i * 0.08}s, opacity 0.3s ease ${i * 0.08}s`;
+      requestAnimationFrame(() => {
+        path.style.strokeDashoffset = '0';
+      });
+    }, 200 + i * 60);
+  });
+  svg.appendChild(edgeG);
+
+  // Draw nodes
+  const nodeG = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+  NODES.forEach((n, i) => {
+    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    g.setAttribute('cursor', 'pointer');
+    g.style.opacity = '0';
+    g.style.transform = `translate(${n.x}px, ${n.y - 10}px)`;
+    g.style.transition = `opacity 0.45s ease ${i * 0.07}s, transform 0.45s ease ${i * 0.07}s`;
+
+    // Outer glow ring
+    const glow = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    glow.setAttribute('cx', n.x); glow.setAttribute('cy', n.y);
+    glow.setAttribute('r', '36');
+    glow.setAttribute('fill', n.color);
+    glow.setAttribute('opacity', '0.06');
+    glow.setAttribute('class', `node-glow-${n.id}`);
+    g.appendChild(glow);
+
+    // Pulse ring
+    const pulse = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    pulse.setAttribute('cx', n.x); pulse.setAttribute('cy', n.y);
+    pulse.setAttribute('r', '30');
+    pulse.setAttribute('fill', 'none');
+    pulse.setAttribute('stroke', n.color);
+    pulse.setAttribute('stroke-width', '1');
+    pulse.setAttribute('opacity', '0.25');
+    pulse.style.transformOrigin = `${n.x}px ${n.y}px`;
+    pulse.style.animation = `pulse-${n.id} 3s ease-in-out infinite ${i * 0.3}s`;
+    g.appendChild(pulse);
+
+    // Add pulse keyframe
+    const styleEl = document.createElement('style');
+    styleEl.textContent = `
+      @keyframes pulse-${n.id} {
+        0%, 100% { r: 30; opacity: 0.25; }
+        50% { r: 38; opacity: 0; }
+      }
+    `;
+    document.head.appendChild(styleEl);
+
+    // Main circle
+    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    circle.setAttribute('cx', n.x); circle.setAttribute('cy', n.y);
+    circle.setAttribute('r', '30');
+    circle.setAttribute('fill', n.color);
+    circle.setAttribute('fill-opacity', '0.12');
+    circle.setAttribute('stroke', n.color);
+    circle.setAttribute('stroke-width', '2');
+    g.appendChild(circle);
+
+    // Inner dot
+    const inner = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    inner.setAttribute('cx', n.x); inner.setAttribute('cy', n.y);
+    inner.setAttribute('r', '6');
+    inner.setAttribute('fill', n.color);
+    g.appendChild(inner);
+
+    // Label
+    const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    label.setAttribute('x', n.x); label.setAttribute('y', n.y + 48);
+    label.setAttribute('text-anchor', 'middle');
+    label.setAttribute('fill', n.color);
+    label.setAttribute('font-size', '13');
+    label.setAttribute('font-weight', '700');
+    label.setAttribute('font-family', 'Segoe UI, Arial, sans-serif');
+    label.textContent = n.label;
+    g.appendChild(label);
+
+    // Sub label (week)
+    const sub = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    sub.setAttribute('x', n.x); sub.setAttribute('y', n.y + 63);
+    sub.setAttribute('text-anchor', 'middle');
+    sub.setAttribute('fill', '#999490');
+    sub.setAttribute('font-size', '10');
+    sub.setAttribute('font-family', 'Segoe UI, Arial, sans-serif');
+    sub.textContent = n.sub;
+    g.appendChild(sub);
+
+    // Hover interactions
+    g.addEventListener('mouseenter', (e) => {
+      circle.setAttribute('fill-opacity', '0.25');
+      circle.setAttribute('stroke-width', '3');
+      glow.setAttribute('opacity', '0.14');
+      showPopup(n, e);
+    });
+    g.addEventListener('mousemove', (e) => movePopup(e));
+    g.addEventListener('mouseleave', () => {
+      circle.setAttribute('fill-opacity', '0.12');
+      circle.setAttribute('stroke-width', '2');
+      glow.setAttribute('opacity', '0.06');
+      hidePopup();
+    });
+    g.addEventListener('click', () => highlightNode(n.id, nodeMap, edgeG));
+
+    nodeG.appendChild(g);
+
+    // Animate in
+    setTimeout(() => {
+      g.style.opacity = '1';
+      g.style.transform = `translate(0, 0)`;
+    }, 100 + i * 70);
+  });
+  svg.appendChild(nodeG);
+
+  container.appendChild(svg);
+}
+
+// ── Popup ──
+const popup = document.getElementById('nodePopup');
+const popupTitle = document.getElementById('popupTitle');
+const popupBody = document.getElementById('popupBody');
+const popupThms = document.getElementById('popupThms');
+
+function showPopup(node, e) {
+  popupTitle.textContent = node.label;
+  popupTitle.style.color = node.color;
+  popupBody.textContent = node.desc;
+  popupThms.innerHTML = node.theorems.map(t =>
+    `<span class="node-popup-thm">${t}</span>`
+  ).join('');
+  popup.classList.add('visible');
+  movePopup(e);
+}
+function movePopup(e) {
+  let x = e.clientX + 16, y = e.clientY - 12;
+  if (x + 270 > window.innerWidth) x = e.clientX - 280;
+  if (y + 200 > window.innerHeight) y = e.clientY - 180;
+  popup.style.left = x + 'px';
+  popup.style.top = y + 'px';
+}
+function hidePopup() {
+  popup.classList.remove('visible');
+}
+
+// ── Highlight node + connected edges ──
+let activeNode = null;
+function highlightNode(id, nodeMap, edgeG) {
+  if (activeNode === id) {
+    // Reset all
+    activeNode = null;
+    edgeG.querySelectorAll('path').forEach(p => {
+      p.setAttribute('stroke', '#3d4263');
+      p.setAttribute('stroke-width', '1.5');
+      p.setAttribute('opacity', '1');
+    });
+    return;
+  }
+  activeNode = id;
+  const connectedEdges = new Set();
+  EDGES.forEach(e => {
+    if (e.from === id || e.to === id) {
+      connectedEdges.add(`${e.from}-${e.to}`);
+    }
+  });
+
+  edgeG.querySelectorAll('path').forEach(p => {
+    const cls = [...p.classList].find(c => c.startsWith('edge-'));
+    if (!cls) return;
+    const key = cls.replace('edge-', '');
+    if (connectedEdges.has(key)) {
+      const targetId = EDGES.find(e => `${e.from}-${e.to}` === key)?.to || id;
+      const targetNode = nodeMap[targetId];
+      p.setAttribute('stroke', targetNode?.color || '#fff');
+      p.setAttribute('stroke-width', '2.5');
+      p.setAttribute('opacity', '1');
+      p.setAttribute('stroke-dasharray', 'none');
+    } else {
+      p.setAttribute('stroke', '#3d4263');
+      p.setAttribute('stroke-width', '1');
+      p.setAttribute('opacity', '0.25');
+    }
+  });
+}
+
+// Init
+window.addEventListener('DOMContentLoaded', buildTree);
+</script>
+
+<!-- ══════════════════════════════════════════════════
+     סעיף הגדרות ומשפטים מלא — מילה במילה לפי הסיכום
+     ══════════════════════════════════════════════════ -->
+<style>
+.full-defs-section {
+  max-width: 920px;
+  margin: 48px auto 60px;
+}
+.full-defs-section h2 {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 6px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--border);
+}
+.full-defs-section > p {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 28px;
+}
+.topic-block {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+}
+.topic-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 20px;
+  cursor: pointer;
+  user-select: none;
+}
+.topic-header:hover { background: rgba(0,0,0,0.02); }
+.topic-color-bar {
+  width: 4px;
+  height: 36px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+.topic-header-text { flex: 1; }
+.topic-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.topic-sub {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-top: 2px;
+}
+.topic-expand {
+  font-size: 0.85rem;
+  color: var(--muted);
+  transition: transform 0.25s;
+}
+.topic-block.open .topic-expand { transform: rotate(180deg); }
+.topic-body {
+  display: none;
+  padding: 6px 20px 20px;
+  border-top: 1px solid var(--border);
+}
+.topic-block.open .topic-body { display: block; }
+
+.def-item, .thm-item {
+  display: flex;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.84rem;
+  line-height: 1.65;
+  align-items: flex-start;
+}
+.def-item:last-child, .thm-item:last-child { border-bottom: none; }
+.def-badge {
+  flex-shrink: 0;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 6px;
+  margin-top: 3px;
+  letter-spacing: 0.04em;
+}
+.badge-def { background: rgba(0,0,0,0.07); color: var(--muted); border: 1px solid var(--border); }
+.badge-thm { color: #fff; }
+.badge-cor { background: rgba(0,0,0,0.05); color: var(--muted); border: 1px solid var(--border); font-style: italic; }
+.def-text { color: var(--text); }
+.def-text em { color: var(--muted); font-style: normal; font-size: 0.8rem; }
+.def-text .math { font-family: 'Courier New', monospace; font-size: 0.82rem; color: inherit; }
+</style>
+
+<div class="full-defs-section">
+  <h2>📖 הגדרות ומשפטים — מילה במילה לפי הסיכום</h2>
+  <p>כל ההגדרות והמשפטים לפי סדר הנושאים, כפי שמופיעים בסיכום הקורס.</p>
+
+  <!-- ───── שדות ───── -->
+  <div class="topic-block open" onclick="toggleTopic(this)">
+    <div class="topic-header">
+      <div class="topic-color-bar" style="background:#6254c8"></div>
+      <div class="topic-header-text">
+        <div class="topic-title">🔢 שדות (Fields)</div>
+        <div class="topic-sub">הרצאות 1–4</div>
+      </div>
+      <div class="topic-expand">▼</div>
+    </div>
+    <div class="topic-body">
+
+      <div class="def-item">
+        <span class="def-badge badge-def">הגדרה</span>
+        <div class="def-text"><strong>שדה</strong> — קבוצה F עם שתי פעולות + ו· המקיימות: (1) סגירות חיבור, (2) חילופיות חיבור, (3) קיבוציות חיבור, (4) קיום אידיש לחיבור: ∃0∈F כך ש‑a+0=a, (5) קיום נגדי: לכל a∈F ∃(−a)∈F כך ש‑a+(−a)=0, (6) סגירות כפל, (7) חילופיות כפל, (8) קיבוציות כפל, (9) קיום יחידה לכפל: ∃1∈F כך ש‑a·1=a, (10) קיום הופכי: לכל a≠0 ∃a⁻¹∈F כך ש‑a·a⁻¹=1, (11) דיסטריביוטיביות: a·(b+c)=a·b+a·c. ובנוסף: 0≠1.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#6254c8">משפט</span>
+        <div class="def-text">Q ו‑R הם שדות.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#6254c8">משפט</span>
+        <div class="def-text">האידיש בשדה הוא יחיד.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#6254c8">משפט</span>
+        <div class="def-text">חוק הביטול בחיבור: אם a+b=a+c אז b=c.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#6254c8">משפט</span>
+        <div class="def-text">הנגדי יחיד: לכל a∈F, הנגדי (−a) יחיד.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#6254c8">משפט</span>
+        <div class="def-text">x·0_F = 0_F לכל x∈F.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#6254c8">משפט</span>
+        <div class="def-text">אין מחלקי אפס: אם x·y=0 אז x=0 או y=0.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#6254c8">משפט</span>
+        <div class="def-text">היחידה לכפל יחידה.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#6254c8">משפט</span>
+        <div class="def-text">ההופכי לכפל יחיד: לכל a≠0, a⁻¹ יחיד.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#6254c8">משפט</span>
+        <div class="def-text">חוק ביטול בכפל: אם a≠0 ו‑ab=ac אז b=c.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#6254c8">משפט</span>
+        <div class="def-text">תכונות נגדי: (−1)·x=−x, (−a)·b=−(ab), (−a)·(−b)=ab, −(−a)=a, −(a+b)=(−a)+(−b).</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#6254c8">משפט</span>
+        <div class="def-text">תכונות הופכי: (a·b)⁻¹=b⁻¹·a⁻¹, (a⁻¹)⁻¹=a, (a/b)·(c/d)=(ac)/(bd).</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#6254c8">משפט</span>
+        <div class="def-text">משפט חלוקה עם שארית: לכל a,b∈ℤ עם b>0, ∃!q,r∈ℤ כך ש‑a=b·q+r ו‑0≤r&lt;b.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-def">הגדרה</span>
+        <div class="def-text"><strong>Zₙ</strong> — קבוצת מחלקות שארית מודולו n: {[0],[1],...,[n−1]}, עם חיבור וכפל מודולו n.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#6254c8">משפט</span>
+        <div class="def-text">Zₙ הוא שדה אם ורק אם n ראשוני.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-def">הגדרה</span>
+        <div class="def-text"><strong>תת-שדה</strong> — תת-קבוצה K⊆F המקיימת: (1) 0,1∈K, (2) סגורה לחיבור, (3) סגורה לנגדי, (4) סגורה לכפל, (5) סגורה להופכי (לאיברים ≠0).</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-def">הגדרה</span>
+        <div class="def-text"><strong>מספרים מרוכבים ℂ</strong>: z=a+bi עם a=Re(z), b=Im(z). שוויון: a+bi=c+di ⟺ a=c, b=d. חיבור: (a+bi)+(c+di)=(a+c)+(b+d)i. כפל: (a+bi)(c+di)=(ac−bd)+(ad+bc)i. צמוד: z̄=a−bi. ערך מוחלט: |z|=√(a²+b²). הופכי: z⁻¹=z̄/|z|².</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ───── מערכות ליניאריות ───── -->
+  <div class="topic-block" onclick="toggleTopic(this)">
+    <div class="topic-header">
+      <div class="topic-color-bar" style="background:#1a91aa"></div>
+      <div class="topic-header-text">
+        <div class="topic-title">📐 מערכות ליניאריות</div>
+        <div class="topic-sub">הרצאות 4–6</div>
+      </div>
+      <div class="topic-expand">▼</div>
+    </div>
+    <div class="topic-body">
+
+      <div class="def-item">
+        <span class="def-badge badge-def">הגדרה</span>
+        <div class="def-text"><strong>מערכת ליניארית</strong> — m משוואות ב‑n נעלמים מעל שדה F. A — מטריצת המקדמים (m×n). A⁺ — מטריצה מורחבת (m×(n+1)). M_{m×n}(F) — קבוצת כל המטריצות m×n. F^m=M_{m×1}(F).</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-def">הגדרה</span>
+        <div class="def-text"><strong>פתרון פרטי / פתרון כללי</strong>: פתרון פרטי — וקטור ספציפי המקיים את המערכת. פתרון כללי — קבוצת כל הפתרונות. שתי מערכות <em>שקולות</em> אם יש להן אותו קבוצת פתרונות.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-def">הגדרה</span>
+        <div class="def-text"><strong>שלוש פעולות שורה אלמנטריות</strong>: (1) החלפת שורה בכפולה סקלרית (α≠0): Rᵢ→αRᵢ. (2) החלפת שורה בעצמה + כפולה של שורה אחרת: Rᵢ→Rᵢ+αRⱼ. (3) החלפת שתי שורות: Rᵢ↔Rⱼ.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-def">הגדרה</span>
+        <div class="def-text"><strong>שקילות שורות</strong>: שתי מטריצות שקולות שורות אם ניתן לעבור מאחת לשנייה בסדרת פעולות שורה אלמנטריות.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#1a91aa">משפט</span>
+        <div class="def-text">פעולות שורה אלמנטריות על מטריצה מורחבת — לא משנות את קבוצת הפתרונות.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-def">הגדרה</span>
+        <div class="def-text"><strong>מקדם מוביל (pivot)</strong> — האיבר השמאלי ביותר שאינו אפס בשורה.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-def">הגדרה</span>
+        <div class="def-text"><strong>מטריצה מדורגת (EF)</strong>: (1) שורות האפס בתחתית. (2) בכל שורה שאינה אפס, המקדם המוביל נמצא מימין למקדם המוביל של השורה שמעליה.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-def">הגדרה</span>
+        <div class="def-text"><strong>מטריצה מדורגת קנונית (REF / RREF)</strong>: EF + (1) המקדמים המובילים הם 1. (2) מעל כל מקדם מוביל — רק אפסים.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#1a91aa">משפט</span>
+        <div class="def-text">לכל מטריצה A יש REF יחידה.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-def">הגדרה</span>
+        <div class="def-text"><strong>משתנה קשור / חופשי</strong>: משתנה קשור — עמודה עם מקדם מוביל. משתנה חופשי — עמודה ללא מקדם מוביל.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#1a91aa">משפט</span>
+        <div class="def-text">אין פתרון ⟺ מופיעה שורת סתירה (0...0|b עם b≠0) ב‑REF.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#1a91aa">משפט</span>
+        <div class="def-text">מספר הפתרונות: על שדה אינסופי — 0 (אין) או ∞. על שדה סופי |F| — 0 או |F|^k (כאשר k=מס׳ משתנים חופשיים).</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-def">הגדרה</span>
+        <div class="def-text"><strong>rank(A)</strong> — מספר השורות שאינן אפס ב‑REF של A = מספר המקדמים המובילים.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#1a91aa">משפט</span>
+        <div class="def-text">rank(A) ≤ min(m,n). המערכת עקבית ⟺ rank(A)=rank(A⁺).</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-def">הגדרה</span>
+        <div class="def-text"><strong>מערכת הומוגנית</strong>: Ax=0. תמיד יש פתרון טריוויאלי x=0.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#1a91aa">משפט</span>
+        <div class="def-text">הפתרון הכללי של Ax=b הוא h+x₀, כאשר x₀ פתרון פרטי ו‑h רץ על כל פתרונות Ax=0.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#1a91aa">משפט</span>
+        <div class="def-text">M_{m×n}(F) עם חיבור מטריצות וכפל בסקלר הוא מרחב וקטורי.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ───── מרחב וקטורי ───── -->
+  <div class="topic-block" onclick="toggleTopic(this)">
+    <div class="topic-header">
+      <div class="topic-color-bar" style="background:#3d8f42"></div>
+      <div class="topic-header-text">
+        <div class="topic-title">🧊 מרחב וקטורי ותת-מרחב</div>
+        <div class="topic-sub">הרצאות 7–8</div>
+      </div>
+      <div class="topic-expand">▼</div>
+    </div>
+    <div class="topic-body">
+
+      <div class="def-item">
+        <span class="def-badge badge-def">הגדרה</span>
+        <div class="def-text"><strong>מרחב וקטורי V מעל שדה F</strong>: קבוצה V עם פעולות ⊕ (חיבור וקטורים) ו‑⊙ (כפל בסקלר) המקיימות 10 אקסיומות: (1) סגירות חיבור, (2) חילופיות: u+v=v+u, (3) קיבוציות: (u+v)+w=u+(v+w), (4) קיום וקטור אפס: ∃0_V כך ש‑v+0_V=v, (5) קיום נגדי: ∀v ∃(−v) כך ש‑v+(−v)=0_V, (6) סגירות כפל בסקלר, (7) α(u+v)=αu+αv, (8) (α+β)v=αv+βv, (9) (αβ)v=α(βv), (10) 1_F·v=v.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#3d8f42">משפט</span>
+        <div class="def-text">תכונות מרחב וקטורי: (1) 0_V יחיד, (2) −v יחיד לכל v, (3) 0_F·v=0_V, (4) α·0_V=0_V, (5) αv=0_V ⟹ α=0_F או v=0_V, (6) (−1)·v=−v.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-def">הגדרה</span>
+        <div class="def-text"><strong>תת-מרחב</strong>: W⊆V תת-מרחב אם: (1) 0_V∈W, (2) סגור לחיבור: u,v∈W ⟹ u+v∈W, (3) סגור לכפל בסקלר: α∈F, w∈W ⟹ αw∈W.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#3d8f42">משפט</span>
+        <div class="def-text">קריטריון מקוצר: W⊆V תת-מרחב ⟺ (1) W≠∅ (או 0_V∈W), (2) לכל α₁,α₂∈F ו‑w₁,w₂∈W: α₁w₁+α₂w₂∈W.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#3d8f42">משפט</span>
+        <div class="def-text">W₁∩W₂ הוא תת-מרחב של V.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#3d8f42">טענה</span>
+        <div class="def-text">אם W₁∪W₂=V אז W₁=V או W₂=V. (כלומר: איחוד של שני תתי-מרחבים הוא תת-מרחב רק אם אחד מכיל את השני.)</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-def">הגדרה</span>
+        <div class="def-text"><strong>מרחב הפולינומים F[x]</strong>: מרחב כל הפולינומים מעל F עם + ו‑·סקלר רגיל. <strong>מעלת</strong> פולינום p(x)=aₙxⁿ+...+a₀ (aₙ≠0) היא n. <strong>Fₙ[x]</strong>: תת-מרחב של פולינומים ממעלה ≤n.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#3d8f42">משפט</span>
+        <div class="def-text">Fₙ[x] הוא תת-מרחב של F[x].</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ───── Span ───── -->
+  <div class="topic-block" onclick="toggleTopic(this)">
+    <div class="topic-header">
+      <div class="topic-color-bar" style="background:#c07828"></div>
+      <div class="topic-header-text">
+        <div class="topic-title">🔗 Span (מרחב הפריסה)</div>
+        <div class="topic-sub">הרצאות 9–10</div>
+      </div>
+      <div class="topic-expand">▼</div>
+    </div>
+    <div class="topic-body">
+
+      <div class="def-item">
+        <span class="def-badge badge-def">הגדרה</span>
+        <div class="def-text"><strong>צירוף ליניארי</strong> של v₁,...,vₖ∈V: ביטוי מהצורה α₁v₁+α₂v₂+...+αₖvₖ עם α₁,...,αₖ∈F.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-def">הגדרה</span>
+        <div class="def-text"><strong>span{v₁,...,vₖ}</strong>: קבוצת כל הצירופים הליניאריים של v₁,...,vₖ. span(∅)={0_V}.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#c07828">משפט</span>
+        <div class="def-text">span{v₁,...,vₖ} הוא תת-מרחב של V.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-def">הגדרה</span>
+        <div class="def-text"><strong>נוצר סופית</strong>: מרחב V נוצר סופית אם ∃v₁,...,vₖ∈V כך ש‑span{v₁,...,vₖ}=V.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#c07828">משפט</span>
+        <div class="def-text">Fⁿ ו‑Fₙ[x] נוצרים סופית. F[x] אינו נוצר סופית.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#c07828">משפט</span>
+        <div class="def-text">אם vᵢ∈S אז vᵢ∈span(S). אם W≤V ומכיל את כל vᵢ, אז span{v₁,...,vₖ}⊆W.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-cor">מסקנה</span>
+        <div class="def-text">span{v₁,...,vₖ} הוא התת-מרחב הקטן ביותר של V המכיל את {v₁,...,vₖ}.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-def">הגדרה</span>
+        <div class="def-text"><strong>קבוצה פורשת</strong>: S פורשת את V אם span(S)=V.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#c07828">משפט</span>
+        <div class="def-text">v∈span{v₁,...,vₖ} ⟺ span{v₁,...,vₖ,v}=span{v₁,...,vₖ}.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ───── תלות ליניארית ───── -->
+  <div class="topic-block" onclick="toggleTopic(this)">
+    <div class="topic-header">
+      <div class="topic-color-bar" style="background:#c07828"></div>
+      <div class="topic-header-text">
+        <div class="topic-title">⚖️ תלות ליניארית (ת"ל ובת"ל)</div>
+        <div class="topic-sub">הרצאות 10–11</div>
+      </div>
+      <div class="topic-expand">▼</div>
+    </div>
+    <div class="topic-body">
+
+      <div class="def-item">
+        <span class="def-badge badge-def">הגדרה</span>
+        <div class="def-text"><strong>בת"ל (ליניארית בלתי תלויה)</strong>: {v₁,...,vₖ} בת"ל אם מהמשוואה α₁v₁+...+αₖvₖ=0 נובע α₁=...=αₖ=0 (רק הצירוף הטריוויאלי שווה 0).</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-def">הגדרה</span>
+        <div class="def-text"><strong>ת"ל (ליניארית תלויה)</strong>: {v₁,...,vₖ} ת"ל אם ∃α₁,...,αₖ לא כולם 0 כך ש‑α₁v₁+...+αₖvₖ=0.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#c07828">משפט</span>
+        <div class="def-text">{0_V} ת"ל.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#c07828">משפט</span>
+        <div class="def-text">{v} בת"ל ⟺ v≠0_V.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#c07828">משפט</span>
+        <div class="def-text">{v₁,v₂} בת"ל ⟺ v₁ אינו כפולה סקלרית של v₂ (ולא להיפך).</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#c07828">משפט</span>
+        <div class="def-text">{v₁,...,vₖ} ת"ל ⟺ ∃j כך ש‑vⱼ∈span{v₁,...,vⱼ₋₁}.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-cor">מסקנה</span>
+        <div class="def-text">אם A⊆B ו‑A ת"ל, אז B ת"ל. אם 0∈S, אז S ת"ל.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#c07828">משפט</span>
+        <div class="def-text">אם {v₁,...,vₖ} בת"ל, אז לכל v∈span{v₁,...,vₖ} יש ייצוג יחיד v=α₁v₁+...+αₖvₖ.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ───── בסיס ───── -->
+  <div class="topic-block" onclick="toggleTopic(this)">
+    <div class="topic-header">
+      <div class="topic-color-bar" style="background:#b83060"></div>
+      <div class="topic-header-text">
+        <div class="topic-title">⭐ בסיס (Basis)</div>
+        <div class="topic-sub">הרצאות 11–12</div>
+      </div>
+      <div class="topic-expand">▼</div>
+    </div>
+    <div class="topic-body">
+
+      <div class="def-item">
+        <span class="def-badge badge-def">הגדרה</span>
+        <div class="def-text"><strong>בסיס</strong> של V: קבוצה S={v₁,...,vₙ}⊆V שהיא גם (1) בת"ל, וגם (2) פורשת את V (span(S)=V).</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-cor">מסקנה</span>
+        <div class="def-text">S בסיס של V ⟺ לכל v∈V יש ייצוג יחיד כצירוף ליניארי של איברי S.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#b83060">משפט</span>
+        <div class="def-text">הבסיס הסטנדרטי של Fⁿ: {e₁,...,eₙ} כאשר eᵢ הוא וקטור עם 1 במקום i ואפסים בשאר.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#b83060">משפט</span>
+        <div class="def-text">הבסיס הסטנדרטי של M_{m×n}(F): {Eᵢⱼ} כאשר Eᵢⱼ היא מטריצה עם 1 במקום (i,j) ואפסים בשאר. גודל: mn.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#b83060">משפט</span>
+        <div class="def-text">הבסיס הסטנדרטי של Fₙ[x]: {1,x,x²,...,xⁿ}. גודל: n+1.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#b83060">⭐ למת שטיינץ (Steinitz Exchange)</span>
+        <div class="def-text">אם {u₁,...,uₖ} בת"ל ו‑{w₁,...,wₘ} פורשת את V, אז k≤m.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-cor">מסקנה</span>
+        <div class="def-text">כל שני בסיסים של V — אותו גודל. (גודל הבסיס מוגדר היטב, תלוי ב‑V בלבד.)</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#b83060">משפט</span>
+        <div class="def-text">אם V נוצר סופית ו‑V≠{0_V}, אז ל‑V יש בסיס.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ───── מימד ───── -->
+  <div class="topic-block" onclick="toggleTopic(this)">
+    <div class="topic-header">
+      <div class="topic-color-bar" style="background:#7a2898"></div>
+      <div class="topic-header-text">
+        <div class="topic-title">📏 מימד (Dimension)</div>
+        <div class="topic-sub">הרצאות 12–15</div>
+      </div>
+      <div class="topic-expand">▼</div>
+    </div>
+    <div class="topic-body">
+
+      <div class="def-item">
+        <span class="def-badge badge-def">הגדרה</span>
+        <div class="def-text"><strong>dim V</strong>: אם V={0_V} אז dim V=0. אם V נוצר סופית ויש בסיס בגודל n, אז dim V=n. אחרת dim V=∞.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#7a2898">משפט</span>
+        <div class="def-text">dim V מוגדר היטב (נובע מלמת שטיינץ — כל הבסיסים אותו גודל).</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-cor">מסקנה 1</span>
+        <div class="def-text">אם dim V=n, אז כל n+1 וקטורים ב‑V הם ת"ל.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-cor">מסקנה 2</span>
+        <div class="def-text">אם dim V=n, אז n−1 וקטורים אינם פורשים את V.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#7a2898">⭐⭐⭐ משפט השלש</span>
+        <div class="def-text">תהי dim V=n ו‑S={v₁,...,vₙ} (בדיוק n וקטורים). אז: S בסיס ⟺ S בת"ל ⟺ S פורשת את V. (מספיק לבדוק תנאי אחד מתוך שלושה!)</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#7a2898">משפט</span>
+        <div class="def-text">השלמה לבסיס: אם {v₁,...,vₖ} בת"ל ב‑V (dim V=n, k&lt;n), ניתן להשלים ל‑{v₁,...,vₖ,vₖ₊₁,...,vₙ} בסיס של V.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#7a2898">משפט</span>
+        <div class="def-text">אם W≤V, אז dim W ≤ dim V.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#7a2898">משפט</span>
+        <div class="def-text">אם W≤V ו‑dim W = dim V, אז W=V.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-def">הגדרה</span>
+        <div class="def-text"><strong>סכום U+W</strong>: {u+w | u∈U, w∈W}. <strong>סכום ישר U⊕W</strong>: U+W כאשר U∩W={0_V}.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#7a2898">משפט</span>
+        <div class="def-text">U+W הוא תת-מרחב של V. {0}≤U∩W≤U,W≤U+W≤V.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#7a2898">⭐ נוסחת המימדים הראשונה</span>
+        <div class="def-text">dim(U+W) = dim U + dim W − dim(U∩W).</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-cor">מסקנה</span>
+        <div class="def-text">אם V=U⊕W, אז dim V = dim U + dim W.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ───── כפל מטריצות + הפיכות ───── -->
+  <div class="topic-block" onclick="toggleTopic(this)">
+    <div class="topic-header">
+      <div class="topic-color-bar" style="background:#c03030"></div>
+      <div class="topic-header-text">
+        <div class="topic-title">🔴 כפל מטריצות, הפיכות, מטריצה משוכלפת</div>
+        <div class="topic-sub">הרצאות 16–18</div>
+      </div>
+      <div class="topic-expand">▼</div>
+    </div>
+    <div class="topic-body">
+
+      <div class="def-item">
+        <span class="def-badge badge-def">הגדרה</span>
+        <div class="def-text"><strong>כפל מטריצות</strong>: [AB]ᵢⱼ = Σₖ [A]ᵢₖ·[B]ₖⱼ. (A מגודל m×k, B מגודל k×n → AB מגודל m×n).</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#c03030">משפט</span>
+        <div class="def-text">כפל מטריצות אינו חילופי בדרך כלל (AB≠BA). קיימות "מחלקי אפס": AB=0 אף ש‑A≠0 ו‑B≠0.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#c03030">משפט</span>
+        <div class="def-text">תכונות: (1) קיבוציות A(BC)=(AB)C, (2) דיסטריביוטיביות שמאל A(B+C)=AB+AC, (3) דיסטריביוטיביות ימין (A+B)C=AC+BC, (4) כפל בסקלר α(AB)=(αA)B=A(αB).</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-def">הגדרה</span>
+        <div class="def-text"><strong>מטריצת היחידה Iₙ</strong>: [Iₙ]ᵢⱼ = 1 אם i=j, 0 אחרת. קיים: AIₙ=A ו‑IₘA=A.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#c03030">משפט</span>
+        <div class="def-text">Ax = x₁C₁+x₂C₂+...+xₙCₙ כאשר Cⱼ הם עמודות A. (Ax הוא צירוף ליניארי של עמודות A בהגבלות xᵢ).</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-def">הגדרה</span>
+        <div class="def-text"><strong>ColA</strong> = span של עמודות A ⊆ Fᵐ. Ax=b יש פתרון ⟺ b∈ColA.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#c03030">משפט</span>
+        <div class="def-text">AB = [AC₁ | AC₂ | ... | ACᵣ] (עמודות AB הן A פועלת על עמודות B).</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-def">הגדרה</span>
+        <div class="def-text"><strong>מטריצה הפיכה</strong>: A (ריבועית n×n) הפיכה אם ∃B כך ש‑AB=BA=Iₙ. אז B=A⁻¹.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#c03030">משפט</span>
+        <div class="def-text">אם AB=Iₙ אז BA=Iₙ.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#c03030">משפט</span>
+        <div class="def-text">אם AB הפיכה, אז גם A וגם B הפיכות.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#c03030">משפט</span>
+        <div class="def-text">תכונות ההופכי: Iₙ⁻¹=Iₙ, (A⁻¹)⁻¹=A, (AB)⁻¹=B⁻¹A⁻¹, (A₁A₂...Aₖ)⁻¹=Aₖ⁻¹...A₂⁻¹A₁⁻¹.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#c03030">משפט</span>
+        <div class="def-text">אם A הפיכה, אז Ax=b יש פתרון יחיד: x=A⁻¹b.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-def">הגדרה</span>
+        <div class="def-text"><strong>מטריצות אלמנטריות</strong>: מטריצות המתקבלות מ‑Iₙ בפעולת שורה אלמנטרית אחת. שלושה סוגים, מקביל לשלוש פעולות השורה.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#c03030">משפט 18</span>
+        <div class="def-text">אם B מתקבלת מ‑A בפעולת שורה E, אז B=EA.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-cor">מסקנה</span>
+        <div class="def-text">שקולות שורות A~B ⟺ ∃E₁,...,Eₖ מטריצות אלמנטריות כך ש‑Eₖ...E₁A=B.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-cor">מסקנה</span>
+        <div class="def-text">מטריצות אלמנטריות הפיכות.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-cor">מסקנה</span>
+        <div class="def-text">A~B (שקולות שורות) ⟹ A הפיכה ⟺ B הפיכה.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#c03030">משפט הצורה הקנונית</span>
+        <div class="def-text">A מטריצה ריבועית. REF של A היא Iₙ ⟺ A הפיכה. אלגוריתם מציאת הופכי: [A|Iₙ] → REF → [Iₙ|A⁻¹].</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-def">הגדרה</span>
+        <div class="def-text"><strong>מטריצה משוכלפת (Transpose)</strong>: [Aᵗ]ᵢⱼ = [A]ⱼᵢ.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#c03030">משפט</span>
+        <div class="def-text">תכונות משוכלפת: (A+B)ᵗ=Aᵗ+Bᵗ, (αA)ᵗ=α·Aᵗ, (Aᵗ)ᵗ=A, (AB)ᵗ=BᵗAᵗ, (Aᵗ)⁻¹=(A⁻¹)ᵗ. A הפיכה ⟺ Aᵗ הפיכה.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-def">הגדרה</span>
+        <div class="def-text"><strong>מטריצה סימטרית</strong>: Aᵗ=A. <strong>מטריצה אנטי-סימטרית</strong>: Aᵗ=−A. קבוצת הסימטריות S ואנטי-סימטריות AS הן תתי-מרחבים. אם 1+1≠0, אז Mₙ(F)=S⊕AS.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ───── NulA / ColA / RowA ───── -->
+  <div class="topic-block" onclick="toggleTopic(this)">
+    <div class="topic-header">
+      <div class="topic-color-bar" style="background:#c03030"></div>
+      <div class="topic-header-text">
+        <div class="topic-title">📦 NulA · ColA · RowA + Rank-Nullity</div>
+        <div class="topic-sub">הרצאות 18–20</div>
+      </div>
+      <div class="topic-expand">▼</div>
+    </div>
+    <div class="topic-body">
+
+      <div class="def-item">
+        <span class="def-badge badge-def">הגדרה</span>
+        <div class="def-text"><strong>NulA (מרחב האפס)</strong>: NulA = {x∈Fⁿ | Ax=0} ⊆ Fⁿ.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#c03030">משפט</span>
+        <div class="def-text">NulA הוא תת-מרחב של Fⁿ.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#c03030">משפט</span>
+        <div class="def-text">פתרונות Ax=b: אם H={x|Ax=0} ו‑G={x|Ax=b}, אז G={h+x₀ | h∈H} (כל פתרון = פתרון הומוגני + פתרון פרטי).</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-def">הגדרה</span>
+        <div class="def-text"><strong>ColA</strong> = span של עמודות A ⊆ Fᵐ. <strong>RowA</strong> = span של שורות A ⊆ Fⁿ. <strong>col-rank</strong> = dim(ColA). <strong>row-rank</strong> = dim(RowA).</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#c03030">משפט</span>
+        <div class="def-text">RowA=Fⁿ ⟺ ColA=Fᵐ (כשA ריבועית) ⟺ A הפיכה.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#c03030">משפט</span>
+        <div class="def-text">A~B (שקולות שורות) ⟹ RowA=RowB.</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-cor">מסקנה</span>
+        <div class="def-text">השורות השאינן-אפס ב‑REF(A) הן בסיס של RowA. לכן: row-rank(A) = rank(A).</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#c03030">⭐⭐ משפט col-rank = row-rank</span>
+        <div class="def-text">dim(ColA) = dim(RowA) = rank(A). (דרגת העמודות שווה לדרגת השורות, שתיהן שוות ל‑rank.)</div>
+      </div>
+
+      <div class="def-item">
+        <span class="def-badge badge-thm" style="background:#c03030">⭐⭐⭐ Rank-Nullity</span>
+        <div class="def-text">לכל מטריצה A מגודל m×n: rank(A) + dim(NulA) = n. (מספר העמודות = משתנים קשורים + משתנים חופשיים.)</div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+function toggleTopic(block) {
+  block.classList.toggle('open');
+}
+</script>
+
+<!-- ══════════════════════════════════════════════════
+     הגדרות פורמליות — מילה במילה מהקובץ
+     ══════════════════════════════════════════════════ -->
+<style>
+.formal-defs-section {
+  max-width: 920px;
+  margin: 20px auto 60px;
+  direction: rtl;
+}
+.formal-defs-section > h2 {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 6px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--border);
+}
+.formal-defs-section > p {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 28px;
+}
+.fdef-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+}
+.fdef-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  cursor: pointer;
+  user-select: none;
+}
+.fdef-header:hover { background: rgba(0,0,0,0.02); }
+.fdef-name {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--text);
+  flex: 1;
+}
+.fdef-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 9px;
+  border-radius: 8px;
+  color: #fff;
+}
+.fdef-expand {
+  font-size: 0.8rem;
+  color: var(--muted);
+  transition: transform 0.25s;
+}
+.fdef-card.open .fdef-expand { transform: rotate(180deg); }
+.fdef-body {
+  display: none;
+  padding: 4px 24px 20px;
+  border-top: 1px solid var(--border);
+  font-size: 0.88rem;
+  line-height: 1.9;
+  color: var(--text);
+}
+.fdef-card.open .fdef-body { display: block; }
+.fdef-body p { margin: 6px 0; }
+.fdef-body ol { margin: 6px 0 6px 20px; padding: 0; }
+.fdef-body li { margin: 4px 0; }
+.fdef-body .katex-display { margin: 8px 0; overflow-x: auto; }
+.fdef-red { color: #c03030; font-weight: 700; }
+.fdef-note {
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: rgba(0,0,0,0.03);
+  border-radius: 8px;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+</style>
+
+<div class="formal-defs-section">
+  <h2>📝 הגדרות פורמליות — מילה במילה</h2>
+  <p>כל הגדרה כפי שרשומה בקובץ, עם נוסחאות KaTeX.</p>
+
+  <!-- צ"ל -->
+  <div class="fdef-card open" onclick="toggleFdef(this)">
+    <div class="fdef-header">
+      <span class="fdef-badge" style="background:#c07828">הגדרה</span>
+      <div class="fdef-name">צירוף ליניארי (צ"ל)</div>
+      <span class="fdef-expand">▼</span>
+    </div>
+    <div class="fdef-body">
+      <p>יהי \(V\) מ"ו מעל \(F\) ויהי \(k \in \mathbb{N}\) ויהיו \(v_1,\ldots,v_k,\ v \in V\).</p>
+      <p>נאמר כי \(v\) הוא <strong>צ"ל</strong> של \(v_1,\ldots,v_k\) אם קיימים \(\alpha_1,\ldots,\alpha_k \in F\) כך ש־</p>
+      \[v = \alpha_1 v_1 + \cdots + \alpha_k v_k\]
+    </div>
+  </div>
+
+  <!-- פרוש -->
+  <div class="fdef-card" onclick="toggleFdef(this)">
+    <div class="fdef-header">
+      <span class="fdef-badge" style="background:#c07828">הגדרה</span>
+      <div class="fdef-name">פרוש (Span)</div>
+      <span class="fdef-expand">▼</span>
+    </div>
+    <div class="fdef-body">
+      <p>יהי \(V\) מ"ו מעל \(F\) ויהי \(k \in \mathbb{N}\) ויהיו \(v_1,\ldots,v_k \in V\).</p>
+      <p>הפרוש של \(v_1,\ldots,v_k\) הוא:</p>
+      \[\operatorname{span}\{v_1,\ldots,v_k\} = \{\alpha_1 v_1 + \cdots + \alpha_k v_k \mid \alpha_1,\ldots,\alpha_k \in F\}\]
+      \[\operatorname{span}(\varnothing) = \{0_V\}\]
+    </div>
+  </div>
+
+  <!-- ת"מ -->
+  <div class="fdef-card" onclick="toggleFdef(this)">
+    <div class="fdef-header">
+      <span class="fdef-badge" style="background:#3d8f42">הגדרה</span>
+      <div class="fdef-name">תת-מרחב (ת"מ)</div>
+      <span class="fdef-expand">▼</span>
+    </div>
+    <div class="fdef-body">
+      <p>יהי \(V\) מ"ו מעל \(F\). נאמר כי \(S\) <strong>תת-מרחב וקטורי</strong> של \(V\) אם ורק אם:</p>
+      \[S \subseteq V\]
+      <p>וכן \(S\) סגורה תחת חיבור וכפל בסקלר.</p>
+    </div>
+  </div>
+
+  <!-- S פורשת -->
+  <div class="fdef-card" onclick="toggleFdef(this)">
+    <div class="fdef-header">
+      <span class="fdef-badge" style="background:#3d8f42">הגדרה</span>
+      <div class="fdef-name">\(S\) פורשת את \(V\)</div>
+      <span class="fdef-expand">▼</span>
+    </div>
+    <div class="fdef-body">
+      <p>נאמר כי \(S\) <strong>פורשת</strong> את \(V\) אם:</p>
+      \[V = \operatorname{span}(S)\]
+    </div>
+  </div>
+
+  <!-- u לא ב-span -->
+  <div class="fdef-card" onclick="toggleFdef(this)">
+    <div class="fdef-header">
+      <span class="fdef-badge" style="background:#3d8f42">הגדרה</span>
+      <div class="fdef-name">\(u\) לא ב־Span</div>
+      <span class="fdef-expand">▼</span>
+    </div>
+    <div class="fdef-body">
+      <p>נאמר כי \(u \notin \operatorname{span}\{v_1,\ldots,v_k\}\) אם לכל \(\alpha_1,\ldots,\alpha_k \in F\) מתקיים:</p>
+      \[u \neq \alpha_1 v_1 + \cdots + \alpha_k v_k\]
+    </div>
+  </div>
+
+  <!-- ת"ל -->
+  <div class="fdef-card" onclick="toggleFdef(this)">
+    <div class="fdef-header">
+      <span class="fdef-badge" style="background:#c07828">הגדרה</span>
+      <div class="fdef-name">תלות / בלתי-תלות ליניארית (ת"ל / בת"ל)</div>
+      <span class="fdef-expand">▼</span>
+    </div>
+    <div class="fdef-body">
+      <p>יהי \(V\) מ"ו מעל \(F\), ותהי \(S \subseteq V\). נאמר כי \(S\) <strong>תלויה ליניארית</strong> אם קיימים:</p>
+      <ol>
+        <li>\(v_1,\ldots,v_k \in S\)</li>
+      </ol>
+      <p>כך ש־ \(v_1,\ldots,v_k\) ת"ל.</p>
+      <p>אחרת נאמר כי \(S\) <strong>בת"ל</strong>.</p>
+    </div>
+  </div>
+
+  <!-- בסיס -->
+  <div class="fdef-card" onclick="toggleFdef(this)">
+    <div class="fdef-header">
+      <span class="fdef-badge" style="background:#b83060">הגדרה</span>
+      <div class="fdef-name">בסיס</div>
+      <span class="fdef-expand">▼</span>
+    </div>
+    <div class="fdef-body">
+      <p>יהי \(V\) מ"ו מעל \(F\) ויהיו \(v_1,\ldots,v_n \in V\).</p>
+      <p>נאמר כי \((v_1,\ldots,v_n)\) <strong>בסיס</strong> של \(V\) אם:</p>
+      <ol>
+        <li>\((v_1,\ldots,v_n)\) בת"ל</li>
+        <li>\((v_1,\ldots,v_n)\) פורשים את \(V\)</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- מימד -->
+  <div class="fdef-card" onclick="toggleFdef(this)">
+    <div class="fdef-header">
+      <span class="fdef-badge" style="background:#7a2898">הגדרה</span>
+      <div class="fdef-name">מימד</div>
+      <span class="fdef-expand">▼</span>
+    </div>
+    <div class="fdef-body">
+      <p>יהי \(V\) מ"ו מעל \(F\). הגודל של \(V\) מוגדר להיות כדלקמן:</p>
+      <ol>
+        <li>במקרה ש־\(V\) הוא מ"ו עם וקטורי בסיס של \(V\) — מספר הוקטורים בבסיס.</li>
+        <li>במקרה ש־\(V\) לא נוצר על ידי בסיס סופי, אז נגדיר: \(\dim V = \infty\)</li>
+      </ol>
+      <p class="fdef-red">\[\dim F_n[x] = n+1, \qquad \dim M_{m \times n}(F) = m \cdot n\]</p>
+    </div>
+  </div>
+
+  <!-- פורשים מינימלית -->
+  <div class="fdef-card" onclick="toggleFdef(this)">
+    <div class="fdef-header">
+      <span class="fdef-badge" style="background:#7a2898">הגדרה</span>
+      <div class="fdef-name">פורשים מינימלית (וקטורים נשמטים)</div>
+      <span class="fdef-expand">▼</span>
+    </div>
+    <div class="fdef-body">
+      <p>יהי \(V\) מ"ו מעל \(F\), ויהיו \(v_1,\ldots,v_n \in V\).</p>
+      <p>נאמר כי \((v_1,\ldots,v_n)\) <strong>פורשים מינימלית</strong> את \(V\) אם:</p>
+      <ol>
+        <li>\((v_1,\ldots,v_n)\) פורשים את \(V\)</li>
+        <li>לכל \(1 \le j \le n\), \(\ v_1,\ldots,v_{j-1},v_{j+1},\ldots,v_n\) לא פורשים את \(V\)</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- בסיס — מסקנה אלטרנטיבית -->
+  <div class="fdef-card" onclick="toggleFdef(this)">
+    <div class="fdef-header">
+      <span class="fdef-badge" style="background:#b83060">מסקנה</span>
+      <div class="fdef-name">בסיס — גדר אלטרנטיבית</div>
+      <span class="fdef-expand">▼</span>
+    </div>
+    <div class="fdef-body">
+      <p>יהי \(V\) מ"ו מעל \(F\), ויהיו \(v_1,\ldots,v_n \in V\).</p>
+      <p>\((v_1,\ldots,v_n)\) בסיס של \(V\) אם ורק אם:</p>
+      <ol>
+        <li>\((v_1,\ldots,v_n)\) בת"ל</li>
+        <li>לכל \(v \in V\) קיים ייצוג יחיד \(v = \alpha_1 v_1 + \cdots + \alpha_n v_n\)</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- סכום ישר -->
+  <div class="fdef-card" onclick="toggleFdef(this)">
+    <div class="fdef-header">
+      <span class="fdef-badge" style="background:#7a2898">הגדרה</span>
+      <div class="fdef-name">סכום ישר (\(U \oplus W\))</div>
+      <span class="fdef-expand">▼</span>
+    </div>
+    <div class="fdef-body">
+      <p>יהי \(V\) מ"ו מעל \(F\) ויהיו \(U, W \subseteq V\).</p>
+      <p>לאחר שנגדיר <strong>סכום</strong> \(U+W\) כצורה:</p>
+      \[U + W = \{u + w \mid u \in U,\ w \in W\}\]
+      <p>לגבי הכאשר \(U \cap W = \{0_V\}\) הסכום הוא <strong>סכום ישר</strong> ונסמנו \(U \oplus W\).</p>
+    </div>
+  </div>
+
+  <!-- כפל מטריצות -->
+  <div class="fdef-card" onclick="toggleFdef(this)">
+    <div class="fdef-header">
+      <span class="fdef-badge" style="background:#6254c8">הגדרה</span>
+      <div class="fdef-name">כפל מטריצות</div>
+      <span class="fdef-expand">▼</span>
+    </div>
+    <div class="fdef-body">
+      <p>יהי \(F\) שדה ויהיו \(m,n,r \in \mathbb{N}\) ויהיו \(A \in M_{m \times r}(F),\ B \in M_{r \times n}(F)\).</p>
+      <p>המכפלה \(AB\) מוגדרת כמטריצה בגודל \(m \times n\) כך שלכל \(1 \le i \le m\) ו־\(1 \le j \le n\):</p>
+      \[[AB]_{ij} = \sum_{k=1}^{r} [A]_{ik}[B]_{kj}\]
+      <div class="fdef-note">⚠️ כפל מטריצות אינו חילופי בדרך כלל.</div>
+    </div>
+  </div>
+
+  <!-- הפיכה שמאל -->
+  <div class="fdef-card" onclick="toggleFdef(this)">
+    <div class="fdef-header">
+      <span class="fdef-badge" style="background:#c03030">הגדרה</span>
+      <div class="fdef-name">הפיכה שמאלית</div>
+      <span class="fdef-expand">▼</span>
+    </div>
+    <div class="fdef-body">
+      <p>תהי \(A \in M_{m \times n}(F)\).</p>
+      <p>\(A\) נקראת <strong>הפיכה שמאלית</strong> אם קיים \(B \in M_{n \times m}(F)\) כך ש־\(BA = I_n\).</p>
+      <p>\(B\) נקרא <strong>הופכי שמאלי</strong> של \(A\).</p>
+    </div>
+  </div>
+
+  <!-- הפיכה ימין -->
+  <div class="fdef-card" onclick="toggleFdef(this)">
+    <div class="fdef-header">
+      <span class="fdef-badge" style="background:#c03030">הגדרה</span>
+      <div class="fdef-name">הפיכה ימנית</div>
+      <span class="fdef-expand">▼</span>
+    </div>
+    <div class="fdef-body">
+      <p>תהי \(A \in M_{m \times n}(F)\).</p>
+      <p>\(A\) נקראת <strong>הפיכה ימנית</strong> אם קיים \(C \in M_{n \times m}(F)\) כך ש־\(AC = I_n\).</p>
+      <p>\(C\) נקרא <strong>הופכי ימני</strong> של \(A\).</p>
+    </div>
+  </div>
+
+  <!-- הפיכה -->
+  <div class="fdef-card" onclick="toggleFdef(this)">
+    <div class="fdef-header">
+      <span class="fdef-badge" style="background:#c03030">הגדרה</span>
+      <div class="fdef-name">הפיכה</div>
+      <span class="fdef-expand">▼</span>
+    </div>
+    <div class="fdef-body">
+      <p>תהי \(A \in M_{m \times n}(F)\).</p>
+      <p>\(A\) נקראת <strong>הפיכה</strong> אם היא גם הפיכה שמאלית וגם הפיכה ימנית.</p>
+    </div>
+  </div>
+
+  <!-- מטריצה משוכלפת -->
+  <div class="fdef-card" onclick="toggleFdef(this)">
+    <div class="fdef-header">
+      <span class="fdef-badge" style="background:#c03030">הגדרה</span>
+      <div class="fdef-name">מטריצה משוכלפת (Transpose)</div>
+      <span class="fdef-expand">▼</span>
+    </div>
+    <div class="fdef-body">
+      <p>תהי \(A \in M_{m \times n}(F)\). הטרנספוז \(A^t\) מוגדר כמטריצה בגודל \(n \times m\) כך שלכל \(1 \le i \le n\), \(1 \le j \le m\):</p>
+      \[[A^t]_{ij} = [A]_{ji}\]
+      <p>תכונות:</p>
+      \[(A+B)^t = A^t + B^t \qquad (\alpha A)^t = \alpha \cdot A^t\]
+      \[(AB)^t = B^t A^t \qquad (A^t)^t = A \qquad (A^{-1})^t = (A^t)^{-1}\]
+    </div>
+  </div>
+
+  <!-- סימטרית / אנטי-סימטרית -->
+  <div class="fdef-card" onclick="toggleFdef(this)">
+    <div class="fdef-header">
+      <span class="fdef-badge" style="background:#c03030">הגדרה</span>
+      <div class="fdef-name">סימטרית ואנטי-סימטרית</div>
+      <span class="fdef-expand">▼</span>
+    </div>
+    <div class="fdef-body">
+      <p>תהי \(A \in M_n(F)\).</p>
+      <p>\(A\) נקראת <strong>סימטרית</strong> אם \(A = A^t\).</p>
+      <p>\(A\) נקראת <strong>אנטי-סימטרית</strong> אם \(A = -A^t\).</p>
+    </div>
+  </div>
+
+  <!-- פולינארית שורה -->
+  <div class="fdef-card" onclick="toggleFdef(this)">
+    <div class="fdef-header">
+      <span class="fdef-badge" style="background:#9a7c10">הגדרה</span>
+      <div class="fdef-name">פולינארית שורה</div>
+      <span class="fdef-expand">▼</span>
+    </div>
+    <div class="fdef-body">
+      <p>יהי \(\Delta : M_n(F) \to F\). נגדיר \(\Delta\) <strong>פולינארית שורה</strong> אם לכל \(\alpha,\beta \in F\), \(1 \le i \le n\), ו־\(R_1,\ldots,R_i,\tilde{R}_i,\ldots,R_n \in M_{1 \times n}(F)\):</p>
+      \[\alpha\,\Delta\!\begin{pmatrix}R_1\\\vdots\\R_i\\\vdots\\R_n\end{pmatrix} + \beta\,\Delta\!\begin{pmatrix}R_1\\\vdots\\\tilde{R}_i\\\vdots\\R_n\end{pmatrix} = \Delta\!\begin{pmatrix}R_1\\\vdots\\\alpha R_i+\beta\tilde{R}_i\\\vdots\\R_n\end{pmatrix}\]
+    </div>
+  </div>
+
+  <!-- מלא-ליניארית -->
+  <div class="fdef-card" onclick="toggleFdef(this)">
+    <div class="fdef-header">
+      <span class="fdef-badge" style="background:#9a7c10">הגדרה</span>
+      <div class="fdef-name">מולטי-ליניארית (מלא-ליניארית)</div>
+      <span class="fdef-expand">▼</span>
+    </div>
+    <div class="fdef-body">
+      <p>יהי \(\Delta : M_n(F) \to F\) כאשר \(\Delta\) <strong>פולינארית שורה</strong> לגבי כל שורה \(i\) בנפרד. כלומר: לכל \(\alpha,\beta \in F\) ו־\(1 \le i \le n\), ו־\(R_1,\ldots,R_i,\tilde{R}_i,\ldots,R_n \in M_{1 \times n}(F)\):</p>
+      \[\alpha\,\Delta\!\begin{pmatrix}R_1\\\vdots\\R_i\\\vdots\\R_n\end{pmatrix} + \beta\,\Delta\!\begin{pmatrix}R_1\\\vdots\\\tilde{R}_i\\\vdots\\R_n\end{pmatrix} = \Delta\!\begin{pmatrix}R_1\\\vdots\\\alpha R_i+\beta\tilde{R}_i\\\vdots\\R_n\end{pmatrix}\]
+    </div>
+  </div>
+
+  <!-- דטרמיננטה -->
+  <div class="fdef-card" onclick="toggleFdef(this)">
+    <div class="fdef-header">
+      <span class="fdef-badge" style="background:#9a7c10">הגדרה</span>
+      <div class="fdef-name">דטרמיננטה</div>
+      <span class="fdef-expand">▼</span>
+    </div>
+    <div class="fdef-body">
+      <p>יהי \(\Delta : M_n(F) \to F\). נגדיר \(\Delta\) <strong>דטרמיננטה</strong> אם מתקיים:</p>
+      <ol>
+        <li>\(\Delta\) מולטי-ליניארית (פולינארית שורה)</li>
+        <li>\(\Delta\) מתחלפת</li>
+        <li>\(\Delta(I_n) = 1_F\)</li>
+      </ol>
+      <div class="fdef-note">ניתן להוכיח שפונקציה כזו קיימת ויחידה.</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function toggleFdef(card) {
+  card.classList.toggle('open');
+}
+</script>
+
+</body>
+</html>

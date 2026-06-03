@@ -80,6 +80,7 @@ const navGroups: NavGroup[] = [
       { href: '/determinants', labelHe: 'דטרמיננטות', icon: <Hash className="w-5 h-5" /> },
       { href: '/dimensions', labelHe: 'ממדים', icon: <Ruler className="w-5 h-5" /> },
       { href: '/steinitz', labelHe: 'שטייניץ + מימדים', icon: <Link2 className="w-5 h-5" /> },
+      { href: '/learning-map', labelHe: '🗺️ מפת למידה (שבועות)', icon: <Map className="w-5 h-5" />, highlight: true },
       { href: '/det-flow', labelHe: 'עץ דטרמיננטות', icon: <GitBranch className="w-5 h-5" /> },
       { href: '/flow', labelHe: 'מפת מושגים', icon: <GitBranch className="w-5 h-5" /> },
     ],

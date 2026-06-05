@@ -131,13 +131,14 @@ function HomeworkCard({ h, expanded, onToggle }: { h: TopHomework; expanded: boo
 
 export default function TopHomeworkPage() {
   const [expandedId, setExpandedId] = useState<number | null>(1);
+  const rankedHomework = [...topHomework].sort((a, b) => a.rank - b.rank);
 
   return (
     <div className="space-y-6">
       <PageHeader
         icon={<GraduationCap className="w-6 h-6" />}
         title="Top 10 תרגילים מומלצים"
-        subtitle="10 התרגילים הכי שווים לפתור משיעורי הבית ומבחני עבר. כל אחד מייצג טכניקה שתחזור במבחן. כל פתרון כולל תבנית לזכור + מלכודות נפוצות."
+        subtitle="10 שאלות שיעורי הבית הכי סבירות למועד ג — מסודרות מחדש אחרי מועד ב ולפי החולשות ממועד א."
         gradient="from-blue-600 to-cyan-700"
       />
 
@@ -161,7 +162,7 @@ export default function TopHomeworkPage() {
       </div>
 
       <div className="space-y-4">
-        {topHomework.map((h) => (
+        {rankedHomework.map((h) => (
           <div key={h.id} id={`${h.rank}`}>
             <HomeworkCard
               h={h}

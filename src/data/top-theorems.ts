@@ -1,6 +1,7 @@
-// Top 10 theorems + proofs to memorize for Linear Algebra 1, Moed B 2025-26.
-// Selection rationale: Tier-1/Tier-2 from MOED_B_THEOREM_ANALYSIS_FINAL + dimension/U+W formula
-// + transpose preserves det + unique-representation theorem (frequent on past Moed B exams).
+// Top 10 theorems + proofs to memorize for Linear Algebra 1, Moed G 2025-26.
+// Recalibrated after Moed B 2026: theorem three, transpose, large determinant,
+// dimension/subspace, parametric system, Null(A^tA), and Hom already appeared.
+// Therefore repeated Moed-B items are downgraded unless they are still core weakness drills.
 //
 // Proofs are written verbatim from lectures wherever possible (no shortcuts) so the user
 // can memorize them word-for-word. Each entry is split into:
@@ -39,8 +40,8 @@ export interface TopTheorem {
 export const topTheorems: TopTheorem[] = [
   {
     id: 1,
-    rank: 1,
-    probability: 95,
+    rank: 2,
+    probability: 78,
     tier: 1,
     name: 'משפט הדרגה (Rank-Nullity)',
     nameEn: 'Rank-Nullity Theorem',
@@ -49,7 +50,7 @@ export const topTheorems: TopTheorem[] = [
     statement: 'rank(A) + dim(NulA) = n',
     preconditions: 'A ∈ M_{m×n}(F), n = מספר העמודות',
     whyAsked:
-      'לא נשאל ב-מועד א 2025. מקשר בין מערכות, מימד ודרגה — כמעט תמיד מופיע ב-מועד ב.',
+      'לא הופיע כהוכחה מלאה במועד ב. עדיין מרכזי לכל שאלה על NulA/ColA/RowA ולחולשה סביב Null(AᵗA).',
     proof: [
       {
         step: 1,
@@ -94,8 +95,8 @@ export const topTheorems: TopTheorem[] = [
 
   {
     id: 2,
-    rank: 2,
-    probability: 90,
+    rank: 1,
+    probability: 82,
     tier: 1,
     name: 'משפט שקילויות ההפיכות',
     nameEn: 'Invertibility Equivalence Table',
@@ -104,7 +105,7 @@ export const topTheorems: TopTheorem[] = [
     statement: 'עבור A ∈ M_n(F), כל התנאים הבאים שקולים זה לזה',
     preconditions: 'A ∈ M_n(F), F שדה',
     whyAsked:
-      'מועד א בדק חלקים בלבד; טבלת השקילויות המלאה נשארה — מועד ב אוהב את זה. כל זוג תנאים יכול להישאל.',
+      'מועד ב בדק תתי-רעיונות, אבל לא שרשרת שקילויות מלאה. במיוחד חשוב AB=I ⇒ BA=I והפיכות דרך rank/det.',
     proof: [
       {
         step: 1,
@@ -155,8 +156,8 @@ export const topTheorems: TopTheorem[] = [
 
   {
     id: 3,
-    rank: 3,
-    probability: 85,
+    rank: 9,
+    probability: 35,
     tier: 1,
     name: 'משפט השלוש (dim V = n)',
     nameEn: 'The Three Theorems',
@@ -165,7 +166,7 @@ export const topTheorems: TopTheorem[] = [
     statement:
       'אם dim V = n ויהיו v_1,...,v_n ∈ V, אז שלושת התנאים שקולים: (1) בסיס, (2) בת"ל, (3) פורשים.',
     preconditions: 'V מ"ו נוצר סופית מעל F, dim V = n, יש לנו בדיוק n וקטורים',
-    whyAsked: 'לא נשאל ב-מועד א 2025. מסתמך על הקורולרים החזקים של מימד.',
+    whyAsked: 'כבר הופיע במועד ב 2026, לכן לא נכון להשאיר אותו ב-85%. להשאיר כחזרה קצרה בלבד, לא כיעד שינון מרכזי.',
     proof: [
       {
         step: 1,
@@ -198,8 +199,8 @@ export const topTheorems: TopTheorem[] = [
 
   {
     id: 4,
-    rank: 4,
-    probability: 75,
+    rank: 3,
+    probability: 72,
     tier: 1,
     name: 'מולטיפליקטיביות הדטרמיננטה',
     nameEn: 'det(AB) = det(A)·det(B)',
@@ -208,7 +209,7 @@ export const topTheorems: TopTheorem[] = [
     statement: 'det(AB) = det(A) · det(B)',
     preconditions: 'A, B ∈ M_n(F)',
     whyAsked:
-      'הוכחה דרך פיצול למקרים. לא הוכח ב-מועד א 2025 (רק חישבו דטרמיננטות).',
+      'במועד ב היה det חישובי גדול, אבל לא הוכחת det(AB). זו וריאציה תיאורטית טבעית למועד ג.',
     proof: [
       {
         step: 1,
@@ -251,7 +252,7 @@ export const topTheorems: TopTheorem[] = [
   {
     id: 5,
     rank: 5,
-    probability: 70,
+    probability: 62,
     tier: 2,
     name: 'דרגת שורות = דרגת עמודות = דרגה',
     nameEn: 'Row Rank = Column Rank = Rank',
@@ -259,7 +260,7 @@ export const topTheorems: TopTheorem[] = [
     lecture: 'הרצאות 13-18',
     statement: 'dim(ColA) = dim(RowA) = rank(A)',
     preconditions: 'A ∈ M_{m×n}(F)',
-    whyAsked: 'לא נשאל ב-מועד א 2025. מקשר בין מרחב שורות ועמודות.',
+    whyAsked: 'לא נשאל כהוכחה עצמאית. מתחבר ל-rank(Bᵗ), Row/Col, ולקריאת מידע מצורה קנונית.',
     proof: [
       {
         step: 1,
@@ -308,8 +309,8 @@ export const topTheorems: TopTheorem[] = [
 
   {
     id: 6,
-    rank: 6,
-    probability: 70,
+    rank: 4,
+    probability: 68,
     tier: 2,
     name: 'למת ההחלפה של שטיינל',
     nameEn: 'Steinitz Exchange Lemma',
@@ -318,7 +319,7 @@ export const topTheorems: TopTheorem[] = [
     statement:
       'אם {v_1,...,v_k} בסיס ו-{w_1,...,w_m} פורשים את V, אז k ≤ m. בפרט: כל שני בסיסים של V באותו גודל.',
     preconditions: 'V מ"ו, {v_1,...,v_k} בסיס, {w_1,...,w_m} פורש',
-    whyAsked: 'יסוד תורת המימד. לא נשאל ב-מועד א 2025.',
+    whyAsked: 'לא הופיע ישירות במועד ב. אחרי שמשפט השלוש כבר נשאל, שטיינל הוא מועמד טבעי להוכחת מימד חלופית.',
     proof: [
       {
         step: 1,
@@ -363,7 +364,7 @@ export const topTheorems: TopTheorem[] = [
   {
     id: 7,
     rank: 7,
-    probability: 65,
+    probability: 55,
     tier: 2,
     name: 'משפט המימדים הראשון',
     nameEn: 'First Dimension Theorem (U+W)',
@@ -372,7 +373,7 @@ export const topTheorems: TopTheorem[] = [
     statement: 'dim(U + W) = dim U + dim W − dim(U ∩ W)',
     preconditions: 'U, W תתי-מרחב של V נוצר סופית',
     whyAsked:
-      'נשאל ב-מועד א 2025 שאלה 4.2 (dim(U∩W)=n−2). יכול להופיע שוב בצורה שונה.',
+      'מימדים כבר הופיעו במועד ב, לכן הסבירות ירדה. עדיין חובה בגלל החולשה האישית והאפשרות לווריאציית סכום ישר.',
     proof: [
       {
         step: 1,
@@ -429,8 +430,8 @@ export const topTheorems: TopTheorem[] = [
 
   {
     id: 8,
-    rank: 8,
-    probability: 60,
+    rank: 6,
+    probability: 58,
     tier: 2,
     name: 'תת-מרחב באותו מימד = שווה',
     nameEn: 'dim W = dim V ⟹ W = V',
@@ -439,7 +440,7 @@ export const topTheorems: TopTheorem[] = [
     statement: 'אם W תת-מרחב של V נוצר סופית, אז dim W ≤ dim V; ושוויון מתקיים אמ"מ W = V.',
     preconditions: 'V נוצר סופית, W ≤ V (תת-מרחב)',
     whyAsked:
-      'מופיע פעמים רבות בשאלות על dim(U+W), שאלות נכון/לא נכון, וכשמסיקים ש-2 תתי-מרחבים שווים.',
+      'הוכחה קצרה שמופיעה כצעד בתוך שאלות מימד. סביר יותר כחלק מסעיף מאשר כשאלה מלאה.',
     proof: [
       {
         step: 1,
@@ -479,8 +480,8 @@ export const topTheorems: TopTheorem[] = [
 
   {
     id: 9,
-    rank: 9,
-    probability: 55,
+    rank: 8,
+    probability: 48,
     tier: 2,
     name: 'det(Aᵗ) = det(A)',
     nameEn: 'Determinant Invariance under Transpose',
@@ -489,7 +490,7 @@ export const topTheorems: TopTheorem[] = [
     statement: 'det(A^t) = det(A) לכל A ∈ M_n(F)',
     preconditions: 'A ∈ M_n(F)',
     whyAsked:
-      'משמש להסיק שתכונות שורות תקפות גם לעמודות. הוכחה קצרה ויפה — אהובה על בוחנים.',
+      'טרנספוז הופיע במועד ב, לכן הסבירות ירדה. לשמור כחזרה קצרה בגלל טעויות נפוצות בהיפוך סדר.',
     proof: [
       {
         step: 1,
@@ -532,7 +533,7 @@ export const topTheorems: TopTheorem[] = [
   {
     id: 10,
     rank: 10,
-    probability: 55,
+    probability: 30,
     tier: 2,
     name: 'יחידות הייצוג (LI ⟺ ייצוג יחיד)',
     nameEn: 'Linear Independence ⟺ Unique Representation',
@@ -542,7 +543,7 @@ export const topTheorems: TopTheorem[] = [
       'v_1,...,v_k בת"ל אמ"מ לכל α_1,...,α_k, β_1,...,β_k ∈ F: α_1 v_1 + ... + α_k v_k = β_1 v_1 + ... + β_k v_k ⟹ α_i = β_i לכל i.',
     preconditions: 'V מ"ו מעל F, v_1,...,v_k ∈ V',
     whyAsked:
-      'נשאל ב-מועד א 2025 שאלה 1.1.2 (15 נקודות). יכול לחזור בצורה הפוכה / שיקול דומה.',
+      'כבר נבדק בעבר הקרוב ולכן לא יעד מרכזי למועד ג. מספיק לדעת להשתמש בו בתוך שאלות span/בת"ל.',
     proof: [
       {
         step: 1,

@@ -48,7 +48,7 @@ interface NavGroup {
 
 const navGroups: NavGroup[] = [
   {
-    label: 'מועד ב — חובה לפני המבחן',
+    label: 'מועד ג — חובה לפני המבחן',
     items: [
       { href: '/', labelHe: 'לוח בקרה', icon: <LayoutDashboard className="w-5 h-5" /> },
       { href: '/battle-plan', labelHe: '⚔️ תוכנית קרב', icon: <Swords className="w-5 h-5" />, highlight: true },
@@ -220,7 +220,7 @@ export default function Layout({ children }: LayoutProps) {
             <div className="text-[11px] text-gray-500 text-center leading-relaxed">
               מבוסס על החומרים שלך
               <br />
-              מועד ב — 14.5.2026
+              מועד ג — 15.6.2026
             </div>
           </div>
         </div>

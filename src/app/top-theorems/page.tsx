@@ -168,17 +168,18 @@ function TheoremCard({ t, expanded, onToggle }: { t: TopTheorem; expanded: boole
 }
 
 export default function TopTheoremsPage() {
-  const [expandedId, setExpandedId] = useState<number | null>(1);
+  const [expandedId, setExpandedId] = useState<number | null>(2);
   const [filterTier, setFilterTier] = useState<'all' | 1 | 2>('all');
 
-  const filtered = topTheorems.filter((t) => filterTier === 'all' || t.tier === filterTier);
+  const rankedTheorems = [...topTheorems].sort((a, b) => a.rank - b.rank);
+  const filtered = rankedTheorems.filter((t) => filterTier === 'all' || t.tier === filterTier);
 
   return (
     <div className="space-y-6">
       <PageHeader
         icon={<Trophy className="w-6 h-6" />}
         title="Top 10 משפטים + הוכחות"
-        subtitle="10 ההוכחות הכי סבירות למועד ב 2025-26 — מסודרות לפי הסתברות. לחץ על משפט לצפייה בהוכחה המלאה, מלכודות, ווריאציות ממבחני עבר."
+        subtitle="10 ההוכחות הכי סבירות למועד ג 2025-26 — מכויל אחרי מועד ב. משפט השלוש כבר הופיע ולכן ירד משמעותית בסבירות."
         gradient="from-purple-600 to-indigo-700"
       />
 

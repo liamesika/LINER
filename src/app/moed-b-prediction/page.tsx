@@ -41,8 +41,8 @@ export default function MoedBPredictionPage() {
     <div className="space-y-6">
       <PageHeader
         icon={<Crosshair className="w-6 h-6" />}
-        title="חיזוי מועד ב — מה צפוי במבחן?"
-        subtitle="ניתוח מבוסס על מועד א 2026 שלך (50/100), הסילבוס שנלמד, ומבחני מועד ב 2022-2024. הוצאתי כל מה שכבר נשאל + העתקות ליניאריות שלא נלמדו."
+        title="חיזוי מועד ג — מה צפוי במבחן?"
+        subtitle="ניתוח מבוסס על מועד א 2026 + מועד ב 2026 שלך. הוצאתי את כל 18 הנושאים שכבר נשאלו בשני המועדים + העתקות ליניאריות שלא נלמדו."
         gradient="from-rose-600 to-pink-700"
       />
 
@@ -51,7 +51,7 @@ export default function MoedBPredictionPage() {
         <div className="bg-white rounded-xl p-5">
           <div className="flex items-center gap-2 mb-4">
             <GraduationCap className="w-6 h-6 text-violet-600" />
-            <h2 className="text-xl font-extrabold text-gray-900">Top 10 שאלות HW לפתור</h2>
+            <h2 className="text-xl font-extrabold text-gray-900">Top 10 שאלות HW לפתור למועד ג</h2>
             <span className="text-xs px-2 py-0.5 rounded-full bg-violet-100 text-violet-700 font-semibold">
               עדיפות מקסימלית
             </span>
@@ -98,8 +98,7 @@ export default function MoedBPredictionPage() {
           <div className="mt-4 bg-amber-50 border border-amber-200 rounded-lg p-3 text-xs text-amber-900 flex items-start gap-2">
             <AlertTriangle className="w-4 h-4 mt-0.5 shrink-0 text-amber-600" />
             <div>
-              <strong>סדר עבודה מומלץ:</strong> 1→2→3→4→5 דחוף ביותר. 6→10 לסיים אם נשאר זמן. תרגילים מסומנים בכחול
-              יש להם פתרון מלא + תבנית ב-Top 10 תרגילים.
+              <strong>סדר עבודה מומלץ:</strong> 1→2→3 דחוף ביותר (rank-nullity + AB=I→BA=I + det(AB)). 4→6 חשוב. 7→10 אם נשאר זמן. תרגילים מסומנים בכחול יש להם פתרון מלא ב-Top 10 תרגילים.
             </div>
           </div>
         </div>
@@ -109,7 +108,7 @@ export default function MoedBPredictionPage() {
       <div className="bg-gray-900 rounded-2xl p-5 text-white shadow-md">
         <h3 className="font-bold mb-3 flex items-center gap-2">
           <TrendingDown className="w-5 h-5 text-gray-400" />
-          ⛔ מה הוצאתי מהחיזוי
+          ⛔ נשאל כבר — לא לבזבז זמן (מועד א + מועד ב)
         </h3>
         <div className="grid md:grid-cols-2 gap-2">
           {lowProbabilityMoedB.map((t, i) => (
@@ -154,7 +153,7 @@ export default function MoedBPredictionPage() {
       <div className="space-y-4">
         <h2 className="font-bold text-gray-900 text-lg flex items-center gap-2">
           <Sparkles className="w-5 h-5 text-rose-600" />
-          חיזוי 5 השאלות הצפויות
+          חיזוי 5 השאלות הצפויות — מועד ג
         </h2>
 
         {predictedQuestions.map((q) => (
@@ -278,7 +277,7 @@ export default function MoedBPredictionPage() {
               🎯 הוכחות מכוילות לפי 3 רמות בטחון
             </h3>
             <p className="text-xs text-gray-600 mt-1">
-              לא 95%+ על שום הוכחה. ההערכה כנה ומבוססת על מה שכבר נשאל ב-מועד א שלך + ניתוח מבחני עבר.
+              לא 95%+ על שום הוכחה. ההערכה כנה ומבוססת על מה שנשאל במועד א + מועד ב שלך + ניתוח מבחני עבר 2022-2025.
             </p>
           </div>
           <div className="flex items-center gap-1.5 text-xs bg-blue-50 text-blue-700 px-3 py-1.5 rounded-full border border-blue-200">
@@ -347,7 +346,7 @@ export default function MoedBPredictionPage() {
             📚 הגדרות צפויות
           </h3>
           <p className="text-xs text-gray-600 mt-1">
-            כל שאלה במבחן בד"כ מתחילה ב-"הגדירי X" (2-3 נקודות). 12 הגדרות הכי סבירות.
+            כל שאלה במבחן בד"כ מתחילה ב-"הגדירי X" (2-3 נקודות). הגדרות הכי סבירות למועד ג (לא כולל מה שנשאל במועד א/ב).
           </p>
         </div>
 
@@ -385,7 +384,7 @@ export default function MoedBPredictionPage() {
         {/* Already-tested definitions — collapsed */}
         <details className="mt-3 bg-gray-50 rounded-lg border border-gray-200">
           <summary className="cursor-pointer p-3 text-xs font-semibold text-gray-600 hover:text-gray-900">
-            הגדרות שכבר נשאלו במועד א ({predictedDefinitions.filter((d) => d.alreadyTested).length})
+            הגדרות שכבר נשאלו במועד א או מועד ב ({predictedDefinitions.filter((d) => d.alreadyTested).length})
           </summary>
           <div className="p-3 pt-0 grid md:grid-cols-2 gap-2">
             {predictedDefinitions.filter((d) => d.alreadyTested).map((d) => (
@@ -418,8 +417,8 @@ export default function MoedBPredictionPage() {
 
       <div className="bg-gradient-to-l from-rose-50 to-pink-50 rounded-2xl p-5 border border-rose-100 text-center">
         <div className="text-sm text-rose-900">
-          <strong>חישוב הסתברויות מבוסס על</strong>: ניתוח מבחני עבר 2022-2024, מועד א 2025, סימולציה 2025-26, ועל מסמך
-          המיקוד מפי המרצים. <strong>לא תחזית מובטחת</strong> — אבל מקסם את הסיכוי לציון 90+.
+          <strong>חישוב הסתברויות מבוסס על</strong>: מועד א 2026 ומועד ב 2026 שלך, ניתוח מבחני עבר 2022-2025, וסילבוס הקורס.
+          <strong> לא תחזית מובטחת</strong> — אבל מקסם את הסיכוי לציון 90+ במועד ג.
         </div>
       </div>
     </div>

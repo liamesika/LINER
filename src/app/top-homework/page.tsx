@@ -142,6 +142,17 @@ export default function TopHomeworkPage() {
         gradient="from-blue-600 to-cyan-700"
       />
 
+      <div className="rounded-lg border border-blue-100 bg-blue-50/60 px-3 py-2 text-xs text-blue-950">
+        <div className="mb-1 font-bold">רשימת מקור קצרה:</div>
+        <ol className="grid gap-x-5 gap-y-1 pr-4 sm:grid-cols-2 lg:grid-cols-3" style={{ listStyleType: 'decimal' }}>
+          {rankedHomework.map((h) => (
+            <li key={h.id}>
+              <span className="font-semibold">{h.source}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-center">
         <div className="stat-card" style={{ '--stat-accent': '#16a34a' } as React.CSSProperties}>
           <div className="text-2xl font-bold text-green-700">{topHomework.filter((h) => h.difficulty === 'easy').length}</div>

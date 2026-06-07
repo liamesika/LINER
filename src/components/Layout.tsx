@@ -52,6 +52,7 @@ const navGroups: NavGroup[] = [
     items: [
       { href: '/', labelHe: 'לוח בקרה', icon: <LayoutDashboard className="w-5 h-5" /> },
       { href: '/battle-plan', labelHe: '⚔️ תוכנית קרב', icon: <Swords className="w-5 h-5" />, highlight: true },
+      { href: '/exam-week', labelHe: '🗓️ לוז שבוע המבחן', icon: <Calendar className="w-5 h-5" />, highlight: true },
       { href: '/weekly-schedule', labelHe: '📅 לוז שבועי (סמסטר ב\')', icon: <Calendar className="w-5 h-5" />, highlight: true },
       { href: '/top-theorems', labelHe: '🏆 Top 10 משפטים + הוכחות', icon: <Trophy className="w-5 h-5" />, highlight: true },
       { href: '/top-homework', labelHe: '📝 Top 10 תרגילים', icon: <GraduationCap className="w-5 h-5" />, highlight: true },
@@ -141,7 +142,14 @@ export default function Layout({ children }: LayoutProps) {
             <Calculator className="w-5 h-5 text-indigo-600" />
             <span className="font-bold text-gray-900">LINER</span>
           </div>
-          <div className="w-10" />
+          <a
+            href="https://c.mentora-edu.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-10 h-10 flex items-center justify-center rounded-lg bg-indigo-600 text-white font-bold text-lg hover:bg-indigo-700 transition-colors"
+          >
+            c
+          </a>
         </div>
       </header>
 
@@ -164,8 +172,8 @@ export default function Layout({ children }: LayoutProps) {
       >
         <div className="flex flex-col h-full">
           {/* Logo */}
-          <div className="p-4 border-b border-gray-200">
-            <button onClick={() => setLogoPopupOpen(true)} className="w-full flex items-center justify-center gap-3">
+          <div className="p-4 border-b border-gray-200 flex items-center gap-2">
+            <button onClick={() => setLogoPopupOpen(true)} className="flex-1 flex items-center justify-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 text-white flex items-center justify-center shadow-md">
                 <Calculator className="w-5 h-5" />
               </div>
@@ -174,6 +182,14 @@ export default function Layout({ children }: LayoutProps) {
                 <div className="text-xs text-gray-500">אלגברה לינארית · מועד ב</div>
               </div>
             </button>
+            <a
+              href="https://c.mentora-edu.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-9 h-9 flex items-center justify-center rounded-lg bg-indigo-600 text-white font-bold text-base hover:bg-indigo-700 transition-colors shrink-0"
+            >
+              c
+            </a>
           </div>
 
           {/* Navigation */}
